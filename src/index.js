@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router, IndexRoute, Route, browserHistory } from 'react-router'
+
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -10,7 +12,9 @@ injectTapEventPlugin();
 
 const Root = () => (
   <MuiThemeProvider>
-    <App/>
+    <Router history={browserHistory}>
+      <Route path="/" component={App}></Route>
+    </Router>
   </MuiThemeProvider>
 )
 
