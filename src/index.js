@@ -6,6 +6,9 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import App from './components/App';
+import HelloWorld from './components/HelloWorld'
+import MaterialDemo from './components/MaterialDemo'
+import NotFound from './components/NotFound'
 import './index.css';
 
 injectTapEventPlugin();
@@ -13,7 +16,11 @@ injectTapEventPlugin();
 const Root = () => (
   <MuiThemeProvider>
     <Router history={browserHistory}>
-      <Route path="/" component={App}></Route>
+      <Route path="/" component={App}>
+        <IndexRoute component={HelloWorld} />
+        <Route path="material" component={MaterialDemo} />
+        <Route path="*" component={NotFound} />
+      </Route>
     </Router>
   </MuiThemeProvider>
 )
