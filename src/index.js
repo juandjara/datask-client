@@ -5,7 +5,7 @@ import { Router, IndexRoute, Route, browserHistory } from 'react-router'
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import App from './App';
+import App from './components/App';
 import './index.css';
 
 injectTapEventPlugin();
