@@ -1,11 +1,13 @@
 import React from 'react'
-import logo from './logo.svg';
+import IconButton from 'material-ui/IconButton';
+import MenuIcon from 'material-ui/svg-icons/navigation/menu'
 
-const Header = () => {
+const Header = (props) => {
   return (
-    <div className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <h2>Welcome to React</h2>
+    <div className="header">
+      <IconButton onTouchTap={props.onToggleSidenav} >
+        <MenuIcon></MenuIcon>
+      </IconButton>
     </div>
   )
 }
