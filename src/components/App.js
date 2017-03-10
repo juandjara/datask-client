@@ -13,7 +13,7 @@ class App extends Component {
       transition: 'all 0.4s ease'
     }
     if (sidenavOpen && !responsive.small) {
-      containerStyle.paddingLeft = 240
+      containerStyle.paddingLeft = 256
     }
     return (
       <div style={containerStyle}>

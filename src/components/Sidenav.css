@@ -1,0 +1,27 @@
+.sidenav-header { 
+  height: 120px;
+  color: white;
+  padding: .5em;
+}
+.sidenav-header-top {
+  display: flex;
+  justify-content: space-between;
+}
+.sidenav a {
+  text-decoration: none;
+}
+.sidenav-times {
+  padding-right: 8px;
+}
+.sidenav-time-icon {
+  opacity: .75;
+  padding: 0 4px;
+}
+.sidenav-username {
+  margin-bottom: 0;
+}
+.sidenav-avatar {
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+}
