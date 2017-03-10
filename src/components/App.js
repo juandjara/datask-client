@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import Sidenav from './Sidenav';
 import Header from './Header';
+import { small } from '../utils/mediaQueries'
 
 class App extends Component {
   constructor() {
@@ -9,13 +10,8 @@ class App extends Component {
     this.state = { sidenavOpen: true }
   }
   handleToggle = () => this.setState({sidenavOpen: !this.state.sidenavOpen});
-  getStyles() {
-    return {
-      container: this.state.sidenavOpen ? {paddingLeft: 240}:{}
-    }
-  }
   render() {
-    const containerStyle = this.state.sidenavOpen ? 
+    const containerStyle = this.state.sidenavOpen && !small() ? 
       {paddingLeft: 240}:{}
     return (
       <div style={containerStyle}>

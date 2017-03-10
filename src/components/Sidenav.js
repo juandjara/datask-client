@@ -6,6 +6,7 @@ import { blue500 } from 'material-ui/styles/colors'
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem'
 import { Link } from 'react-router'
+import { small } from '../utils/mediaQueries'
 
 const Sidenav = (props) => {
   const styles = {
@@ -23,6 +24,7 @@ const Sidenav = (props) => {
   return (
     <Drawer width={props.open ? 240 : null}
             open={props.open}
+            docked={!small()}
             onRequestChange={(open) => this.setState({open})}>
       <section style={styles.sidenavHeader}>
         <p style={{marginLeft: "1em"}}>Juan Dominguez</p>
