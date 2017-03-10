@@ -1,4 +1,4 @@
-import { small } from '../utils/mediaQueries'
+import mediaQueries from '../utils/mediaQueries'
 
 // action type
 export const TOGGLE_SIDENAV="TOGGLE_SIDENAV"
@@ -8,7 +8,7 @@ export function toggleSidenav() {
   return { type: TOGGLE_SIDENAV }
 }
 
-const intialState = !small()
+const intialState = !window.matchMedia(mediaQueries.small).matches
 
 // reducer
 export default (state = intialState, {type}) => {

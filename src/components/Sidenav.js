@@ -7,7 +7,6 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
-import { small } from '../utils/mediaQueries'
 import { toggleSidenav } from '../ducks/sidenav'
 
 const Sidenav = (props) => {
@@ -26,7 +25,7 @@ const Sidenav = (props) => {
   return (
     <Drawer width={props.open ? 240 : null}
             open={props.open}
-            docked={!small()}
+            docked={!props.responsive.small}
             onRequestChange={(open) => props.dispatch(toggleSidenav())}>
       <section style={styles.sidenavHeader}>
         <p style={{marginLeft: "1em"}}>Juan Dominguez</p>
@@ -52,7 +51,8 @@ const Sidenav = (props) => {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    open: state.sidenavOpen
+    open: state.sidenavOpen,
+    responsive: state.responsive
   }
 }
 

@@ -1,5 +1,3 @@
-export function small() {
-  return window.matchMedia('(max-width: 425px)').matches
+export default {
+  small: 'screen and (max-width: 426px)'
 }
-
-// media query reducer suscribe ?
