@@ -2,21 +2,19 @@ import React, { Component } from 'react'
 
 import Sidenav from './Sidenav';
 import Header from './Header';
+import { connect } from 'react-redux'
 import { small } from '../utils/mediaQueries'
+import { toggleSidenav } from '../ducks/sidenav'
 
 class App extends Component {
-  constructor() {
-    super()
-    this.state = { sidenavOpen: true }
-  }
-  handleToggle = () => this.setState({sidenavOpen: !this.state.sidenavOpen});
+  handleToggle = () => this.props.dispatch(toggleSidenav());
   render() {
-    const containerStyle = this.state.sidenavOpen && !small() ? 
+    const containerStyle = this.props.sidenavOpen && !small() ? 
       {paddingLeft: 240}:{}
     return (
       <div style={containerStyle}>
-        <Sidenav open={this.state.sidenavOpen} />
-        <Header onToggleSidenav={this.handleToggle}></Header>
+        <Sidenav />
+        <Header onToggleSidenav={this.handleToggle} />
         <div className="main">
           {this.props.children}
         </div>
@@ -25,4 +23,10 @@ class App extends Component {
   }
 }
 
-export default App
+const mapStateToProps = (state, ownProps) => {
+  return {
+    sidenavOpen: state.sidenavOpen
+  }
+}
+
+export default connect(mapStateToProps)(App)

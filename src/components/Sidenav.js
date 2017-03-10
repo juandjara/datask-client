@@ -6,7 +6,9 @@ import { blue500 } from 'material-ui/styles/colors'
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem'
 import { Link } from 'react-router'
+import { connect } from 'react-redux'
 import { small } from '../utils/mediaQueries'
+import { toggleSidenav } from '../ducks/sidenav'
 
 const Sidenav = (props) => {
   const styles = {
@@ -25,7 +27,7 @@ const Sidenav = (props) => {
     <Drawer width={props.open ? 240 : null}
             open={props.open}
             docked={!small()}
-            onRequestChange={(open) => this.setState({open})}>
+            onRequestChange={(open) => props.dispatch(toggleSidenav())}>
       <section style={styles.sidenavHeader}>
         <p style={{marginLeft: "1em"}}>Juan Dominguez</p>
       </section>
@@ -48,4 +50,10 @@ const Sidenav = (props) => {
   )
 }
 
-export default Sidenav
+const mapStateToProps = (state, ownProps) => {
+  return {
+    open: state.sidenavOpen
+  }
+}
+
+export default connect(mapStateToProps)(Sidenav)

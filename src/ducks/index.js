@@ -1,1 +1,6 @@
-export default (state = {}, action) => state
+import { combineReducers } from 'redux'
+import sidenav from './sidenav'
+
+export default combineReducers({
+  sidenavOpen: sidenav
+})
