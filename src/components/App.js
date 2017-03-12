@@ -18,10 +18,13 @@ class App extends Component {
     return (
       <div style={containerStyle}>
         <Sidenav />
-        <Header onToggleSidenav={this.handleToggle} />
-        <div className="main">
+        {responsive.small ? (<Header onToggleSidenav={this.handleToggle} />) : null}
+        <main className="main">
           {children}
-        </div>
+        </main>
+        <footer className="footer">
+          Open Crono
+        </footer>
       </div>
     )
   }

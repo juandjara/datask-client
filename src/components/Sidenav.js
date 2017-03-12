@@ -11,6 +11,7 @@ import MenuItem from 'material-ui/MenuItem'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { toggleSidenav } from '../ducks/sidenav'
+import Avatar from './Avatar'
 import './Sidenav.css'
 
 const Sidenav = (props) => {
@@ -21,8 +22,7 @@ const Sidenav = (props) => {
             onRequestChange={(open) => props.dispatch(toggleSidenav())}>
       <section className="sidenav-header" style={{backgroundColor: teal500}}>
         <div className="sidenav-header-top">
-          <img className="sidenav-avatar"
-               src="" alt="Avatar"/>
+          <Avatar className="sidenav-avatar" />
           <div className="sidenav-times">
             <div><TimeIcon  color="white" className="sidenav-time-icon" />{'00:00:00'}</div>
             <div><TimeIcon2 color="white" className="sidenav-time-icon" />{'00:00:00'}</div>

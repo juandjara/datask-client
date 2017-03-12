@@ -1,3 +1,3 @@
 export default {
-  small: 'screen and (max-width: 426px)'
+  small: 'screen and (max-width: 900px)'
 }
