@@ -5,7 +5,7 @@ import PersonIcon from 'material-ui/svg-icons/social/person'
 import TimeIcon from 'material-ui/svg-icons/image/timer'
 import TimeIcon2 from 'material-ui/svg-icons/action/today'
 import TimeIcon3 from 'material-ui/svg-icons/action/date-range'
-import { blue500 } from 'material-ui/styles/colors'
+import { teal500 } from 'material-ui/styles/colors'
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem'
 import { Link } from 'react-router'
@@ -19,7 +19,7 @@ const Sidenav = (props) => {
             className="sidenav"
             docked={!props.responsive.small}
             onRequestChange={(open) => props.dispatch(toggleSidenav())}>
-      <section className="sidenav-header" style={{backgroundColor: blue500}}>
+      <section className="sidenav-header" style={{backgroundColor: teal500}}>
         <div className="sidenav-header-top">
           <img className="sidenav-avatar"
                src="" alt="Avatar"/>

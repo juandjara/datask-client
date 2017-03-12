@@ -13,8 +13,9 @@ const Header = (props) => {
           <MenuIcon color="black"></MenuIcon>
         </IconButton>
       )}
-      style={{boxShadow: "none", backgroundColor: "white"}}
-      titleStyle={{marginRight:64, color: "black", textAlign: "center"}}>
+      style={{boxShadow: "none", backgroundColor: "transparent"}}
+      titleStyle={{color: "black"}}
+    >
     </AppBar>
   )
 }
