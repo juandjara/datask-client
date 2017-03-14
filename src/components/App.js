@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import Sidenav from './Sidenav';
+//import Sidenav from './Sidenav';
 import Header from './Header';
 import { connect } from 'react-redux'
 import { toggleSidenav } from '../ducks/sidenav'
@@ -17,7 +17,9 @@ class App extends Component {
     }
     return (
       <div style={containerStyle}>
+        {/*
         <Sidenav />
+        */}
         {responsive.small ? (<Header onToggleSidenav={this.handleToggle} />) : null}
         <main className="main">
           {children}

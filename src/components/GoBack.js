@@ -1,11 +1,11 @@
 import React from 'react'
 import { browserHistory } from 'react-router'
-import FlatButton from 'material-ui/FlatButton'
+import Button from 'react-toolbox/lib/button/Button';
 
 const NotFound = () => {
   return (
-    <FlatButton onClick={() => browserHistory.goBack()}
-                label="Volver atr&aacute;s" />
+    <Button onClick={() => browserHistory.goBack()}
+            label="Volver atr&aacute;s" />
   )
 }
 

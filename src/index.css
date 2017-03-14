@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import '~react-toolbox/lib/variables.css';
+
 body {
   margin: 0;
   padding: 0;
@@ -38,4 +41,8 @@ body {
   width: 44px;
   height: 44px;
   padding: 8px;
+}
+
+.shadow-z1 {
+  box-shadow: var(--shadow-2p);
 }
