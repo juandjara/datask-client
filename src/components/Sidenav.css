@@ -1,10 +1,12 @@
 .sidenav-header { 
   color: white;
   padding: 12px 1em;
+  margin-bottom: .5em;
 }
 .sidenav-header-top {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 1em;
 }
 .sidenav a {
   text-decoration: none;
@@ -14,7 +16,7 @@
   padding: 0 4px;
 }
 .sidenav-username {
-  margin-bottom: 0;
+  margin: 0;
 }
 .sidenav-avatar {
   height: 80px;

@@ -5,9 +5,9 @@ import PersonIcon from 'material-ui/svg-icons/social/person'
 import TimeIcon from 'material-ui/svg-icons/image/timer'
 import TimeIcon2 from 'material-ui/svg-icons/action/today'
 import TimeIcon3 from 'material-ui/svg-icons/action/date-range'
+import DownIcon from 'material-ui/svg-icons/navigation/arrow-drop-down'
 import { teal500 } from 'material-ui/styles/colors'
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem'
+import { Drawer, MenuItem, IconButton } from 'material-ui';
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { toggleSidenav } from '../ducks/sidenav'
@@ -29,7 +29,12 @@ const Sidenav = (props) => {
             <div><TimeIcon3 color="white" className="sidenav-time-icon" />{'00:00:00'}</div>
           </div>
         </div>
-        <p className="sidenav-username">Juan Dominguez</p>
+        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}} >
+          <p className="sidenav-username">Juan Dominguez</p>
+          <IconButton style={{padding: 0, width: 24, height: 24}}>
+            <DownIcon color="white" />
+          </IconButton>
+        </div>
       </section>
       <Link to="/clients">
         <MenuItem primaryText="Clientes" leftIcon={<BuildingIcon />} />
