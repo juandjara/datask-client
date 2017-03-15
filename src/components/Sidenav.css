@@ -2,23 +2,32 @@
 
 .sidenav-header { 
   color: white;
-  padding: .75em 1em;
   background-color: var(--palette-teal-500);
+  padding-left: 1em;  
 }
-.sidenav-header-top {
+.sidenav-username {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 1em;
+  align-items: center;
+  padding-right: 5px;
 }
+.sidenav-username p {
+  margin: 10px 0;
+}
+
 .sidenav a {
   text-decoration: none;
 }
-.sidenav-time-icon {
-  opacity: .75;
-  padding: 0 4px;
+.sidenav-times {
+  margin-left: 1em;
 }
-.sidenav-username {
-  margin: 0;
+.sidenav-times .material-icons {
+  opacity: .75;
+  padding-right: 4px;
+}
+.sidenav-times div {
+  display: flex;
+  align-items: center;
+  padding-bottom: 4px;
 }
 .sidenav-avatar {
   height: 80px;

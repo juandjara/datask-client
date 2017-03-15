@@ -1,63 +1,83 @@
-import React from 'react'
+import React, { Component } from 'react'
 import NavDrawer from 'react-toolbox/lib/layout/NavDrawer'
 import List from 'react-toolbox/lib/list/List'
 import ListItem from 'react-toolbox/lib/list/ListItem'
+import IconButton from 'react-toolbox/lib/button/IconButton'
+import FontIcon from 'react-toolbox/lib/font_icon/FontIcon'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { toggleSidenav } from '../ducks/sidenav'
 import Avatar from './Avatar'
 import './Sidenav.css'
 
-const Sidenav = (props) => {
-  return (
-    <NavDrawer permanentAt="md" 
-               className="sidenav"
-               active={props.open}
-               pinned={!props.responsive.small}
-               onOverlayClick={() => props.dispatch(toggleSidenav())}>
-      <header className="sidenav-header">
-        Juan
-      </header>
+class Sidenav extends Component {
+  constructor() {
+    super()
+    this.state = {
+      showMainLinks: true
+    }
+  }
+  render () {
+    const mainLinks = (
       <List>
         <Link to="/projects">
           <ListItem leftIcon="work" caption="Proyectos" />
         </Link>
-        <Link>
+        <Link to="/clients">
           <ListItem leftIcon="business" caption="Clientes"></ListItem>
         </Link>
-        <Link>
+        <Link to="/users">
           <ListItem leftIcon="person" caption="Usuarios"></ListItem>
         </Link>
+      </List>      
+    )
+    const userLinks = (
+      <List>
+        <Link to="/userprefs">
+          <ListItem leftIcon="settings" caption="Preferencias" />
+        </Link>
+        <ListItem leftIcon="close" caption="Cerrar sesión" />
       </List>
-      {/*
-      <header className="sidenav-header" style={{backgroundColor: teal500}}>
-        <div className="sidenav-header-top">
-          <Avatar className="sidenav-avatar" />
-          <div className="sidenav-times">
-            <div><TimeIcon  color="white" className="sidenav-time-icon" />{'00:00:00'}</div>
-            <div><TimeIcon2 color="white" className="sidenav-time-icon" />{'00:00:00'}</div>
-            <div><TimeIcon3 color="white" className="sidenav-time-icon" />{'00:00:00'}</div>
+    )
+    const {open, responsive, dispatch} = this.props;
+    const { showMainLinks } = this.state;
+    return (
+      <NavDrawer
+        permanentAt="md" 
+        className="sidenav"
+        active={open}
+        pinned={!responsive.small}
+        onOverlayClick={() => dispatch(toggleSidenav())}>
+        <header className="sidenav-header">
+          <h2 style={{margin: 0, padding: '1rem 0'}}>Open Crono</h2>
+          <div style={{display: 'flex'}}>
+            <Avatar className="sidenav-avatar" />
+            <section className="sidenav-times">
+              <div>
+                <FontIcon>timer</FontIcon>
+                <span>00:00:00</span>
+              </div>
+              <div>
+                <FontIcon>date_range</FontIcon>
+                <span>00:00:00</span>
+              </div>
+              <div>
+                <FontIcon>event_note</FontIcon>
+                <span>00:00:00</span>
+              </div>
+            </section>
           </div>
-        </div>
-        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}} >
-          <p className="sidenav-username">Juan Dominguez</p>
-          <IconButton style={{padding: 0, width: 24, height: 24}}>
-            <DownIcon color="white" />
-          </IconButton>
-        </div>
-      </header>
-      <Link to="/clients">
-        <MenuItem primaryText="Clientes" leftIcon={<BuildingIcon />} />
-      </Link>
-      <Link to="/projects">
-        <MenuItem primaryText="Proyectos" leftIcon={<WorkIcon />} />
-      </Link>
-      <Link to="/users">
-        <MenuItem primaryText="Usuarios" leftIcon={<PersonIcon />} />
-      </Link>
-      */}
-    </NavDrawer>
-  )
+          <div className="sidenav-username">
+            <p style={{flex: 1}} >Juan D. Jara</p>
+            <IconButton 
+              onClick={() => this.setState({ showMainLinks: !showMainLinks })} 
+              inverse icon="arrow_drop_down" />
+          </div>
+        </header>
+        {showMainLinks ? mainLinks : userLinks}
+      </NavDrawer>
+    )
+  }
 }
 
 const mapStateToProps = (state, ownProps) => {

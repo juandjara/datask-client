@@ -46,3 +46,7 @@ body {
 .shadow-z1 {
   box-shadow: var(--shadow-2p);
 }
+
+.green-500 {
+  color: var(--palette-green-500);
+}
