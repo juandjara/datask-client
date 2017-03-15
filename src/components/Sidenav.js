@@ -1,13 +1,7 @@
 import React from 'react'
-import BuildingIcon from 'material-ui/svg-icons/communication/business'
-import WorkIcon from 'material-ui/svg-icons/action/work'
-import PersonIcon from 'material-ui/svg-icons/social/person'
-import TimeIcon from 'material-ui/svg-icons/image/timer'
-import TimeIcon2 from 'material-ui/svg-icons/action/today'
-import TimeIcon3 from 'material-ui/svg-icons/action/date-range'
-import DownIcon from 'material-ui/svg-icons/navigation/arrow-drop-down'
-import { teal500 } from 'material-ui/styles/colors'
-import { Drawer, MenuItem, IconButton } from 'material-ui';
+import NavDrawer from 'react-toolbox/lib/layout/NavDrawer'
+import List from 'react-toolbox/lib/list/List'
+import ListItem from 'react-toolbox/lib/list/ListItem'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { toggleSidenav } from '../ducks/sidenav'
@@ -16,11 +10,27 @@ import './Sidenav.css'
 
 const Sidenav = (props) => {
   return (
-    <Drawer open={props.open}
-            className="sidenav"
-            docked={!props.responsive.small}
-            onRequestChange={(open) => props.dispatch(toggleSidenav())}>
-      <section className="sidenav-header" style={{backgroundColor: teal500}}>
+    <NavDrawer permanentAt="md" 
+               className="sidenav"
+               active={props.open}
+               pinned={!props.responsive.small}
+               onOverlayClick={() => props.dispatch(toggleSidenav())}>
+      <header className="sidenav-header">
+        Juan
+      </header>
+      <List>
+        <Link to="/projects">
+          <ListItem leftIcon="work" caption="Proyectos" />
+        </Link>
+        <Link>
+          <ListItem leftIcon="business" caption="Clientes"></ListItem>
+        </Link>
+        <Link>
+          <ListItem leftIcon="person" caption="Usuarios"></ListItem>
+        </Link>
+      </List>
+      {/*
+      <header className="sidenav-header" style={{backgroundColor: teal500}}>
         <div className="sidenav-header-top">
           <Avatar className="sidenav-avatar" />
           <div className="sidenav-times">
@@ -35,7 +45,7 @@ const Sidenav = (props) => {
             <DownIcon color="white" />
           </IconButton>
         </div>
-      </section>
+      </header>
       <Link to="/clients">
         <MenuItem primaryText="Clientes" leftIcon={<BuildingIcon />} />
       </Link>
@@ -45,7 +55,8 @@ const Sidenav = (props) => {
       <Link to="/users">
         <MenuItem primaryText="Usuarios" leftIcon={<PersonIcon />} />
       </Link>
-    </Drawer>
+      */}
+    </NavDrawer>
   )
 }
 

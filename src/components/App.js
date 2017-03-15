@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-
-//import Sidenav from './Sidenav';
+import Layout from 'react-toolbox/lib/layout/Layout';
+import Panel from 'react-toolbox/lib/layout/Panel';
+import Sidenav from './Sidenav';
 import Header from './Header';
 import { connect } from 'react-redux'
 import { toggleSidenav } from '../ducks/sidenav'
@@ -10,24 +11,25 @@ class App extends Component {
   render() {
     const { sidenavOpen, responsive, children } = this.props;
     const containerStyle = {
-      transition: 'all 0.4s ease'
+      //transition: 'all 0.4s ease',
+      flex: 1
     }
     if (sidenavOpen && !responsive.small) {
       containerStyle.paddingLeft = 256
     }
     return (
-      <div style={containerStyle}>
-        {/*
+      <Layout>
         <Sidenav />
-        */}
-        {responsive.small ? (<Header onToggleSidenav={this.handleToggle} />) : null}
-        <main className="main">
-          {children}
-        </main>
-        <footer className="footer">
-          Open Crono
-        </footer>
-      </div>
+        <Panel style={containerStyle}>
+          {responsive.small ? (<Header onToggleSidenav={this.handleToggle} />) : null}
+          <main className="main">
+            {children}
+          </main>
+          <footer className="footer">
+            Open Crono
+          </footer>
+        </Panel>
+      </Layout>
     )
   }
 }
