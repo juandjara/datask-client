@@ -4,11 +4,14 @@ import List from 'react-toolbox/lib/list/List'
 import ListItem from 'react-toolbox/lib/list/ListItem'
 import IconButton from 'react-toolbox/lib/button/IconButton'
 import FontIcon from 'react-toolbox/lib/font_icon/FontIcon'
+import MakeTooltip from 'react-toolbox/lib/tooltip'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { toggleSidenav } from '../ducks/sidenav'
 import Avatar from './Avatar'
 import './Sidenav.css'
+
+const IconWithTooltip = MakeTooltip(FontIcon)
 
 class Sidenav extends Component {
   constructor() {
@@ -54,15 +57,15 @@ class Sidenav extends Component {
             <Avatar className="sidenav-avatar" />
             <section className="sidenav-times">
               <div>
-                <FontIcon>timer</FontIcon>
+                <IconWithTooltip tooltip="Tiempo de hoy" value="timer" />
                 <span>00:00:00</span>
               </div>
               <div>
-                <FontIcon>date_range</FontIcon>
+                <IconWithTooltip tooltip="Tiempo de la semana" value="date_range" />
                 <span>00:00:00</span>
               </div>
               <div>
-                <FontIcon>event_note</FontIcon>
+                <IconWithTooltip tooltip="Tiempo del mes" value="event_note" />
                 <span>00:00:00</span>
               </div>
             </section>
