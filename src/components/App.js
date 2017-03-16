@@ -21,9 +21,6 @@ class App extends Component {
       <Layout>
         <Sidenav />
         <Panel style={containerStyle}>
-          {/*
-          {responsive.small ? (<Header onToggleSidenav={this.handleToggle} />) : null}
-          */}
           <Header onToggleSidenav={this.handleToggle} />
           <main className="main">
             {children}

@@ -7,6 +7,7 @@ import FontIcon from 'react-toolbox/lib/font_icon/FontIcon'
 import MakeTooltip from 'react-toolbox/lib/tooltip'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
+import ReactTransitionGroup from 'react-addons-transition-group'
 import { toggleSidenav } from '../ducks/sidenav'
 import Avatar from './Avatar'
 import './Sidenav.css'
@@ -20,24 +21,54 @@ class Sidenav extends Component {
       showMainLinks: true
     }
   }
+  toggleLinks() {
+    const animationTime = 400; // ms
+    if(this.state.showMainLinks) {
+      this.setState(prev => ({
+        animationClass: 'animated slideInLeft',
+        showMainLinks: !prev.showMainLinks
+      }), () => {
+        setTimeout(() => {
+          this.setState({ animationClass: '' })
+        }, animationTime)
+      })
+    } else {
+      this.setState({
+        animationClass: 'animated slideOutLeft'
+      }, () => {
+        setTimeout(() => {
+          this.setState(prev => ({
+            showMainLinks: !prev.showMainLinks,
+            animationClass: ''
+          }))
+        }, animationTime)
+      })
+    }
+  }
+  getAnimClass() {
+    return this.state.animationClass;
+  }
   render () {
     const mainLinks = (
-      <List>
+      <List className="animated slideInLeft">
         <Link to="/projects">
           <ListItem leftIcon="work" caption="Proyectos" />
         </Link>
         <Link to="/clients">
-          <ListItem leftIcon="business" caption="Clientes"></ListItem>
+          <ListItem leftIcon="business" caption="Clientes" />
         </Link>
         <Link to="/users">
-          <ListItem leftIcon="person" caption="Usuarios"></ListItem>
+          <ListItem leftIcon="person" caption="Usuarios" />
         </Link>
-      </List>      
+      </List>
     )
     const userLinks = (
-      <List>
+      <List key="sidenav1" className={this.getAnimClass()}>
         <Link to="/userprefs">
           <ListItem leftIcon="settings" caption="Preferencias" />
+        </Link>
+        <Link to="/account">
+          <ListItem leftIcon="account_circle" caption="Cuenta de usuario" />
         </Link>
         <ListItem leftIcon="close" caption="Cerrar sesión" />
       </List>
@@ -73,11 +104,12 @@ class Sidenav extends Component {
           <div className="sidenav-username">
             <p style={{flex: 1}} >Juan D. Jara</p>
             <IconButton 
-              onClick={() => this.setState({ showMainLinks: !showMainLinks })} 
-              inverse icon="arrow_drop_down" />
+              onClick={() => this.toggleLinks()} 
+              inverse icon={showMainLinks ? 'arrow_drop_down':'arrow_drop_up'} />
           </div>
         </header>
-        {showMainLinks ? mainLinks : userLinks}
+        {showMainLinks ? null : [userLinks, (<div key="sidenav2" className="divider"></div>)]}
+        {mainLinks}
       </NavDrawer>
     )
   }

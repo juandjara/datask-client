@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 @import '~react-toolbox/lib/variables.css';
+@import '~animate.css';
 
 body {
   margin: 0;
@@ -49,4 +50,14 @@ body {
 
 .green-500 {
   color: var(--palette-green-500);
+}
+
+.divider {
+  margin: 4px 0;
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;  
+}
+
+.hidden {
+  display: none;
 }

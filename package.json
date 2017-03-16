@@ -7,7 +7,9 @@
     "react-toolbox-themr": "^1.0.2"
   },
   "dependencies": {
+    "animate.css": "^3.5.2",
     "react": "^15.4.2",
+    "react-addons-transition-group": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",
     "react-router": "^3.0.2",
@@ -18,7 +20,7 @@
     "redux-thunk": "^2.2.0"
   },
   "reactToolbox": {
-    "output":"src/assets/rtoolbox",
+    "output": "src/assets/rtoolbox",
     "customProperties": {
       "color-primary": "var(--palette-teal-500)"
     }
