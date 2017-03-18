@@ -1,0 +1,27 @@
+.task-quick-access {
+  padding: .5em 1em;
+  padding-top: 0;
+  border-bottom: 1px solid #ccc;
+}
+.task-cards-container {
+  display: flex;
+  padding: .25em 0;
+  overflow-x: auto;
+}
+.task-card {
+  background: white;
+  display: flex;
+  align-items: center;
+  padding: .25em;
+  margin-right: 1em;
+  border-radius: 4px;
+  flex-shrink: 0;  
+}
+.mini-delete {
+  padding: .25em .5em;
+  color: #444;
+  cursor: pointer;
+}
+.mini-delete:hover {
+  color: red;
+}

@@ -5,7 +5,7 @@ const HelloWorld = () => {
     <div className="hello-world">
       <div className="shadow-z1"
            style={{background: "white", padding: ".5em"}}>
-        Welcome to Open Crono!
+        General panel for editing things
       </div>
     </div>
   )
