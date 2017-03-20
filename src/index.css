@@ -13,21 +13,16 @@ body {
 .not-found-page {
   text-align: center;
 }
-.hello-world div {
+.hello-world {
   min-height: 10em;
   height: 10em;
+  border-radius: .3em;
 }
 
 .main {
-  padding: .5em;
+  padding: 0 1em;
   max-width: 60rem;
-  margin: 1em auto;
-}
-
-* {
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  margin: 1em 0;
 }
 
 .shadow-z1 {

@@ -1,18 +1,8 @@
-.header {
+.Header {
+  padding: 2px .5em;
+  padding-left: 2px;
+  border-bottom: 1px solid #ccc;
   display: flex;
   align-items: center;
-  padding: .5em;
-}
-.header-input {
-  border: none;
-  padding: .5em;
-  margin-left: .5em;
-  font-size: 14px;
-  background: transparent;
-  transition: background-color 0.25s ease;
-  flex: 1;
-}
-.header-input:focus,
-.header-input:hover {
-  background: white;
+  justify-content: space-between;
 }

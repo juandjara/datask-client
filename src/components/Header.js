@@ -1,25 +1,19 @@
 import React from 'react'
 import IconButton from 'react-toolbox/lib/button/IconButton';
-import PlayButton from './GreenPlayButton';
+import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import ShowOnMedia from './ShowOnMedia'
+import TaskQuickAccess from './TaskQuickAccess'
 import './Header.css'
 
 const Header = (props) => {
-  /*
   return (
-    <header className="header">
+    <header className="Header">
       <ShowOnMedia queryKey="small">
         <IconButton icon="menu" onClick={props.onToggleSidenav} />
       </ShowOnMedia>
-      <input type="text" placeholder="Empieza una nueva tarea..." className="header-input" />
-      <PlayButton />
+      <Icon title="Tareas destacadas" className="task-cards-star">star</Icon>        
+      <TaskQuickAccess />
     </header>
-  )
-  */
-  return (
-    <ShowOnMedia queryKey="small">
-      <IconButton style={{float: "left"}} icon="menu" onClick={props.onToggleSidenav} />
-    </ShowOnMedia>
   )
 }
 
