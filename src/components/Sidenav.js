@@ -78,12 +78,13 @@ class Sidenav extends Component {
       <NavDrawer
         permanentAt="md" 
         className="sidenav"
+        width={240}
         active={open}
         pinned={!responsive.small}
         onOverlayClick={() => dispatch(toggleSidenav())}>
         <header className="sidenav-header">
           <h2 style={{margin: 0, padding: '1rem 0'}}>Open Crono</h2>
-          <div style={{display: 'flex'}}>
+          <div className="sidenav-avatar-times">
             <Avatar className="sidenav-avatar" />
             <section className="sidenav-times">
               <div>

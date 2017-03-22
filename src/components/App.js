@@ -11,12 +11,9 @@ class App extends Component {
   handleToggle = () => this.props.dispatch(toggleSidenav());
   render() {
     const { sidenavOpen, responsive, children } = this.props;
-    const containerStyle = {
-      //transition: 'all 0.4s ease',
-      flex: 1
-    }
+    const containerStyle = { flex: 1 };
     if (sidenavOpen && !responsive.small) {
-      containerStyle.paddingLeft = 256
+      containerStyle.paddingLeft = 240
     }
     return (
       <Layout>

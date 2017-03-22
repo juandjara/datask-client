@@ -1,8 +1,10 @@
-@import '~react-toolbox/lib/colors.css';
+.sidenav {
+  max-width: 240px;
+}
 
 .sidenav-header { 
   color: white;
-  background-color: var(--palette-teal-500);
+  background-color: var(--palette-teal-400);
   padding-left: 1em;  
 }
 .sidenav-username {
@@ -19,13 +21,13 @@
   text-decoration: none;
 }
 .sidenav-times {
-  margin-left: 1em;
+  margin-right: 1.2rem;
 }
 .sidenav-times .material-icons {
   opacity: .75;
   padding-right: 4px;
 }
-.sidenav-times div {
+.sidenav-times > div {
   display: flex;
   align-items: center;
   padding-bottom: 4px;
@@ -37,4 +39,9 @@
 }
 .sidenav .animated {
   animation-duration: 400ms;
+}
+
+.sidenav-avatar-times {
+  display: flex;
+  justify-content: space-between;
 }
