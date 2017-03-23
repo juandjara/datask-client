@@ -13,3 +13,10 @@
 .header-appbar {
   background-color: var(--palette-teal-500) !important;
 }
+
+.header-avatar {
+  display: block;
+  border-radius: 50%;
+  height: 56px;
+  width: 56px;
+}

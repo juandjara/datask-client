@@ -52,11 +52,11 @@ h1,h2,h3 {
   color: #444;
 }
 
-.header-avatar {
-  display: block;
-  border-radius: 50%;
-  height: 56px;
-  width: 56px;
+.truncate-line {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
 }
 
 /* http://lea.verou.me/2012/04/background-attachment-local/ */

@@ -1,23 +1,10 @@
-.task-cards-star {
-  font-size: 1em;
-  margin: 0 .5em;
-  color: var(--palette-amber-500);
-}
-
-.mini-delete {
-  color: #444;
-  cursor: pointer;
-}
-.mini-delete:hover {
-  color: tomato;
-}
-
 .task-cards-container {
   overflow-y: auto;
   max-height: 90px;
   width: 100%;
   padding-left: .5rem;
 }
+
 .task-card {
   display: inline-flex;
   align-items: center;
@@ -28,46 +15,47 @@
   border-radius: 2px;
   background: #f7f7f7;
 }
+
 .task-card-text {
   max-width: 150px;
   padding-left: 8px;
   padding-right: 4px;
 }
-.truncate-line {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  display: inline-block;
+
+.task-cards-star {
+  font-size: 1em;
+  margin: 0 .5em;
+  color: var(--palette-amber-500);
 }
+
 .task-card-icon {
   opacity: .5;
   color: #444;  
   padding: 4px;
   font-size: 1rem;
-  cursor: pointer;
   height: 25px;
-}
-.task-card-icon:hover,
-.task-card-icon:focus {
-  opacity: 1;
-}
-
-.task-card-icon.play {
-  font-size: 20px;
-  padding: 2px;
-}
-.task-card-icon.play:hover {
-  color: var(--palette-green-500);
-}
-.task-card-icon.clear{
-  padding-right: 2px;
-}
-.task-card-icon.clear:hover{
-  color: tomato;
 }
 
 .task-card-button {
   border: none;
   background: none;
   padding: 0;
+  cursor: pointer;  
+}
+.task-card-button:hover .task-card-icon,
+.task-card-button:focus .task-card-icon {
+  opacity: 1;
+}
+.task-card-button .play {
+  font-size: 20px;
+  padding: 2px;
+}
+.task-card-button:hover .play {
+  color: var(--palette-green-500);
+}
+.task-card-button .clear{
+  padding-right: 2px;
+}
+.task-card-button:hover .clear {
+  color: tomato;
 }
