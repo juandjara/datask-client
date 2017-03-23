@@ -1,30 +1,9 @@
-.task-cards-container {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  padding: .25em 0;
-  overflow-x: auto;
-}
 .task-cards-star {
   font-size: 1em;
   margin: 0 .5em;
   color: var(--palette-amber-500);
 }
-@media screen and (max-width: 900px) {
-  .task-cards-star {
-    margin-left: 0;
-  }
-}
-.task-card {
-  background: white;
-  display: flex;
-  align-items: center;
-  padding: .25em;
-  margin-right: .5em;
-  border-radius: .4em;
-  flex-shrink: 0;
-  border: 1px solid #e4e7e7;
-}
+
 .mini-delete {
   color: #444;
   cursor: pointer;
@@ -33,12 +12,40 @@
   color: tomato;
 }
 
+.task-cards-container {
+  overflow-y: auto;
+  max-height: 90px;
+  width: 100%;
+  padding-left: .5rem;
+}
+.task-card {
+  display: inline-flex;
+  align-items: center;
+  min-width: 200px;
+  border: 1px solid #ccc;
+  margin: 2px;
+  padding: 2px;
+  border-radius: 2px;
+  background: #f7f7f7;
+}
+.task-card-text {
+  max-width: 150px;
+  padding-left: 8px;
+  padding-right: 4px;
+}
+.truncate-line {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+}
 .task-card-icon {
   opacity: .5;
   color: #444;  
   padding: 4px;
   font-size: 1rem;
   cursor: pointer;
+  height: 25px;
 }
 .task-card-icon:hover,
 .task-card-icon:focus {
@@ -63,9 +70,4 @@
   border: none;
   background: none;
   padding: 0;
-}
-
-.task-card-text {
-  padding-left: 8px;
-  padding-right: 4px;
 }

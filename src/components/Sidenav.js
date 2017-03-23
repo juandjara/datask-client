@@ -82,32 +82,6 @@ class Sidenav extends Component {
         active={open}
         pinned={!responsive.small}
         onOverlayClick={() => dispatch(toggleSidenav())}>
-        <header className="sidenav-header">
-          <h2 style={{margin: 0, padding: '1rem 0'}}>Open Crono</h2>
-          <div className="sidenav-avatar-times">
-            <Avatar className="sidenav-avatar" />
-            <section className="sidenav-times">
-              <div>
-                <IconWithTooltip tooltip="Tiempo de hoy" value="timer" />
-                <span>00:00:00</span>
-              </div>
-              <div>
-                <IconWithTooltip tooltip="Tiempo de la semana" value="date_range" />
-                <span>00:00:00</span>
-              </div>
-              <div>
-                <IconWithTooltip tooltip="Tiempo del mes" value="event_note" />
-                <span>00:00:00</span>
-              </div>
-            </section>
-          </div>
-          <div className="sidenav-username">
-            <p style={{flex: 1}} >Juan D. Jara</p>
-            <IconButton 
-              onClick={() => this.toggleLinks()} 
-              inverse icon={showMainLinks ? 'arrow_drop_down':'arrow_drop_up'} />
-          </div>
-        </header>
         {showMainLinks ? null : [userLinks, (<div key="sidenav2" className="divider"></div>)]}
         {mainLinks}
       </NavDrawer>

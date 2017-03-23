@@ -3,14 +3,14 @@ import TaskCard from './TaskCard'
 import './TaskQuickAccess.css' 
 
 const taskData = [
-  {name: "Tarea importante 1"},
-  {name: "Tarea importante 2"},
-  {name: "Tarea importante 3"}
+  {name: "Observatorio Empresarial"},
+  {name: "Menciones"},
+  {name: "Geex"}
 ]
 
 const TaskQuickAccess = () => {
   return (
-    <div className="task-cards-container">
+    <div className="scroll-shadow task-cards-container">
       {taskData.map((d, i) => <TaskCard key={i} task={d} />)}
     </div>
   )
