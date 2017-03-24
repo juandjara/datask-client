@@ -8,20 +8,20 @@ import Header from './Header';
 import TaskQuickAccess from './TaskQuickAccess'
 import TimeCounters from './TimeCounters'
 import { connect } from 'react-redux'
-import { toggleSidenav } from '../ducks/sidenav'
+import { toggleSidenavOpen } from '../ducks/sidenav'
 
 class App extends Component {
-  handleToggle = () => this.props.dispatch(toggleSidenav());
+  handleToggle = () => this.props.dispatch(toggleSidenavOpen());
   render() {
-    const { sidenavOpen, responsive, children } = this.props;
-    const containerStyle = { flex: 1 };
-    if (sidenavOpen && !responsive.small) {
+    const { sidenav, responsive, children } = this.props;
+    const containerStyle = {};
+    if (sidenav.pinned) {
       containerStyle.paddingLeft = 240
     }
     return (
       <Layout>
         <Sidenav />
-        <Panel>
+        <Panel style={containerStyle}>
           <ReactTooltip place="right" effect="solid" />         
           <Header onToggleSidenav={this.handleToggle} />
           
@@ -60,7 +60,7 @@ class App extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    sidenavOpen: state.sidenavOpen,
+    sidenav: state.sidenav,
     responsive: state.responsive
   }
 }

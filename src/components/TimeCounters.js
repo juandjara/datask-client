@@ -8,7 +8,11 @@ const TimeCounters = (props) => {
   return (
     <section {...props}>
       <div>
-        <IconWithTooltip tooltip="Tiempo de hoy" value="timer" />
+        <IconWithTooltip tooltip="Tiempo actual" value="timer" />
+        <span>00:00:00</span>
+      </div>      
+      <div>
+        <IconWithTooltip tooltip="Tiempo de hoy" value="today" />
         <span>00:00:00</span>
       </div>
       <div>

@@ -7,7 +7,7 @@ import FontIcon from 'react-toolbox/lib/font_icon/FontIcon'
 import MakeTooltip from 'react-toolbox/lib/tooltip'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
-import { toggleSidenav } from '../ducks/sidenav'
+import { toggleSidenavOpen, toggleSidenavPinned } from '../ducks/sidenav'
 import Avatar from './Avatar'
 import './Sidenav.css'
 
@@ -72,7 +72,7 @@ class Sidenav extends Component {
         <ListItem leftIcon="close" caption="Cerrar sesión" />
       </List>
     )
-    const {open, responsive, dispatch} = this.props;
+    const {open, pinned, dispatch} = this.props;
     const { showMainLinks } = this.state;
     return (
       <NavDrawer
@@ -80,8 +80,13 @@ class Sidenav extends Component {
         className="sidenav"
         width={240}
         active={open}
-        pinned={!responsive.small}
-        onOverlayClick={() => dispatch(toggleSidenav())}>
+        pinned={pinned}
+        onOverlayClick={() => dispatch(toggleSidenavOpen())}>
+        <label>
+        <input name="pinnedCheck" type="checkbox" checked={pinned}
+               onChange={() => dispatch(toggleSidenavPinned())} />
+          Pinned
+        </label>
         {showMainLinks ? null : [userLinks, (<div key="sidenav2" className="divider"></div>)]}
         {mainLinks}
       </NavDrawer>
@@ -91,7 +96,8 @@ class Sidenav extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    open: state.sidenavOpen,
+    open: state.sidenav.open,
+    pinned: state.sidenav.pinned,
     responsive: state.responsive
   }
 }
