@@ -13,7 +13,7 @@ import { toggleSidenavOpen } from '../ducks/sidenav'
 class App extends Component {
   handleToggle = () => this.props.dispatch(toggleSidenavOpen());
   render() {
-    const { sidenav, responsive, children } = this.props;
+    const { sidenav, children } = this.props;
     const containerStyle = {};
     if (sidenav.pinned) {
       containerStyle.paddingLeft = 240
@@ -60,8 +60,7 @@ class App extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    sidenav: state.sidenav,
-    responsive: state.responsive
+    sidenav: state.sidenav
   }
 }
 

@@ -4,14 +4,10 @@ import List from 'react-toolbox/lib/list/List'
 import ListItem from 'react-toolbox/lib/list/ListItem'
 import Button from 'react-toolbox/lib/button/Button'
 import FontIcon from 'react-toolbox/lib/font_icon/FontIcon'
-import MakeTooltip from 'react-toolbox/lib/tooltip'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { toggleSidenavOpen, toggleSidenavPinned } from '../ducks/sidenav'
-import Avatar from './Avatar'
 import './Sidenav.css'
-
-const IconWithTooltip = MakeTooltip(FontIcon)
 
 class Sidenav extends Component {
   constructor() {
