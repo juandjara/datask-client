@@ -19,9 +19,15 @@ const initialState = {
 export default (state = initialState, {type}) => {
   switch(type) {
     case TOGGLE_SIDENAV_OPEN:
-      return Object.assign({}, state,  {open: !state.open})
+      return {
+        open: !state.open,
+        pinned: state.pinned
+      }
     case TOGGLE_SIDENAV_PINNED:
-      return Object.assign({}, state, {pinned: !state.pinned})
+      return {
+        pinned: !state.pinned,
+        open: state.open
+      }
     default:
       return state
   }
