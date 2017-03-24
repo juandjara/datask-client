@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import NavDrawer from 'react-toolbox/lib/layout/NavDrawer'
 import List from 'react-toolbox/lib/list/List'
 import ListItem from 'react-toolbox/lib/list/ListItem'
-import IconButton from 'react-toolbox/lib/button/IconButton'
+import Button from 'react-toolbox/lib/button/Button'
 import FontIcon from 'react-toolbox/lib/font_icon/FontIcon'
 import MakeTooltip from 'react-toolbox/lib/tooltip'
 import { Link } from 'react-router'
@@ -82,11 +82,24 @@ class Sidenav extends Component {
         active={open}
         pinned={pinned}
         onOverlayClick={() => dispatch(toggleSidenavOpen())}>
-        <label>
-        <input name="pinnedCheck" type="checkbox" checked={pinned}
-               onChange={() => dispatch(toggleSidenavPinned())} />
-          Pinned
-        </label>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          alignItems: 'center',
+          borderBottom: '1px solid #ccc'
+        }}>
+          <Button 
+            onClick={() => dispatch(toggleSidenavPinned())}
+            style={{
+              textTransform: 'none',
+              borderRadius: 0,
+              width: '100%',
+              textAlign: 'right'
+            }}>
+            {pinned? 'Desprender':'Fijar'} men&uacute;
+            <FontIcon value={pinned? 'chevron_left':'chevron_right'} />
+          </Button>
+        </div>
         {showMainLinks ? null : [userLinks, (<div key="sidenav2" className="divider"></div>)]}
         {mainLinks}
       </NavDrawer>
