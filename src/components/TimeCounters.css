@@ -1,9 +1,11 @@
 .time-counters {
-  background: white;
-  border: 1px solid #ccc;
-  padding: 1rem;
-  padding-bottom: .5rem;
+  background: #f7f7f7;
+  border-left: 1px solid #e4e4e4;
+  height: 100%;
+  padding: .5rem .75rem;
+  padding-top: 1rem;
   font-size: 14px;
+  border-bottom-left-radius: 5px;
 }
 .time-counters .material-icons {
   opacity: .75;

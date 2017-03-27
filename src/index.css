@@ -19,15 +19,19 @@ h1,h2,h3 {
   text-align: center;
 }
 .hello-world {
-  min-height: 10em;
-  height: 10em;
-  border-radius: .3em;
+  height: 90vh;
 }
 
 .main {
   padding: 0 1em;
+  background: white;
+  min-height: 90vh;
+}
+.main > * {
   max-width: 80rem;
-  margin: 1em 0;
+  border: 1px solid #ddd;
+  border-width: 0 1px;
+  margin: 0 auto;
 }
 
 .shadow-z1 {

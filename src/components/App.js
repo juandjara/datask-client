@@ -24,26 +24,18 @@ class App extends Component {
         <Panel style={containerStyle}>
           <ReactTooltip place="right" effect="solid" />         
           <Header onToggleSidenav={this.handleToggle} />
-          
           <div style={{marginTop: 56}}>
-
             <div style={{display: 'flex'}}>
+              <section><TimeCounters /></section>
               <section style={{flex: 1, marginRight: '2px', marginBottom: '.5rem'}}>
-                <p style={{display: 'flex', margin: '.5rem 0', marginTop: '1em'}} >
+                <p style={{display: 'flex', marginBottom: '.75rem', marginTop: '1.5rem'}} >
                   <Icon className="task-cards-star">star</Icon>
                   Tareas destacadas
                 </p>
                 <TaskQuickAccess />
               </section>
-              <section style={{flex: 0, height: 80}}>
-                <TimeCounters />
-              </section>
             </div>
-            <h2 style={{margin: "1rem", marginTop: 0}}>Proyectos</h2>
-            <main className="main">
-              {children}
-            </main>
-
+            <main className="main">{children}</main>
           </div>
         </Panel>
       </Layout>
