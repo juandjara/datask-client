@@ -15,7 +15,7 @@ class App extends Component {
   render() {
     const { sidenav, children } = this.props;
     const containerStyle = {};
-    if (sidenav.pinned) {
+    if (sidenav.pinned && sidenav.open) {
       containerStyle.paddingLeft = 240
     }
     return (

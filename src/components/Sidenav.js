@@ -73,7 +73,7 @@ class Sidenav extends Component {
     return (
       <NavDrawer
         permanentAt="md" 
-        className="sidenav"
+        className={`sidenav ${open? '':'hidden'}`}
         width={240}
         active={open}
         pinned={pinned}
