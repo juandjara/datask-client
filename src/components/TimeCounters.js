@@ -1,29 +1,27 @@
 import React from 'react'
 import Icon from 'react-toolbox/lib/font_icon/FontIcon'
-import MakeTooltip from 'react-toolbox/lib/tooltip'
 import './TimeCounters.css';
 
-const IconWithTooltip = MakeTooltip(Icon)
+const timeData = [
+  {time: "00:00:00", icon: "timer", tooltip: "Tiempo actual"},
+  {time: "00:00:00", icon: "today", tooltip: "Tiempo de hoy"},
+  {time: "00:00:00", icon: "date_range", tooltip: "Tiempo de la semana"},
+  {time: "00:00:00", icon: "event_note", tooltip: "Tiempo del mes"},
+]
+
+const Counter = ({time, tooltip, icon}) => (
+  <div data-tip={tooltip} className="time-counters-item">
+    <Icon value={icon} />
+    <span>{time}</span>
+  </div>  
+)
 
 const TimeCounters = (props) => {
   return (
     <section {...props} className="time-counters">
-      <div>
-        <IconWithTooltip tooltip="Tiempo actual" value="timer" />
-        <span>00:00:00</span>
-      </div>      
-      <div>
-        <IconWithTooltip tooltip="Tiempo de hoy" value="today" />
-        <span>00:00:00</span>
-      </div>
-      <div>
-        <IconWithTooltip tooltip="Tiempo de la semana" value="date_range" />
-        <span>00:00:00</span>
-      </div>
-      <div>
-        <IconWithTooltip tooltip="Tiempo del mes" value="event_note" />
-        <span>00:00:00</span>
-      </div>
+      {timeData.map((timeItem, i) => (
+        <Counter key={i} {...timeItem} />
+      ))}
     </section>
   )
 }
