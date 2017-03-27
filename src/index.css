@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 @import '~react-toolbox/lib/variables.css';
+@import '~react-toolbox/lib/colors.css';
 @import '~animate.css';
 
 body {
