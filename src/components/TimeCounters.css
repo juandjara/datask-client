@@ -1,0 +1,14 @@
+.time-counters {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 1em;
+}
+.time-counters .material-icons {
+  opacity: .75;
+  padding-right: 4px;
+}
+.time-counters > div {
+  display: flex;
+  align-items: center;
+  padding-bottom: 4px;
+}

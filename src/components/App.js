@@ -36,14 +36,7 @@ class App extends Component {
                 <TaskQuickAccess />
               </section>
               <section style={{flex: 0, height: 80}}>
-                <TimeCounters 
-                  className="sidenav-times"
-                  style={{
-                    background: 'white',
-                    border: '1px solid #ccc', 
-                    marginRight: '0',
-                    padding: '1em'
-                  }} />
+                <TimeCounters />
               </section>
             </div>
             <h2 style={{margin: "1rem", marginTop: 0}}>Proyectos</h2>

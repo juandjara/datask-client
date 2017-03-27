@@ -44,30 +44,6 @@ class Sidenav extends Component {
     return this.state.animationClass;
   }
   render () {
-    const mainLinks = (
-      <List className="animated slideInLeft">
-        <Link to="/projects">
-          <ListItem leftIcon="work" caption="Proyectos" />
-        </Link>
-        <Link to="/clients">
-          <ListItem leftIcon="business" caption="Clientes" />
-        </Link>
-        <Link to="/users">
-          <ListItem leftIcon="person" caption="Usuarios" />
-        </Link>
-      </List>
-    )
-    const userLinks = (
-      <List key="sidenav1" className={this.getAnimClass()}>
-        <Link to="/userprefs">
-          <ListItem leftIcon="settings" caption="Preferencias" />
-        </Link>
-        <Link to="/account">
-          <ListItem leftIcon="account_circle" caption="Cuenta de usuario" />
-        </Link>
-        <ListItem leftIcon="close" caption="Cerrar sesión" />
-      </List>
-    )
     const {open, pinned, dispatch} = this.props;
     const { showMainLinks } = this.state;
     return (
@@ -96,8 +72,17 @@ class Sidenav extends Component {
             <FontIcon value={pinned? 'chevron_left':'chevron_right'} />
           </Button>
         </div>
-        {showMainLinks ? null : [userLinks, (<div key="sidenav2" className="divider"></div>)]}
-        {mainLinks}
+        <List>
+          <Link to="/projects">
+            <ListItem leftIcon="work" caption="Proyectos" />
+          </Link>
+          <Link to="/clients">
+            <ListItem leftIcon="business" caption="Clientes" />
+          </Link>
+          <Link to="/users">
+            <ListItem leftIcon="person" caption="Usuarios" />
+          </Link>
+        </List>
       </NavDrawer>
     )
   }

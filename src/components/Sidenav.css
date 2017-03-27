@@ -2,47 +2,9 @@
   max-width: 240px;
   padding-top: 64px;
 }
-
-.sidenav-header { 
-  color: white;
-  background-color: var(--palette-teal-400);
-  padding-left: 1em;  
-}
-.sidenav-username {
-  display: flex;
-  align-items: center;
-  padding-right: 5px;
-  margin-top: .5em;
-}
-.sidenav-username p {
-  margin: 10px 0;
-}
-
 .sidenav a {
   text-decoration: none;
 }
-.sidenav-times {
-  margin-right: 1.2rem;
-}
-.sidenav-times .material-icons {
-  opacity: .75;
-  padding-right: 4px;
-}
-.sidenav-times > div {
-  display: flex;
-  align-items: center;
-  padding-bottom: 4px;
-}
-.sidenav-avatar {
-  height: 80px;
-  width: 80px;
-  border-radius: 50%;
-}
 .sidenav .animated {
   animation-duration: 400ms;
-}
-
-.sidenav-avatar-times {
-  display: flex;
-  justify-content: space-between;
 }

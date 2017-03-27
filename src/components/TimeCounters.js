@@ -1,12 +1,13 @@
 import React from 'react'
 import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import MakeTooltip from 'react-toolbox/lib/tooltip'
+import './TimeCounters.css';
 
 const IconWithTooltip = MakeTooltip(Icon)
 
 const TimeCounters = (props) => {
   return (
-    <section {...props}>
+    <section {...props} className="time-counters">
       <div>
         <IconWithTooltip tooltip="Tiempo actual" value="timer" />
         <span>00:00:00</span>
