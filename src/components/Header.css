@@ -17,6 +17,7 @@
 .header-avatar {
   display: block;
   border-radius: 50%;
+  cursor: pointer;
   height: 56px;
   width: 56px;
 }
