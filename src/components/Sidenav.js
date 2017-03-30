@@ -62,7 +62,8 @@ class Sidenav extends Component {
               textAlign: 'right'
             }}>
             {pinned? 'Desprender':'Fijar'} men&uacute;
-            <FontIcon style={{ paddingLeft: '.75rem' }} value={pinned? 'first_page':'last_page'} />
+            <FontIcon style={{ paddingLeft: '.75rem' }} 
+                      value={pinned? 'first_page':'last_page'} />
           </Button>
         </div>
         <List>

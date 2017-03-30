@@ -24,10 +24,10 @@ class App extends Component {
         <Panel style={containerStyle}>
           <ReactTooltip place="right" effect="solid" />         
           <Header onToggleSidenav={this.handleToggle} />
-          <div style={{marginTop: 56}}>
+          <div className="below-navbar">
             <div style={{display: 'flex'}}>
               <section style={{flex: 1, marginRight: '2px', marginBottom: '.5rem'}}>
-                <p style={{display: 'flex', marginBottom: '.75rem', marginTop: '1.5rem'}} >
+                <p style={{display: 'flex', margin: '.75rem 0'}} >
                   <Icon className="task-cards-star">star</Icon>
                   Tareas destacadas
                 </p>

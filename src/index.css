@@ -18,18 +18,13 @@ h1,h2,h3 {
 .not-found-page {
   text-align: center;
 }
-.hello-world {
-  height: 90vh;
-}
 
 .main {
-  padding: 0 1em;
   background: white;
-  min-height: 90vh;
   border-top: 1px solid #ccc;
 }
 .main > * {
-  max-width: 80rem;
+  max-width: 1280px;
   margin: 0 auto;
 }
 
@@ -61,6 +56,15 @@ h1,h2,h3 {
   white-space: nowrap;
   overflow: hidden;
   display: inline-block;
+}
+
+.below-navbar {
+  padding-top: 4rem;
+}
+@media(max-width: 600px) {
+  .below-navbar { 
+    padding-top: 3rem;
+  }
 }
 
 /* http://lea.verou.me/2012/04/background-attachment-local/ */

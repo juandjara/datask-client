@@ -1,7 +1,6 @@
 .time-counters {
   height: 100%;
-  padding: 1rem;
-  padding-bottom: .5rem;
+  padding: .5rem 1rem;
   font-size: 14px;
 }
 .time-counters .material-icons {
