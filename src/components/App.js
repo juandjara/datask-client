@@ -26,7 +26,6 @@ class App extends Component {
           <Header onToggleSidenav={this.handleToggle} />
           <div style={{marginTop: 56}}>
             <div style={{display: 'flex'}}>
-              <section><TimeCounters /></section>
               <section style={{flex: 1, marginRight: '2px', marginBottom: '.5rem'}}>
                 <p style={{display: 'flex', marginBottom: '.75rem', marginTop: '1.5rem'}} >
                   <Icon className="task-cards-star">star</Icon>
@@ -34,6 +33,9 @@ class App extends Component {
                 </p>
                 <TaskQuickAccess />
               </section>
+              <div style={{position: 'fixed', right: 0}}>
+                <TimeCounters />
+              </div>
             </div>
             <main className="main">{children}</main>
           </div>

@@ -10,12 +10,6 @@ import { toggleSidenavOpen, toggleSidenavPinned } from '../ducks/sidenav'
 import './Sidenav.css'
 
 class Sidenav extends Component {
-  constructor() {
-    super()
-    this.state = {
-      showMainLinks: true
-    }
-  }
   toggleLinks() {
     const animationTime = 400; // ms
     if(this.state.showMainLinks) {
@@ -45,7 +39,6 @@ class Sidenav extends Component {
   }
   render () {
     const {open, pinned, dispatch} = this.props;
-    const { showMainLinks } = this.state;
     return (
       <NavDrawer
         permanentAt="md" 
@@ -69,7 +62,7 @@ class Sidenav extends Component {
               textAlign: 'right'
             }}>
             {pinned? 'Desprender':'Fijar'} men&uacute;
-            <FontIcon value={pinned? 'chevron_left':'chevron_right'} />
+            <FontIcon style={{ paddingLeft: '.75rem' }} value={pinned? 'first_page':'last_page'} />
           </Button>
         </div>
         <List>
