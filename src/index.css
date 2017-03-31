@@ -9,6 +9,7 @@ body {
   padding: 0;
   background: #f0f0f0;
   min-height: 100vh;
+  font-family: 'Roboto',Helvetica,Arial,sans-serif;
 }
 
 h1,h2,h3 {
@@ -39,7 +40,7 @@ h1,h2,h3 {
 .divider {
   margin: 4px 0;
   border-top: 1px solid #ccc;
-  border-left: 1px solid #ccc;  
+  border-left: 1px solid #ccc;
 }
 
 .hidden {
@@ -62,7 +63,7 @@ h1,h2,h3 {
   padding-top: 4rem;
 }
 @media(max-width: 600px) {
-  .below-navbar { 
+  .below-navbar {
     padding-top: 3rem;
   }
 }
@@ -77,7 +78,7 @@ h1,h2,h3 {
 		/* Shadow covers */
 		linear-gradient(#f0f0f0 30%, rgba(255,255,255,0)),
 		linear-gradient(rgba(255,255,255,0), #f0f0f0 70%) 0 100%,
-		
+
 		/* Shadows */
 		radial-gradient(50% 0, farthest-side, rgba(0,0,0,.2), rgba(0,0,0,0)),
 		radial-gradient(50% 100%,farthest-side, rgba(0,0,0,.2), rgba(0,0,0,0)) 0 100%;
@@ -85,14 +86,14 @@ h1,h2,h3 {
 		/* Shadow covers */
 		linear-gradient(#f0f0f0 30%, rgba(255,255,255,0)),
 		linear-gradient(rgba(255,255,255,0), #f0f0f0 70%) 0 100%,
-		
+
 		/* Shadows */
 		radial-gradient(farthest-side at 50% 0, rgba(0,0,0,.2), rgba(0,0,0,0)),
 		radial-gradient(farthest-side at 50% 100%, rgba(0,0,0,.2), rgba(0,0,0,0)) 0 100%;
 	background-repeat: no-repeat;
 	background-color: #f0f0f0;
 	background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
-	
+
 	/* Opera doesn't support this in the shorthand */
 	background-attachment: local, local, scroll, scroll;
 }

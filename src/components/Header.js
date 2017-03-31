@@ -28,7 +28,7 @@ class Header extends React.Component {
           </Menu>
           <IconButton onClick={this.toggleMenu}
                       inverse icon="arrow_drop_down" />
-          <Avatar onClick={this.toggleMenu} 
+          <Avatar onClick={this.toggleMenu}
                   className="header-avatar" />
         </div>
       </AppBar>
