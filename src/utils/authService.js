@@ -1,5 +1,5 @@
 export default {
-  userIsLogged() {
+  userIsLogged(store) {
     return localStorage.getItem('jwt')
   }
 }

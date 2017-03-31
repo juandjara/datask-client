@@ -7,13 +7,22 @@ import NotFound from './components/NotFound'
 import Login from './components/Login'
 import AuthService from './utils/authService';
 
-const RequireAuth = (wrappedComp) => {
-  return AuthService.userIsLogged() ? wrappedComp : Login;
+export default (store) => {
+  const requireAuth = (nextState, replaceRoute) => {
+    if(!AuthService.userIsLogged(store)) {
+      replaceRoute({
+        pathname: '/login',
+        state: { nextPathname: nextState.location.pathname }
+      })
+    }
+  }
+  return [
+    (
+      <Route path="/" component={App} onEnter={requireAuth}>
+        <IndexRoute component={Projects} />
+      </Route>
+    ),
+    (<Route path="/login" component={Login} />),
+    (<Route path="*" component={NotFound} />)
+  ]
 }
-
-export default (
-  <Route path="/" component={RequireAuth(App)}>
-    <IndexRoute component={Projects} />
-    <Route path="*" component={NotFound} />
-  </Route>
-)

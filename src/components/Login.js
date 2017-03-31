@@ -1,5 +1,4 @@
 import React from 'react';
-import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import Input from 'react-toolbox/lib/input/Input'
 import Checkbox from 'react-toolbox/lib/checkbox/Checkbox'
 import Button from 'react-toolbox/lib/button/Button'
