@@ -34,9 +34,11 @@ h1,h2,h3 {
 }
 
 .divider {
-  margin: 4px 0;
-  border-top: 1px solid #ccc;
-  border-left: 1px solid #ccc;
+  margin: .5em 0;
+  min-height: 26px;
+  border-top: 1px solid #e4e4e4;
+  border-bottom: 1px solid transparent;
+  border-left: 1px solid #e4e4e4;
 }
 
 .hidden {
@@ -56,11 +58,11 @@ h1,h2,h3 {
 }
 
 .below-navbar {
-  padding-top: 4rem;
+  margin-top: 4rem;
 }
 @media(max-width: 600px) {
   .below-navbar {
-    padding-top: 3rem;
+    margin-top: 3rem;
   }
 }
 

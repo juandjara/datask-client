@@ -23,19 +23,23 @@ class Header extends React.Component {
       <AppBar fixed flat title="Datask"
               onLeftIconClick={props.onToggleSidenav}
               theme={{appBar: "header-appbar", title: "header-appbar-title"}}
-              leftIcon="menu" rightIcon="search">
+              leftIcon="menu">
         <div style={{display: 'flex', alignItems:'center'}}>
-          <p style={{margin: '0'}}>{props.username}</p>
           <Menu active={showMenu} onHide={this.toggleMenu}
+                className="below-navbar"
                 inverse icon="arrow_drop_down" position="topRight" menuRipple>
             <MenuItem icon="settings" caption="Preferencias" />
             <MenuItem icon="person" caption="Perfil" />
             <MenuItem onClick={this.onLogout} icon="close" caption="Cerrar sesión" />
           </Menu>
-          <IconButton onClick={this.onToggleMenu}
-                      inverse icon="arrow_drop_down" />
+          <IconButton inverse icon="search" />
+          <div className="divider"></div>
+          <p style={{margin: '0 1em'}}>{props.username}</p>
           <Avatar onClick={this.onToggleMenu}
                   className="header-avatar" />
+          <IconButton onClick={this.onToggleMenu}
+                      style={{marginRight: -12}}
+                      inverse icon="arrow_drop_down" />
         </div>
       </AppBar>
     )
