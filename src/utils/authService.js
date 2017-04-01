@@ -13,5 +13,22 @@ export function login(form) {
   return fetchPost(url, form)
   .then(res => res.json())
 }
+export function processToken(jwt, shouldSaveToken) {
+  if(!jwt) {
+    return null
+  }
 
-export default { userIsLogged, login }
+  if(shouldSaveToken) {
+    localStorage.setItem("jwt", jwt)
+  }
+
+  // get second token section delimited by . ,
+  // then transform from baes64 string to json string
+  // then transform from json string to json object
+  const sections = jwt.split('.')
+  const decoded = atob(sections[1])
+  const data = JSON.parse(decoded)
+  return data;
+}
+
+export default { userIsLogged, login, processToken }

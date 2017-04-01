@@ -13,3 +13,7 @@
   padding: 1em;
   background: #f7f7f7;
 }
+/* fix for firefox */
+.login-form input {
+  box-shadow: none;
+}

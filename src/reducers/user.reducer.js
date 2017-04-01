@@ -1,4 +1,4 @@
-import { login } from '../utils/authService'
+import { login, processToken } from '../utils/authService'
 import { browserHistory } from 'react-router';
 
 // action types
@@ -7,24 +7,6 @@ export const USER_LOG_OUT = "USER_LOG_OUT"
 export const LOGIN_ERROR = "USER_LOGIN_ERROR";
 export const LOGIN_LOADING = "USER_LOGIN_LOADING"
 
-export function processToken(jwt, shouldSaveToken) {
-  if(!jwt) {
-    return null
-  }
-
-  if(shouldSaveToken) {
-    localStorage.setItem("jwt", jwt)
-  }
-
-  // get second token section delimited by . ,
-  // then transform from baes64 string to json string
-  // then transform from json string to json object
-  const sections = jwt.split('.')
-  const decoded = atob(sections[1])
-  const data = JSON.parse(decoded)
-  return data;
-}
-
 // action creators
 export function authenticate(form, rememberMe) {
   return (dispatch) => {
@@ -32,24 +14,19 @@ export function authenticate(form, rememberMe) {
       type: LOGIN_LOADING
     });
 
-    login(form)
-    .then(data => {
-      const tokenData = processToken(data.id_token, rememberMe);
+    login(form).then(json => {
+      const tokenData = processToken(json.id_token, rememberMe);
       dispatch({
         type: USER_LOG_IN,
         user: tokenData
       });
       browserHistory.push('/');
-    })
-    .catch(res => {
+    }).catch(res => {
       const errorMap = {
         401: 'Usuario o contraseña inválidos',
         400: 'Error de validación'
       }
-      let msg = errorMap[res.status];
-      if(!msg) {
-        msg = `${res.status} ${res.statusText}`;
-      }
+      let msg = errorMap[res.status] || `${res.status} ${res.statusText}`;
       if(res.status >= 500) {
         msg = "Fallo del servidor";
       }

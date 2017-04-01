@@ -41,7 +41,7 @@ class Login extends Component {
               name="username" type="text" required
               value={form.username} onChange={this.onChange} />
             <Input
-              minLength={3}
+              minLength={4}
               label="Contraseña" type="password"
               name="password" icon="lock" required
               value={form.password} onChange={this.onChange} />
