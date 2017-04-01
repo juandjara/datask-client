@@ -8,7 +8,7 @@ import Header from './Header';
 import TaskQuickAccess from './TaskQuickAccess'
 import TimeCounters from './TimeCounters'
 import { connect } from 'react-redux'
-import { toggleSidenavOpen } from '../ducks/sidenav'
+import { toggleSidenavOpen } from '../reducers/sidenav.reducer'
 
 class App extends Component {
   handleToggle = () => this.props.dispatch(toggleSidenavOpen());
@@ -22,7 +22,7 @@ class App extends Component {
       <Layout>
         <Sidenav />
         <Panel style={containerStyle}>
-          <ReactTooltip place="right" effect="solid" />         
+          <ReactTooltip place="right" effect="solid" />
           <Header onToggleSidenav={this.handleToggle} />
           <div className="below-navbar">
             <div style={{display: 'flex'}}>

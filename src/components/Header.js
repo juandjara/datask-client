@@ -3,7 +3,9 @@ import Menu from 'react-toolbox/lib/menu/Menu';
 import MenuItem from 'react-toolbox/lib/menu/MenuItem';
 import IconButton from 'react-toolbox/lib/button/IconButton';
 import AppBar from 'react-toolbox/lib/app_bar/AppBar';
+import { browserHistory } from 'react-router'
 import Avatar from './Avatar'
+import { logout } from '../reducers/user.reducer'
 import './Header.css'
 
 class Header extends React.Component {
@@ -11,6 +13,10 @@ class Header extends React.Component {
     showMenu: false
   }
   toggleMenu = () => this.setState(({showMenu}) => ({showMenu: !showMenu}))
+  logout = () => {
+    logout();
+    browserHistory.push('/login');
+  }
   render() {
     const props = this.props;
     const { showMenu } = this.state;
@@ -24,7 +30,7 @@ class Header extends React.Component {
                 inverse icon="arrow_drop_down" position="topRight" menuRipple>
             <MenuItem icon="settings" caption="Preferencias" />
             <MenuItem icon="person" caption="Perfil" />
-            <MenuItem icon="close" caption="Cerrar sesión" />
+            <MenuItem onClick={this.logout} icon="close" caption="Cerrar sesión" />
           </Menu>
           <IconButton onClick={this.toggleMenu}
                       inverse icon="arrow_drop_down" />

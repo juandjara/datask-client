@@ -9,7 +9,7 @@ import AuthService from './utils/authService';
 
 export default (store) => {
   const requireAuth = (nextState, replaceRoute) => {
-    if(!AuthService.userIsLogged(store)) {
+    if(!AuthService.userIsLogged(store.getState())) {
       replaceRoute({
         pathname: '/login',
         state: { nextPathname: nextState.location.pathname }

@@ -6,7 +6,7 @@ import Button from 'react-toolbox/lib/button/Button'
 import FontIcon from 'react-toolbox/lib/font_icon/FontIcon'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
-import { toggleSidenavOpen, toggleSidenavPinned } from '../ducks/sidenav'
+import { toggleSidenavOpen, toggleSidenavPinned } from '../reducers/sidenav.reducer'
 import './Sidenav.css'
 
 class Sidenav extends Component {
@@ -41,7 +41,7 @@ class Sidenav extends Component {
     const {open, pinned, dispatch} = this.props;
     return (
       <NavDrawer
-        permanentAt="md" 
+        permanentAt="md"
         className={`sidenav ${open? '':'hidden'}`}
         width={240}
         active={open}
@@ -53,7 +53,7 @@ class Sidenav extends Component {
           alignItems: 'center',
           borderBottom: '1px solid #ccc'
         }}>
-          <Button 
+          <Button
             onClick={() => dispatch(toggleSidenavPinned())}
             style={{
               textTransform: 'none',
@@ -62,7 +62,7 @@ class Sidenav extends Component {
               textAlign: 'right'
             }}>
             {pinned? 'Desprender':'Fijar'} men&uacute;
-            <FontIcon style={{ paddingLeft: '.75rem' }} 
+            <FontIcon style={{ paddingLeft: '.75rem' }}
                       value={pinned? 'first_page':'last_page'} />
           </Button>
         </div>

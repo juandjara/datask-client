@@ -1,6 +1,6 @@
 import { applyMiddleware, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
-import rootReducer from './ducks/index'
+import rootReducer from './reducers/index.reducer'
 import { mediaQueryTracker } from 'redux-mediaquery'
 import mediaQueries from './utils/mediaQueries'
 
@@ -27,10 +27,10 @@ store.dispatch(mediaQueryTracker({
 }))
 
 if(module.hot) {
-  module.hot.accept('./ducks/', () => {
-    const nextRootReducer = require('./ducks/index').default
+  module.hot.accept('./reducers/index.reducer', () => {
+    const nextRootReducer = require('./reducers/index.reducer').default
     store.replaceReducer(nextRootReducer)
-  })  
+  })
 }
 
 export default store
