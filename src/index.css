@@ -33,10 +33,6 @@ h1,h2,h3 {
   box-shadow: var(--shadow-2p);
 }
 
-.green-500 {
-  color: var(--palette-green-500);
-}
-
 .divider {
   margin: 4px 0;
   border-top: 1px solid #ccc;

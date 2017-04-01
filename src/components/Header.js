@@ -12,7 +12,10 @@ class Header extends React.Component {
   state = {
     showMenu: false
   }
-  toggleMenu = () => this.setState(({showMenu}) => ({showMenu: !showMenu}))
+  onToggleMenu = () => this.setState(({showMenu}) => ({showMenu: !showMenu}))
+  onLogout = () => {
+    this.props.dispatch(logout());
+  }
   render() {
     const props = this.props;
     const { showMenu } = this.state;
@@ -27,11 +30,11 @@ class Header extends React.Component {
                 inverse icon="arrow_drop_down" position="topRight" menuRipple>
             <MenuItem icon="settings" caption="Preferencias" />
             <MenuItem icon="person" caption="Perfil" />
-            <MenuItem onClick={logout} icon="close" caption="Cerrar sesión" />
+            <MenuItem onClick={this.onLogout} icon="close" caption="Cerrar sesión" />
           </Menu>
-          <IconButton onClick={this.toggleMenu}
+          <IconButton onClick={this.onToggleMenu}
                       inverse icon="arrow_drop_down" />
-          <Avatar onClick={this.toggleMenu}
+          <Avatar onClick={this.onToggleMenu}
                   className="header-avatar" />
         </div>
       </AppBar>
