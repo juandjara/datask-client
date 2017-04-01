@@ -3,9 +3,9 @@ import Menu from 'react-toolbox/lib/menu/Menu';
 import MenuItem from 'react-toolbox/lib/menu/MenuItem';
 import IconButton from 'react-toolbox/lib/button/IconButton';
 import AppBar from 'react-toolbox/lib/app_bar/AppBar';
-import { browserHistory } from 'react-router'
-import Avatar from './Avatar'
+import { connect } from 'react-redux';
 import { logout } from '../reducers/user.reducer'
+import Avatar from './Avatar'
 import './Header.css'
 
 class Header extends React.Component {
@@ -13,10 +13,6 @@ class Header extends React.Component {
     showMenu: false
   }
   toggleMenu = () => this.setState(({showMenu}) => ({showMenu: !showMenu}))
-  logout = () => {
-    logout();
-    browserHistory.push('/login');
-  }
   render() {
     const props = this.props;
     const { showMenu } = this.state;
@@ -26,11 +22,12 @@ class Header extends React.Component {
               theme={{appBar: "header-appbar", title: "header-appbar-title"}}
               leftIcon="menu" rightIcon="search">
         <div style={{display: 'flex', alignItems:'center'}}>
+          <p style={{margin: '0'}}>{props.username}</p>
           <Menu active={showMenu} onHide={this.toggleMenu}
                 inverse icon="arrow_drop_down" position="topRight" menuRipple>
             <MenuItem icon="settings" caption="Preferencias" />
             <MenuItem icon="person" caption="Perfil" />
-            <MenuItem onClick={this.logout} icon="close" caption="Cerrar sesión" />
+            <MenuItem onClick={logout} icon="close" caption="Cerrar sesión" />
           </Menu>
           <IconButton onClick={this.toggleMenu}
                       inverse icon="arrow_drop_down" />
@@ -42,4 +39,7 @@ class Header extends React.Component {
   }
 }
 
-export default Header
+const mapStateToProps = state => {
+  return state.user ? { username: state.user.sub } : {}
+}
+export default connect(mapStateToProps)(Header)

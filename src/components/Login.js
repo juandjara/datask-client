@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import Input from 'react-toolbox/lib/input/Input'
 import Checkbox from 'react-toolbox/lib/checkbox/Checkbox'
 import Button from 'react-toolbox/lib/button/Button'
-import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import { connect } from 'react-redux'
 import { authenticate } from '../reducers/user.reducer'
 import './Login.css'
 
 class Login extends Component {
   state = {
+    rememberMe: true,
     form: {
       username: '',
       password: ''
@@ -16,17 +16,20 @@ class Login extends Component {
   }
   onSubmit = (ev) => {
     ev.preventDefault();
-    this.props.dispatch(authenticate(this.state.form))
+    this.props.dispatch(authenticate(this.state.form, this.state.rememberMe))
   }
   onChange = (text, ev) => {
-    const el = ev.target;
+    const name = ev.target.name;
     this.setState(prevState => ({
-      form: Object.assign(prevState.form, { [el.name]: text })
+      form: Object.assign(prevState.form, { [name]: text })
     }))
+  }
+  onCheckboxChange = (checked) => {
+    this.setState({ rememberMe: checked })
   }
   render() {
     const {loading, error} = this.props;
-    const {form} = this.state
+    const {form, rememberMe} = this.state
     return (
       <div className="login-wrapper">
         <div style={{minHeight: '400px'}} >
@@ -43,8 +46,10 @@ class Login extends Component {
               name="password" icon="lock" required
               value={form.password} onChange={this.onChange} />
             <div style={{marginTop: '1em'}}>
-              <Checkbox style={{opacity: 0.5}} checked={true}
-                        label="Recordarme durante 24h" />
+              <Checkbox
+                style={{opacity: 0.5}}
+                onChange={this.onCheckboxChange} checked={rememberMe}
+                label="Recordarme durante 24h" />
               <Button
                 primary raised style={{width: '100%'}}
                 type="submit" disabled={loading}>

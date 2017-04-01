@@ -7,25 +7,26 @@ export const USER_LOG_OUT = "USER_LOG_OUT"
 export const LOGIN_ERROR = "USER_LOGIN_ERROR";
 export const LOGIN_LOADING = "USER_LOGIN_LOADING"
 
-// action creators
-export function processToken(jwt) {
+export function processToken(jwt, shouldSaveToken) {
   if(!jwt) {
-    return {
-      type: USER_LOG_IN,
-      user: null
-    }
+    return null
   }
 
-  localStorage.setItem("jwt", jwt)
-  const sections = jwt.split('.')
-  const data = JSON.parse(atob(sections[1]))
-  return {
-    type: USER_LOG_IN,
-    user: data
+  if(shouldSaveToken) {
+    localStorage.setItem("jwt", jwt)
   }
+
+  // get second token section delimited by . ,
+  // then transform from baes64 string to json string
+  // then transform from json string to json object
+  const sections = jwt.split('.')
+  const decoded = atob(sections[1])
+  const data = JSON.parse(decoded)
+  return data;
 }
 
-export function authenticate(form) {
+// action creators
+export function authenticate(form, rememberMe) {
   return (dispatch) => {
     dispatch({
       type: LOGIN_LOADING
@@ -33,7 +34,11 @@ export function authenticate(form) {
 
     login(form)
     .then(data => {
-      dispatch(processToken(data.id_token));
+      const tokenData = processToken(data.id_token, rememberMe);
+      dispatch({
+        type: USER_LOG_IN,
+        user: tokenData
+      });
       browserHistory.push('/');
     })
     .catch(res => {
@@ -57,16 +62,18 @@ export function authenticate(form) {
 }
 
 export function logout() {
-  // borrar localStorage
-  localStorage.removeItem("jwt")
-  return {
-    type: USER_LOG_OUT,
-    user: null
+  return (dispatch) => {
+    localStorage.removeItem("jwt")
+    browserHistory.push('/login')
+    dispatch({
+      type: USER_LOG_OUT,
+      user: null
+    })
   }
 }
 
 const storedToken = localStorage.getItem("jwt");
-const initialState = processToken(storedToken).user;
+const initialState = processToken(storedToken);
 
 // reducer
 export default (state = initialState, action) => {
