@@ -29,7 +29,7 @@ class Header extends React.Component {
                 className="below-navbar"
                 inverse icon="arrow_drop_down" position="topRight" menuRipple>
             <MenuItem icon="settings" caption="Preferencias" />
-            <MenuItem icon="person" caption="Perfil" />
+            <MenuItem icon="account_circle" caption="Perfil" />
             <MenuItem onClick={this.onLogout} icon="close" caption="Cerrar sesión" />
           </Menu>
           <IconButton inverse icon="search" />
