@@ -4,7 +4,7 @@ import MenuItem from 'react-toolbox/lib/menu/MenuItem';
 import IconButton from 'react-toolbox/lib/button/IconButton';
 import AppBar from 'react-toolbox/lib/app_bar/AppBar';
 import { connect } from 'react-redux';
-import { logout } from '../reducers/user.reducer'
+import { logout } from '../reducers/auth.reducer'
 import Avatar from './Avatar'
 import './Header.css'
 
@@ -47,6 +47,6 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return state.user ? { username: state.user.sub } : {}
+  return state.auth ? { username: state.auth.sub } : {}
 }
 export default connect(mapStateToProps)(Header)

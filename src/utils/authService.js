@@ -1,11 +1,11 @@
 import config from '../config';
 import fetchPost from './fetchPost'
 
-export function userIsLogged(state) {
-  if(!state.user) {
+export function tokenIsValid(tokenData) {
+  if(!tokenData) {
     return false;
   }
-  const tokenTimestamp = state.user.exp * 1000;
+  const tokenTimestamp = tokenData.exp * 1000;
   return new Date(tokenTimestamp) > new Date();
 }
 export function login(form) {
@@ -31,4 +31,14 @@ export function processToken(jwt, shouldSaveToken) {
   return data;
 }
 
-export default { userIsLogged, login, processToken }
+export const requireAuth = (store) => (nextState, replaceRoute) => {
+  const tokenData = store.getState().auth;
+  if(!tokenIsValid(tokenData)) {
+    replaceRoute({
+      pathname: '/login',
+      query: { next: nextState.location.pathname }
+    })
+  }
+}
+
+export default { tokenIsValid, login, processToken, requireAuth }

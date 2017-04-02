@@ -2,25 +2,26 @@ import { login, processToken } from '../utils/authService'
 import { browserHistory } from 'react-router';
 
 // action types
-export const USER_LOG_IN = "USER_LOG_IN"
-export const USER_LOG_OUT = "USER_LOG_OUT"
-export const LOGIN_ERROR = "USER_LOGIN_ERROR";
-export const LOGIN_LOADING = "USER_LOGIN_LOADING"
+export const LOG_IN = "AUTH_LOG_IN"
+export const LOG_OUT = "AUTH_LOG_OUT"
+export const LOGIN_ERROR = "AUTH_LOGIN_ERROR";
+export const LOGIN_LOADING = "AUTH_LOGIN_LOADING"
 
 // action creators
-export function authenticate(form, rememberMe) {
+export function authenticate(credentials, rememberMe, nextLocation) {
   return (dispatch) => {
     dispatch({
       type: LOGIN_LOADING
     });
 
-    login(form).then(json => {
+    login(credentials).then(json => {
       const tokenData = processToken(json.id_token, rememberMe);
       dispatch({
-        type: USER_LOG_IN,
-        user: tokenData
+        type: LOG_IN,
+        data: tokenData,
+        token: json.id_token
       });
-      browserHistory.push('/');
+      browserHistory.push(nextLocation || '/');
     }).catch(res => {
       const errorMap = {
         401: 'Usuario o contraseña inválidos',
@@ -43,8 +44,7 @@ export function logout() {
     localStorage.removeItem("jwt")
     browserHistory.push('/login')
     dispatch({
-      type: USER_LOG_OUT,
-      user: null
+      type: LOG_OUT
     })
   }
 }
@@ -55,9 +55,10 @@ const initialState = processToken(storedToken);
 // reducer
 export default (state = initialState, action) => {
   switch (action.type) {
-    case USER_LOG_IN:
-    case USER_LOG_OUT:
-      return action.user;
+    case LOG_IN:
+      return Object.assign(action.data, {token: action.token});
+    case LOG_OUT:
+      return null;
     case LOGIN_ERROR:
       return { error: action.error }
     case LOGIN_LOADING:

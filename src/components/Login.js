@@ -3,7 +3,7 @@ import Input from 'react-toolbox/lib/input/Input'
 import Checkbox from 'react-toolbox/lib/checkbox/Checkbox'
 import Button from 'react-toolbox/lib/button/Button'
 import { connect } from 'react-redux'
-import { authenticate } from '../reducers/user.reducer'
+import { authenticate } from '../reducers/auth.reducer'
 import './Login.css'
 
 class Login extends Component {
@@ -16,7 +16,9 @@ class Login extends Component {
   }
   onSubmit = (ev) => {
     ev.preventDefault();
-    this.props.dispatch(authenticate(this.state.form, this.state.rememberMe))
+    const { form, rememberMe } = this.state;
+    const { location } = this.props;
+    this.props.dispatch(authenticate(form, rememberMe, location.query.next))
   }
   onChange = (text, ev) => {
     const name = ev.target.name;
@@ -66,5 +68,5 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = state => state.user || state;
+const mapStateToProps = state => state.auth || state;
 export default connect(mapStateToProps)(Login);
