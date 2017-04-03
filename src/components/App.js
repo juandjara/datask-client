@@ -9,8 +9,13 @@ import TaskQuickAccess from './TaskQuickAccess'
 import TimeCounters from './TimeCounters'
 import { connect } from 'react-redux'
 import { toggleSidenavOpen } from '../reducers/sidenav.reducer'
+import { fetchProfile } from '../reducers/profile.reducer';
 
 class App extends Component {
+  componentDidMount() {
+    this.props.dispatch(fetchProfile());
+  }
+
   handleToggle = () => this.props.dispatch(toggleSidenavOpen());
   render() {
     const { sidenav, children } = this.props;

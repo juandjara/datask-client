@@ -47,6 +47,6 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return { username: state.auth.sub }
+  return { username: `${state.profile.firstName} ${state.profile.lastName}` }
 }
 export default connect(mapStateToProps)(Header)

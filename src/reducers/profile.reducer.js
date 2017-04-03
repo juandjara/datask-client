@@ -21,17 +21,17 @@ export function fetchProfile() {
     fetch(url, { headers })
     .then(res => res.json().then(json => Object.assign(res, {data: json})))
     .then(resWithData => {
-      if(res.ok) {
-        dispatch({ type: PROFILE_SUCCESS, profile: res.data })
+      if(resWithData.ok) {
+        dispatch({ type: PROFILE_SUCCESS, profile: resWithData.data })
       } else {
-        dispatch({ type: PROFILE_ERROR, error: res.data })
+        dispatch({ type: PROFILE_ERROR, error: resWithData.data })
       }
     })
   }
 }
 
 // reducer
-export default (state, action) => {
+export default (state = {}, action) => {
   switch (action.type) {
     case PROFILE_LOADING:
       return {loading: true}
