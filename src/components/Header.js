@@ -1,10 +1,11 @@
 import React from 'react'
-import Menu from 'react-toolbox/lib/menu/Menu';
-import MenuItem from 'react-toolbox/lib/menu/MenuItem';
-import IconButton from 'react-toolbox/lib/button/IconButton';
-import AppBar from 'react-toolbox/lib/app_bar/AppBar';
-import { connect } from 'react-redux';
+import Menu from 'react-toolbox/lib/menu/Menu'
+import MenuItem from 'react-toolbox/lib/menu/MenuItem'
+import IconButton from 'react-toolbox/lib/button/IconButton'
+import AppBar from 'react-toolbox/lib/app_bar/AppBar'
+import { connect } from 'react-redux'
 import { logout } from '../reducers/auth.reducer'
+import { Link } from 'react-router'
 import Avatar from './Avatar'
 import './Header.css'
 
@@ -29,7 +30,9 @@ class Header extends React.Component {
                 className="below-navbar"
                 inverse icon="arrow_drop_down" position="topRight" menuRipple>
             <MenuItem icon="settings" caption="Preferencias" />
-            <MenuItem icon="account_circle" caption="Perfil" />
+            <Link to="/profile">
+              <MenuItem icon="account_circle" caption="Perfil" />
+            </Link>
             <MenuItem onClick={this.onLogout} icon="close" caption="Cerrar sesión" />
           </Menu>
           <IconButton inverse icon="search" />
