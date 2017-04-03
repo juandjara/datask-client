@@ -50,15 +50,15 @@ export function logout() {
 }
 
 const storedToken = localStorage.getItem("jwt");
-const initialState = processToken(storedToken);
+const initialState = Object.assign({token: storedToken}, processToken(storedToken));
 
 // reducer
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOG_IN:
-      return Object.assign(action.data, {token: action.token});
+      return Object.assign({token: action.token}, action.data)
     case LOG_OUT:
-      return null;
+      return {}
     case LOGIN_ERROR:
       return { error: action.error }
     case LOGIN_LOADING:

@@ -2,7 +2,7 @@ import config from '../config';
 import fetchPost from './fetchPost'
 
 export function tokenIsValid(tokenData) {
-  if(!tokenData) {
+  if(!tokenData.exp) {
     return false;
   }
   const tokenTimestamp = tokenData.exp * 1000;
@@ -31,6 +31,8 @@ export function processToken(jwt, shouldSaveToken) {
   return data;
 }
 
+// function that returns another function
+// that serves as route interceptor for react-router
 export const requireAuth = (store) => (nextState, replaceRoute) => {
   const tokenData = store.getState().auth;
   if(!tokenIsValid(tokenData)) {

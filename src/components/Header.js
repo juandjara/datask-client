@@ -47,6 +47,6 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return state.auth ? { username: state.auth.sub } : {}
+  return { username: state.auth.sub }
 }
 export default connect(mapStateToProps)(Header)
