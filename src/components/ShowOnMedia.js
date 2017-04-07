@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
-const ShowOnMedia = ({responsive, queryKey, children}) => {
-  const queryState = responsive[queryKey]
+const ShowOnMedia = ({responsive, mediaKey, children}) => {
+  const queryState = responsive[mediaKey]
   return queryState ? children : null
 }
 
@@ -11,4 +11,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps)(ShowOnMedia) 
+export default connect(mapStateToProps)(ShowOnMedia)

@@ -1,14 +1,13 @@
 .time-counters {
   height: 100%;
-  padding: .5rem 1rem;
-  font-size: 14px;
+  padding: .5rem;
 }
 .time-counters .material-icons {
   opacity: .75;
-  padding-right: 12px;
-  font-size: 18px;
+  padding-right: .5em;
 }
-.time-counters > div {
+.time-counters-item {
+  max-width: 50%;
   display: flex;
   align-items: center;
   padding-bottom: 4px;

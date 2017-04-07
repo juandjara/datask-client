@@ -18,7 +18,7 @@ class Profile extends Component {
   }
   onSubmit = (ev) => {
     ev.preventDefault();
-    console.log(this.state.form);
+    console.log(this.props.form);
   }
   onChange = (text, ev) => {
     const name = ev.target.name;

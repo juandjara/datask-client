@@ -1,6 +1,6 @@
 import React from 'react'
 import TaskCard from './TaskCard'
-import './TaskQuickAccess.css' 
+import './TaskQuickAccess.css'
 
 const taskData = [
   {name: "Observatorio Empresarial"},
@@ -8,9 +8,9 @@ const taskData = [
   {name: "Geex"}
 ]
 
-const TaskQuickAccess = () => {
+const TaskQuickAccess = (props) => {
   return (
-    <div className="scroll-shadow task-cards-container">
+    <div {...props} className="task-cards-container">
       {taskData.map((d, i) => <TaskCard key={i} task={d} />)}
     </div>
   )

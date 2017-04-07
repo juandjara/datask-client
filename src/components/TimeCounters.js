@@ -13,7 +13,7 @@ const Counter = ({time, tooltip, icon}) => (
   <div data-tip={tooltip} className="time-counters-item">
     <Icon value={icon} />
     <span>{time}</span>
-  </div>  
+  </div>
 )
 
 const TimeCounters = (props) => {

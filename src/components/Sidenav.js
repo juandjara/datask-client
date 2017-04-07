@@ -3,7 +3,10 @@ import NavDrawer from 'react-toolbox/lib/layout/NavDrawer'
 import List from 'react-toolbox/lib/list/List'
 import ListItem from 'react-toolbox/lib/list/ListItem'
 import Button from 'react-toolbox/lib/button/Button'
-import FontIcon from 'react-toolbox/lib/font_icon/FontIcon'
+import Icon from 'react-toolbox/lib/font_icon/FontIcon'
+import TaskQuickAccess from './TaskQuickAccess'
+import TimeCounters from './TimeCounters'
+import Avatar from './Avatar'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { toggleSidenavOpen, toggleSidenavPinned } from '../reducers/sidenav.reducer'
@@ -42,30 +45,24 @@ class Sidenav extends Component {
     return (
       <NavDrawer
         permanentAt="md"
-        className={`sidenav ${open? '':'hidden'}`}
-        width={240}
+        className={`sidenav ${open? '':''}`}
         active={open}
         pinned={pinned}
         onOverlayClick={() => dispatch(toggleSidenavOpen())}>
-        <div style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          alignItems: 'center',
-          borderBottom: '1px solid #ccc'
-        }}>
-          <Button
-            onClick={() => dispatch(toggleSidenavPinned())}
-            style={{
-              textTransform: 'none',
-              borderRadius: 0,
-              width: '100%',
-              textAlign: 'right'
-            }}>
-            {pinned? 'Desprender':'Fijar'} men&uacute;
-            <FontIcon style={{ paddingLeft: '.75rem' }}
-                      value={pinned? 'first_page':'last_page'} />
-          </Button>
+        <div style={{display: 'flex', alignItems: 'center'}}>
+          <Avatar style={{borderRadius: '50%', padding: '.5em'}} />
+          <h3>Juan D. Jara</h3>
         </div>
+        <TimeCounters style={{height: 'auto'}} />
+        <p style={{margin: '.5em'}}>
+          <Icon value="star" style={{
+            fontSize: 'inherit',
+            color: 'var(--palette-amber-500)',
+            paddingRight: '4px'
+          }} />
+          Tareas destacadas
+        </p>
+        <TaskQuickAccess style={{maxHeight: '140px'}} />
         <List>
           <Link to="/projects">
             <ListItem leftIcon="work" caption="Proyectos" />
@@ -75,6 +72,12 @@ class Sidenav extends Component {
           </Link>
           <Link to="/users">
             <ListItem leftIcon="person" caption="Usuarios" />
+          </Link>
+          <Link to="/users">
+            <ListItem leftIcon="person" caption="Enlace 4" />
+          </Link>
+          <Link to="/users">
+            <ListItem leftIcon="person" caption="Enlace 5" />
           </Link>
         </List>
       </NavDrawer>
