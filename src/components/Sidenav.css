@@ -1,9 +1,21 @@
 .sidenav {
-  background: papayawhip;
+  background: papayawhip !important;
 }
-.sidenav a {
+.sidenav-green {
+  background: var(--palette-teal-500) !important;
+  color: white !important;
+}
+.sidenav-links a {
   text-decoration: none;
 }
+.sidenav-green .sidenav-links .material-icons {
+  color: white !important;
+  opacity: 0.75;
+}
+.sidenav-green .sidenav-links span {
+  color: white !important;
+}
+
 .sidenav .animated {
   animation-duration: 400ms;
 }
