@@ -1,11 +1,7 @@
 import React, { Component } from 'react'
 import NavDrawer from 'react-toolbox/lib/layout/NavDrawer'
-import List from 'react-toolbox/lib/list/List'
-import ListItem from 'react-toolbox/lib/list/ListItem'
-import Button from 'react-toolbox/lib/button/Button'
 import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import IconButton from 'react-toolbox/lib/button/IconButton'
-import Menu from 'react-toolbox/lib/menu/Menu'
 import MenuItem from 'react-toolbox/lib/menu/MenuItem'
 import TaskQuickAccess from './TaskQuickAccess'
 import TimeCounters from './TimeCounters'
@@ -13,7 +9,7 @@ import Avatar from './Avatar'
 import Flex from './Flex'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
-import { toggleSidenavOpen, toggleSidenavPinned } from '../reducers/sidenav.reducer'
+import { toggleSidenavOpen } from '../reducers/sidenav.reducer'
 import './Sidenav.css'
 
 class Sidenav extends Component {
@@ -27,7 +23,7 @@ class Sidenav extends Component {
     return (
       <NavDrawer
         permanentAt="md"
-        className={`sidenav-green ${open? '':''}`}
+        className={`sidenav ${open? '':''}`}
         active={open}
         pinned={pinned}
         onOverlayClick={() => dispatch(toggleSidenavOpen())}>
@@ -39,20 +35,14 @@ class Sidenav extends Component {
             inverse onClick={this.toggleProfileMenu} />
         </Flex>
         <div className="sidenav-links" style={{
-          marginBottom: '1em ',
+          marginTop: 0,
           display: profileMenuActive? 'block':'none'
         }}>
           <Link to="/profile">
-            <MenuItem style={{
-              borderBottom: '1px solid #ccc',
-            }} icon="account_circle" caption="Perfil" />
+            <MenuItem className="sidenav-link" icon="account_circle" caption="Perfil" />
           </Link>
-          <MenuItem style={{
-            borderBottom: '1px solid #ccc',
-          }} icon="settings" caption="Preferencias" />
-          <MenuItem style={{
-            borderBottom: '1px solid #ccc',
-          }} icon="clear" caption="Cerrar sesión" />
+          <MenuItem className="sidenav-link" icon="settings" caption="Preferencias" />
+          <MenuItem className="sidenav-link" icon="clear" caption="Cerrar sesión" />
         </div>
         <TimeCounters style={{height: 'auto'}} />
         <p style={{margin: '.5em'}}>
@@ -64,23 +54,23 @@ class Sidenav extends Component {
           Tareas destacadas
         </p>
         <TaskQuickAccess style={{maxHeight: '140px'}} />
-        <List className="sidenav-links">
+        <div className="sidenav-links">
           <Link to="/projects">
-            <ListItem leftIcon="work" caption="Proyectos" />
+            <MenuItem className="sidenav-link" icon="work" caption="Proyectos" />
           </Link>
           <Link to="/clients">
-            <ListItem leftIcon="business" caption="Clientes" />
+            <MenuItem className="sidenav-link" icon="business" caption="Clientes" />
           </Link>
           <Link to="/users">
-            <ListItem leftIcon="person" caption="Usuarios" />
+            <MenuItem className="sidenav-link" icon="person" caption="Usuarios" />
           </Link>
           <Link to="/users">
-            <ListItem leftIcon="person" caption="Enlace 4" />
+            <MenuItem className="sidenav-link" icon="person" caption="Enlace 4" />
           </Link>
           <Link to="/users">
-            <ListItem leftIcon="person" caption="Enlace 5" />
+            <MenuItem className="sidenav-link" icon="person" caption="Enlace 5" />
           </Link>
-        </List>
+        </div>
       </NavDrawer>
     )
   }

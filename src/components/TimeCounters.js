@@ -10,9 +10,9 @@ const timeData = [
 ]
 
 const Counter = ({time, tooltip, icon}) => (
-  <div data-tip={tooltip} className="time-counters-item">
+  <div className="time-counters-item">
     <Icon value={icon} />
-    <span>{time}</span>
+    <span data-tip={tooltip}>{time}</span>
   </div>
 )
 

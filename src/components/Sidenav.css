@@ -1,21 +1,21 @@
 .sidenav {
-  background: papayawhip !important;
-}
-.sidenav-green {
   background: var(--palette-teal-500) !important;
   color: white !important;
+}
+.sidenav-links {
+  margin: 12px 0;
 }
 .sidenav-links a {
   text-decoration: none;
 }
-.sidenav-green .sidenav-links .material-icons {
+.sidenav-links .material-icons {
   color: white !important;
   opacity: 0.75;
 }
-.sidenav-green .sidenav-links span {
+.sidenav-links span {
   color: white !important;
 }
-
-.sidenav .animated {
-  animation-duration: 400ms;
+.sidenav-link:hover {
+  background: #444 !important;
+  background: rgba(0, 0, 0, 0.25) !important;
 }

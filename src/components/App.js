@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Layout from 'react-toolbox/lib/layout/Layout';
 import Panel from 'react-toolbox/lib/layout/Panel';
 import ReactTooltip from 'react-tooltip';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 import Sidenav from './Sidenav';
 import { connect } from 'react-redux'
 import Header from './Header'
@@ -22,7 +24,8 @@ class App extends Component {
       <Layout>
         <Sidenav />
         <Panel style={containerStyle}>
-          <ReactTooltip place="right" effect="solid" />
+          <ReactTooltip effect="solid" place="right" />
+          <ToastContainer autoClose={3000} position="bottom-right" />
           <Header />
           <main className="main">{children}</main>
         </Panel>

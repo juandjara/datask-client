@@ -1,10 +1,7 @@
 import React from 'react'
 import IconButton from 'react-toolbox/lib/button/IconButton'
-import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
 import { logout } from '../reducers/auth.reducer'
-import Avatar from './Avatar'
 import ShowOnMedia from './ShowOnMedia'
 import { toggleSidenavOpen } from '../reducers/sidenav.reducer'
 import './Header.css'
@@ -20,7 +17,6 @@ class Header extends React.Component {
     this.props.dispatch(logout());
   }
   render() {
-    const props = this.props;
     return (
         <header style={{
           display: 'flex',

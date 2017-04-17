@@ -31,6 +31,9 @@ h1,h2,h3 {
 .color-teal {
   color: var(--palette-teal-500);
 }
+.color-red {
+  color: var(--palette-red-500);
+}
 
 .divider {
   margin: .5em 0;
@@ -63,6 +66,10 @@ h1,h2,h3 {
   .below-navbar {
     margin-top: 3rem;
   }
+}
+
+.toastify-content {
+  background: #333 !important;
 }
 
 /* http://lea.verou.me/2012/04/background-attachment-local/ */
