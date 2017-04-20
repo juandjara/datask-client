@@ -1,7 +1,7 @@
 import React from 'react'
 import Icon from 'react-toolbox/lib/font_icon/FontIcon'
-import TaskQuickAccess from './TaskQuickAccess'
-import ShowOnMedia from './ShowOnMedia'
+import TaskQuickAccess from '../shared/taskQuickAccess/TaskQuickAccess'
+import ShowOnMedia from '../shared/ShowOnMedia'
 
 const HelloWorld = () => {
   return (

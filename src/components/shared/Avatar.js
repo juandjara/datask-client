@@ -1,5 +1,5 @@
 import React from 'react'
-import templateImage from '../assets/fuken-comic-avatar.jpg'
+import templateImage from '../../assets/fuken-comic-avatar.jpg'
 
 const Avatar = (props) => {
   return (

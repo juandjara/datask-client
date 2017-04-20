@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import Layout from 'react-toolbox/lib/layout/Layout';
 import Panel from 'react-toolbox/lib/layout/Panel';
 import ReactTooltip from 'react-tooltip';
+import { connect } from 'react-redux'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-import Sidenav from './Sidenav';
-import { connect } from 'react-redux'
-import Header from './Header'
-import { fetchProfile } from '../reducers/profile.reducer';
+import Sidenav from '../shared/sidenav/Sidenav';
+import Header from '../shared/header/Header'
+import { fetchProfile } from '../../reducers/profile.reducer';
 
 class App extends Component {
   componentDidMount() {

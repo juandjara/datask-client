@@ -1,11 +1,11 @@
 import React from 'react'
 import { IndexRedirect, Route } from 'react-router'
 
-import App from './components/App';
-import Projects from './components/Projects'
-import Profile from './components/Profile'
-import NotFound from './components/NotFound'
-import Login from './components/Login'
+import App from './components/routed/App';
+import Projects from './components/routed/Projects'
+import Profile from './components/routed/Profile'
+import NotFound from './components/routed/NotFound'
+import Login from './components/routed/Login'
 import { requireAuth } from './utils/authService';
 
 export default (store) => {
