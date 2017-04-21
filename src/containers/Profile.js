@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import Input from 'react-toolbox/lib/input/Input'
 import Button from 'react-toolbox/lib/button/Button'
 import ProgressBar from 'react-toolbox/lib/progress_bar/ProgressBar'
-import Flex from '../shared/Flex'
-import { setAll, setValue, reset } from '../../reducers/form.reducer'
-import { saveProfile } from '../../reducers/profile.reducer'
+import Flex from '../components/Flex'
+import { setAll, setValue, reset } from '../reducers/form.reducer'
+import { saveProfile } from '../reducers/profile.reducer'
 
 class Profile extends Component {
   componentDidMount() {

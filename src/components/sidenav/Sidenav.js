@@ -9,7 +9,7 @@ import Avatar from '../Avatar'
 import Flex from '../Flex'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
-import { toggleSidenavOpen } from '../../../reducers/sidenav.reducer'
+import { toggleSidenavOpen } from '../../reducers/sidenav.reducer'
 import './Sidenav.css'
 
 class Sidenav extends Component {

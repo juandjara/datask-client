@@ -5,9 +5,9 @@ import ReactTooltip from 'react-tooltip';
 import { connect } from 'react-redux'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-import Sidenav from '../shared/sidenav/Sidenav';
-import Header from '../shared/header/Header'
-import { fetchProfile } from '../../reducers/profile.reducer';
+import Sidenav from '../components/sidenav/Sidenav';
+import Header from '../components/header/Header'
+import { fetchProfile } from '../reducers/profile.reducer';
 
 class App extends Component {
   componentDidMount() {

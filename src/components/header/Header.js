@@ -1,9 +1,9 @@
 import React from 'react'
 import IconButton from 'react-toolbox/lib/button/IconButton'
 import { connect } from 'react-redux'
-import { logout } from '../../../reducers/auth.reducer'
+import { logout } from '../../reducers/auth.reducer'
 import ShowOnMedia from '../ShowOnMedia'
-import { toggleSidenavOpen } from '../../../reducers/sidenav.reducer'
+import { toggleSidenavOpen } from '../../reducers/sidenav.reducer'
 import './Header.css'
 
 class Header extends React.Component {

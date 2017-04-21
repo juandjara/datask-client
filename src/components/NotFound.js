@@ -1,5 +1,5 @@
 import React from 'react'
-import GoBack from '../shared/GoBack';
+import GoBack from './GoBack';
 
 const NotFound = () => {
   return (
