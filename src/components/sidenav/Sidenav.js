@@ -65,11 +65,8 @@ class Sidenav extends Component {
           <Link to="/users">
             <MenuItem className="sidenav-link" icon="person" caption="Usuarios" />
           </Link>
-          <Link to="/users">
-            <MenuItem className="sidenav-link" icon="person" caption="Enlace 4" />
-          </Link>
-          <Link to="/users">
-            <MenuItem className="sidenav-link" icon="person" caption="Enlace 5" />
+          <Link to="/reports">
+            <MenuItem className="sidenav-link" icon="warning" caption="Reportes" />
           </Link>
         </div>
       </NavDrawer>

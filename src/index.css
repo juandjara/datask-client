@@ -9,6 +9,7 @@ body {
   padding: 0;
   min-height: 100vh;
   font-family: 'Roboto',Helvetica,Arial,sans-serif;
+  background: linear-gradient(var(--palette-orange-100) 150px, var(--palette-teal-100) 20px);
 }
 
 h1,h2,h3 {
@@ -20,7 +21,7 @@ h1,h2,h3 {
 }
 
 .main > * {
-  max-width: 1280px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
@@ -72,32 +73,7 @@ h1,h2,h3 {
   background: #333 !important;
 }
 
-/* http://lea.verou.me/2012/04/background-attachment-local/ */
-.scroll-shadow {
-	overflow-y: auto;
-	width: 100%;
-	max-height: 200px;
-
-	background:
-		/* Shadow covers */
-		linear-gradient(#f0f0f0 30%, rgba(255,255,255,0)),
-		linear-gradient(rgba(255,255,255,0), #f0f0f0 70%) 0 100%,
-
-		/* Shadows */
-		radial-gradient(50% 0, farthest-side, rgba(0,0,0,.2), rgba(0,0,0,0)),
-		radial-gradient(50% 100%,farthest-side, rgba(0,0,0,.2), rgba(0,0,0,0)) 0 100%;
-	background:
-		/* Shadow covers */
-		linear-gradient(#f0f0f0 30%, rgba(255,255,255,0)),
-		linear-gradient(rgba(255,255,255,0), #f0f0f0 70%) 0 100%,
-
-		/* Shadows */
-		radial-gradient(farthest-side at 50% 0, rgba(0,0,0,.2), rgba(0,0,0,0)),
-		radial-gradient(farthest-side at 50% 100%, rgba(0,0,0,.2), rgba(0,0,0,0)) 0 100%;
-	background-repeat: no-repeat;
-	background-color: #f0f0f0;
-	background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
-
-	/* Opera doesn't support this in the shorthand */
-	background-attachment: local, local, scroll, scroll;
+.list-item {
+  background-color: white;
+  border-bottom: 1px solid #ccc;
 }
