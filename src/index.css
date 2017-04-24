@@ -9,7 +9,7 @@ body {
   padding: 0;
   min-height: 100vh;
   font-family: 'Roboto',Helvetica,Arial,sans-serif;
-  background: linear-gradient(var(--palette-orange-100) 150px, var(--palette-teal-100) 20px);
+  background: linear-gradient(0deg, var(--palette-teal-50) 0%, #f2f2f7 50%, #f2f7f7 100%);
 }
 
 h1,h2,h3 {
@@ -22,7 +22,6 @@ h1,h2,h3 {
 
 .main > * {
   max-width: 960px;
-  margin: 0 auto;
 }
 
 .shadow-z1 {
