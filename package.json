@@ -25,7 +25,8 @@
   "reactToolbox": {
     "output": "src/assets/rtoolbox",
     "customProperties": {
-      "color-primary": "var(--palette-teal-500)"
+      "color-primary": "var(--palette-teal-500)",
+      "color-accent": "var(--palette-amber-600)"
     }
   },
   "scripts": {

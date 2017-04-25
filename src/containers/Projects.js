@@ -3,6 +3,7 @@ import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import List from 'react-toolbox/lib/list/List'
 import ListItem from 'react-toolbox/lib/list/ListItem'
 import Tooltip from 'react-toolbox/lib/tooltip'
+import Button from 'react-toolbox/lib/button/Button'
 import { Link } from 'react-router'
 import TaskQuickAccess from '../components/taskQuickAccess/TaskQuickAccess'
 import ShowOnMedia from '../components/ShowOnMedia'
@@ -10,6 +11,7 @@ import { connect } from 'react-redux'
 import { fetchProjects } from '../reducers/projects.reducer'
 
 const TooltipIcon = Tooltip(Icon);
+const TooltipButton = Tooltip(Button);
 
 class Projects extends Component {
   componentDidMount() {
@@ -29,7 +31,7 @@ class Projects extends Component {
     return actionsData.map((data, i) => (
       <Link
         to={data.link}
-        key={`${project.id}_action_${i}`}
+        key={`action${i}project${project.id}`}
         style={{color: '#757575'}} >
         <TooltipIcon
           tooltip={data.tooltip}
@@ -53,6 +55,18 @@ class Projects extends Component {
           </section>
         </ShowOnMedia> */}
         {loading && <p className="color-teal">Cargando ... </p>}
+        <TooltipButton
+          floating
+          accent
+          tooltip="Nuevo proyecto"
+          tooltipPosition="left"
+          icon="add"
+          style={{
+            position: 'absolute',
+            top: '.75em',
+            right: '1em'
+          }}
+        />
         <List className="list">
           {projects.map((project, i) => (
             <ListItem
