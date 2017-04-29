@@ -4,35 +4,22 @@ import Input from 'react-toolbox/lib/input/Input'
 import Button from 'react-toolbox/lib/button/Button'
 import ProgressBar from 'react-toolbox/lib/progress_bar/ProgressBar'
 import Flex from '../components/Flex'
-import { setAll, setValue, reset } from '../reducers/form.reducer'
-import { saveProfile } from '../reducers/profile.reducer'
+import {
+  fetchProfile, saveProfile, updateProfileField
+} from '../reducers/profile.reducer'
 
 class Profile extends Component {
   componentDidMount() {
-    this.updateForm(this.props);
-  }
-  componentWillUnmount() {
-    this.props.dispatch(reset())
-  }
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.profile !== this.props.profile) {
-      this.updateForm(nextProps);
-    }
-  }
-  updateForm(props) {
-    const { email, firstName, lastName } = props.profile
-    props.dispatch(setAll({ email, firstName, lastName }))
+    this.props.dispatch(fetchProfile())
   }
   onSubmit = (ev) => {
     ev.preventDefault();
-    const { profile, form, dispatch } = this.props;
-    dispatch(saveProfile(Object.assign(form, {
-      login: profile.login
-    })));
+    const { profile, dispatch } = this.props;
+    dispatch(saveProfile(profile))
   }
   onChange = (text, ev) => {
     const name = ev.target.name;
-    this.props.dispatch(setValue(name, text))
+    this.props.dispatch(updateProfileField(name, text))
   }
   parseDate(dateProp) {
     if(!dateProp) {
@@ -44,7 +31,7 @@ class Profile extends Component {
     return `el ${dateStr} a las ${timeStr}`
   }
   render() {
-    const { form, profile } = this.props;
+    const { profile } = this.props;
     return (
       <div style={{padding: '1em'}}>
         <h2 style={{marginBottom: 0}}>Perfil</h2>
@@ -62,14 +49,14 @@ class Profile extends Component {
         <form onSubmit={this.onSubmit}>
           <Input
             label="Email" icon="email" name="email" type="email"
-            value={form.email || ""} onChange={this.onChange} />
+            value={profile.email || ""} onChange={this.onChange} />
           <div style={{display: 'flex'}}>
             <Input
               label="Nombre" icon="person_outline" name="firstName" type="text"
-              value={form.firstName || ""} onChange={this.onChange} />
+              value={profile.firstName || ""} onChange={this.onChange} />
             <Input
               label="Apellidos" name="lastName" type="text"
-              value={form.lastName || ""} onChange={this.onChange} />
+              value={profile.lastName || ""} onChange={this.onChange} />
           </div>
           <Button type="submit" raised primary>
             Guardar
@@ -81,7 +68,6 @@ class Profile extends Component {
 }
 
 const mapStateToProps = state => ({
-  profile: state.profile,
-  form: state.form
+  profile: state.profile
 });
 export default connect(mapStateToProps)(Profile);
