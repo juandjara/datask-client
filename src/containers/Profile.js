@@ -36,12 +36,12 @@ class Profile extends Component {
       <div style={{padding: '1em'}}>
         <h2 style={{marginBottom: 0}}>Perfil</h2>
         {profile.loading && (
-          <Flex align="center" className="color-teal">
+          <Flex align="center" className="color-primary">
             <ProgressBar type='circular' mode='indeterminate' />
             <span>Cargando ...</span>
           </Flex>
         )}
-        <div className="color-red">
+        <div className="color-error">
           <pre>{JSON.stringify(profile.error)}</pre>
         </div>
         <p>Creado el {this.parseDate(profile.createdDate)} </p>

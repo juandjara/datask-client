@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import Sidenav from '../components/sidenav/Sidenav';
 import Header from '../components/header/Header'
 import { fetchProfile } from '../reducers/profile.reducer';
+import './App.css';
 
 class App extends Component {
   componentDidMount() {

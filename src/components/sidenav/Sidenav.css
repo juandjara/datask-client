@@ -1,21 +1,24 @@
 .sidenav {
-  background: var(--palette-teal-500) !important;
-  color: white !important;
+  background: var(--palette-teal-500);
+  color: white;
 }
 .sidenav-links {
   margin: 12px 0;
 }
-.sidenav-links a {
+.sidenav-links > a {
   text-decoration: none;
+  display: block;
 }
-.sidenav-links .material-icons {
-  color: white !important;
+.sidenav-link .material-icons {
+  color: white;
   opacity: 0.75;
 }
-.sidenav-links span {
-  color: white !important;
+.sidenav-link span {
+  color: white;
 }
 .sidenav-link:hover {
-  background: #444 !important;
-  background: rgba(0, 0, 0, 0.25) !important;
+  background-color: rgba(0, 0, 0, 0.25) !important;
+}
+.sidenav-link-active .sidenav-link {
+  background-color: var(--palette-teal-400) !important;
 }

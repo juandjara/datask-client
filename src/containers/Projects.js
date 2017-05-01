@@ -40,7 +40,12 @@ class Projects extends Component {
     ))
   }
   render() {
-    const {projects, loading} = this.props;
+    const {loading} = this.props;
+    const projects = [
+      {name: "Proyecto 1"},
+      {name: "Proyecto 2"},
+      {name: "Proyecto 3"}
+    ]
     return (
       <div className="projects"
            style={{padding: ".5em"}}>
@@ -54,7 +59,7 @@ class Projects extends Component {
             <TaskQuickAccess />
           </section>
         </ShowOnMedia> */}
-        {loading && <p className="color-teal">Cargando ... </p>}
+        {loading && <p className="color-primary">Cargando ... </p>}
         <TooltipButton
           floating
           accent

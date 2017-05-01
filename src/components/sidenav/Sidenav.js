@@ -7,7 +7,7 @@ import TaskQuickAccess from '../taskQuickAccess/TaskQuickAccess'
 import TimeCounters from '../timeCounters/TimeCounters'
 import Avatar from '../Avatar'
 import Flex from '../Flex'
-import { Link } from 'react-router'
+import MenuLink from './MenuLink'
 import { connect } from 'react-redux'
 import { toggleSidenavOpen } from '../../reducers/sidenav.reducer'
 import './Sidenav.css'
@@ -39,10 +39,8 @@ class Sidenav extends Component {
           marginTop: 0,
           display: profileMenuActive? 'block':'none'
         }}>
-          <Link to="/profile">
-            <MenuItem className="sidenav-link" icon="account_circle" caption="Perfil" />
-          </Link>
-          <MenuItem className="sidenav-link" icon="settings" caption="Preferencias" />
+          <MenuLink to="/profile" icon="account_circle" text="Perfil" />
+          <MenuLink to="/prefs" icon="settings" text="Preferencias" />
           <MenuItem className="sidenav-link" icon="clear" caption="Cerrar sesión" />
         </div>
         <TimeCounters style={{height: 'auto'}} />
@@ -56,18 +54,10 @@ class Sidenav extends Component {
         </p>
         <TaskQuickAccess style={{maxHeight: '140px'}} />
         <div className="sidenav-links">
-          <Link to="/projects">
-            <MenuItem className="sidenav-link" icon="work" caption="Proyectos" />
-          </Link>
-          <Link to="/clients">
-            <MenuItem className="sidenav-link" icon="business" caption="Clientes" />
-          </Link>
-          <Link to="/users">
-            <MenuItem className="sidenav-link" icon="person" caption="Usuarios" />
-          </Link>
-          <Link to="/reports">
-            <MenuItem className="sidenav-link" icon="warning" caption="Reportes" />
-          </Link>
+          <MenuLink to="/projects" icon="work" text="Proyectos" />
+          <MenuLink to="/clients" icon="business" text="Clientes" />
+          <MenuLink to="/users" icon="person" text="Usuarios" />
+          <MenuLink to="/reports" icon="warning" text="Reportes" />
         </div>
       </NavDrawer>
     )

@@ -20,59 +20,13 @@ h1,h2,h3 {
   text-align: center;
 }
 
-.main > * {
-  max-width: 960px;
-}
-
 .shadow-z1 {
   box-shadow: var(--shadow-2p);
 }
 
-.color-teal {
+.color-primary {
   color: var(--palette-teal-500);
 }
-.color-red {
+.color-error {
   color: var(--palette-red-500);
-}
-
-.divider {
-  margin: .5em 0;
-  min-height: 26px;
-  border-top: 1px solid #e4e4e4;
-  border-bottom: 1px solid transparent;
-  border-left: 1px solid #e4e4e4;
-}
-
-.hidden {
-  display: none !important;
-}
-
-.subheader {
-  font-size: 14px;
-  color: #444;
-}
-
-.truncate-line {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  display: inline-block;
-}
-
-.below-navbar {
-  margin-top: 4rem;
-}
-@media(max-width: 600px) {
-  .below-navbar {
-    margin-top: 3rem;
-  }
-}
-
-.toastify-content {
-  background: #333 !important;
-}
-
-.list-item {
-  background-color: white;
-  border-bottom: 1px solid #ccc;
 }

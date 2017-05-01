@@ -36,7 +36,7 @@ class Login extends Component {
       <div className="login-wrapper">
         <div style={{minHeight: '400px'}} >
           <h1 className="login-header">Open Crono</h1>
-          <p className="color-teal" style={{textAlign: 'center'}}>
+          <p className="color-primary" style={{textAlign: 'center'}}>
             {loading && 'Cargando ...'}
           </p>
           <p style={{color: 'tomato', textAlign: 'center'}}>{error}</p>
