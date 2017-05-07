@@ -1,5 +1,3 @@
-import axios from '../utils/axiosWrapper'
-
 // key for storing the token in the browser localStorage
 export const JWT_KEY = "__datask_jwt";
 

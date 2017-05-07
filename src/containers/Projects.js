@@ -92,7 +92,7 @@ class Projects extends Component {
 }
 
 const mapStateToProps = state => ({
-  projects: state.projects.data,
+  projects: state.projects.currentPage,
   loading: state.projects.loading
 });
 
