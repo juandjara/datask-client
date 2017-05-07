@@ -1,5 +1,6 @@
-import { login, processToken } from '../utils/authService'
+import { getTokenData, JWT_KEY } from '../utils/authService'
 import { browserHistory } from 'react-router';
+import axios from '../utils/axiosWrapper'
 
 // action types
 export const LOG_IN = "AUTH_LOG_IN"
@@ -14,12 +15,17 @@ export function authenticate(credentials, rememberMe, nextLocation) {
       type: LOGIN_LOADING
     });
 
-    login(credentials).then(json => {
-      const tokenData = processToken(json.id_token, rememberMe);
+    axios.post('/authenticate', credentials)
+    .then(res => {
+      const token = res.data.id_token
+      const tokenData = getTokenData(token);
+      if(rememberMe) {
+        localStorage.setItem(JWT_KEY, token);
+      }
       dispatch({
         type: LOG_IN,
         data: tokenData,
-        token: json.id_token
+        token
       });
       browserHistory.push(nextLocation || '/');
     }).catch(res => {
@@ -41,7 +47,7 @@ export function authenticate(credentials, rememberMe, nextLocation) {
 
 export function logout() {
   return (dispatch) => {
-    localStorage.removeItem("jwt")
+    localStorage.removeItem(JWT_KEY)
     browserHistory.push('/login')
     dispatch({
       type: LOG_OUT
@@ -49,8 +55,8 @@ export function logout() {
   }
 }
 
-const storedToken = localStorage.getItem("jwt");
-const initialState = Object.assign({token: storedToken}, processToken(storedToken));
+const storedToken = localStorage.getItem(JWT_KEY);
+const initialState = Object.assign({token: storedToken}, getTokenData(storedToken));
 
 // reducer
 export default (state = initialState, action) => {

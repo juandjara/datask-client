@@ -1,5 +1,10 @@
 import axios from '../utils/axiosWrapper'
 
+// key for storing the token in the browser localStorage
+export const JWT_KEY = "__datask_jwt";
+
+// checks if token is valid
+// a token is valid when is not expired and not missing
 export function tokenIsValid(tokenData) {
   if(!tokenData.exp) {
     return false;
@@ -7,22 +12,16 @@ export function tokenIsValid(tokenData) {
   const tokenTimestamp = tokenData.exp * 1000;
   return new Date(tokenTimestamp) > new Date();
 }
-export function login(form) {
-  axios.post('/authenticate', form)
-  .then(res => res.json())
-}
-export function processToken(jwt, shouldSaveToken) {
+
+// extracts json data encoded in the token
+export function getTokenData(jwt) {
   if(!jwt) {
     return null
   }
 
-  if(shouldSaveToken) {
-    localStorage.setItem("jwt", jwt)
-  }
-
-  // get second token section delimited by . ,
-  // then transform from baes64 string to json string
-  // then transform from json string to json object
+  // 1. get second token section delimited by .
+  // 2. transform from baes64 string to json string
+  // 3. transform from json string to json object
   const sections = jwt.split('.')
   const decoded = atob(sections[1])
   const data = JSON.parse(decoded)
@@ -41,4 +40,4 @@ export const requireAuth = (store) => (nextState, replaceRoute) => {
   }
 }
 
-export default { tokenIsValid, login, processToken, requireAuth }
+export default { tokenIsValid, getTokenData, requireAuth }
