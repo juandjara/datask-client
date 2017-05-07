@@ -10,12 +10,16 @@ import Flex from '../Flex'
 import MenuLink from './MenuLink'
 import { connect } from 'react-redux'
 import { toggleSidenavOpen } from '../../reducers/sidenav.reducer'
+import { logout } from '../../reducers/auth.reducer'
 import './Sidenav.css'
 
 class Sidenav extends Component {
   state = {profileMenuActive: false}
   toggleProfileMenu = () => {
     this.setState(({profileMenuActive}) => ({profileMenuActive: !profileMenuActive}))
+  }
+  logout = () => {
+    this.props.dispatch(logout())
   }
   render () {
     const {open, pinned, profile, dispatch} = this.props;
@@ -41,7 +45,7 @@ class Sidenav extends Component {
         }}>
           <MenuLink to="/profile" icon="account_circle" text="Perfil" />
           <MenuLink to="/prefs" icon="settings" text="Preferencias" />
-          <MenuItem className="sidenav-link" icon="clear" caption="Cerrar sesión" />
+          <MenuLink onClick={this.logout} icon="clear" text="Cerrar sesión" />
         </div>
         <TimeCounters style={{height: 'auto'}} />
         <p style={{margin: '.5em'}}>
