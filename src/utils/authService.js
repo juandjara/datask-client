@@ -1,5 +1,4 @@
-import config from '../config';
-import fetchPost from './fetchPost'
+import axios from '../utils/axiosWrapper'
 
 export function tokenIsValid(tokenData) {
   if(!tokenData.exp) {
@@ -9,8 +8,7 @@ export function tokenIsValid(tokenData) {
   return new Date(tokenTimestamp) > new Date();
 }
 export function login(form) {
-  const url = `${config.api}/authenticate`
-  return fetchPost(url, form)
+  axios.post('/authenticate', form)
   .then(res => res.json())
 }
 export function processToken(jwt, shouldSaveToken) {

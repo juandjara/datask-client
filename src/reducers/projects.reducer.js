@@ -1,4 +1,4 @@
-import config from '../config'
+import axios from '../utils/axiosWrapper'
 
 // action types
 export const PROJECTS_LOADING = "PROJECTS_LOADING"
@@ -16,17 +16,9 @@ function getAuthHeaders(state) {
 export function fetchProjects() {
   return (dispatch, getState) => {
     dispatch({ type: PROJECTS_LOADING });
-    const headers = getAuthHeaders(getState());
-    const url = `${config.api}/projects`;
-    fetch(url, { headers })
-    .then(res => res.json().then(json => Object.assign(res, {data: json})))
-    .then(resWithData => {
-      if(resWithData.ok) {
-        dispatch({ type: PROJECTS_SUCCESS, projects: resWithData.data })
-      } else {
-        dispatch({ type: PROJECTS_ERROR, error: resWithData.data })
-      }
-    })
+    axios.get('/projects')
+    .then(res => dispatch({ type: PROJECTS_SUCCESS, projects: res.data }))
+    .catch(res => dispatch({ type: PROJECTS_ERROR, error: res.data }))
   }
 }
 

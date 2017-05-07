@@ -1,6 +1,6 @@
-import config from '../config'
 import { toast } from 'react-toastify';
 import React from 'react';
+import axios from '../utils/axiosWrapper';
 
 // action types
 export const PROFILE_FETCH = "PROFILE_FETCH"
@@ -19,28 +19,13 @@ const ToastBody = ({text}) => (
   }}>{text}</p>
 )
 
-function getAuthHeaders(state) {
-  const token = state.auth.token;
-  return {
-    Authorization: `Bearer ${token}`
-  }
-}
-
 // action creators
 export function fetchProfile() {
   return (dispatch, getState) => {
     dispatch({ type: PROFILE_FETCH });
-    const headers = getAuthHeaders(getState());
-    const url = `${config.api}/account`;
-    fetch(url, { headers })
-    .then(res => res.json().then(json => Object.assign(res, {data: json})))
-    .then(resWithData => {
-      if(resWithData.ok) {
-        dispatch({ type: PROFILE_FETCH_SUCCESS, profile: resWithData.data })
-      } else {
-        dispatch({ type: PROFILE_FETCH_ERROR, error: resWithData.data })
-      }
-    })
+    axios.get('/account')
+    .then(res => dispatch({ type: PROFILE_FETCH_SUCCESS, profile: res.data }))
+    .catch(res => dispatch({ type: PROFILE_FETCH_ERROR, error: res.data }))
   }
 }
 
@@ -51,23 +36,15 @@ export function updateProfileField(name, value) {
 export function saveProfile(profile) {
   return (dispatch, getState) => {
     dispatch({ type: PROFILE_UPDATE })
-    let headers = getAuthHeaders(getState());
-    headers['Content-Type'] = 'application/json'
-    const url = `${config.api}/account`;
-    fetch(url, {
-      headers,
-      body: JSON.stringify(profile),
-      method: 'POST'
+    axios.post('/account', profile)
+    .then(() => {
+      toast.success(<ToastBody text="Perfil guardado" />)
+      dispatch({ type: PROFILE_UPDATE_SUCCESS, profile })
     })
-    .then(res => {
-      if(res.ok) {
-        toast.success(<ToastBody text="Perfil guardado" />)
-        dispatch({ type: PROFILE_UPDATE, profile })
-      } else {
-        const error = `${res.status} ${res.statusText}`;
-        toast.error(<ToastBody text={error} />)
-        dispatch({ type: PROFILE_UPDATE_ERROR, error })
-      }
+    .catch(res => {
+      const error = `${res.status} ${res.statusText}`;
+      toast.error(<ToastBody text={error} />)
+      dispatch({ type: PROFILE_UPDATE_ERROR, error })
     })
   }
 }
