@@ -24,9 +24,9 @@ class Projects extends Component {
   }
   renderListActions(project) {
     const actionsData = [
-      {link: `/requests/${project.id}`, icon: 'record_voice_over', tooltip: 'Solicitudes'},
+      {link: `/projects/${project.id}`, icon: 'edit', tooltip: 'Editar'},
       {link: `/tasks/${project.id}`, icon: 'timer', tooltip: 'Tareas'},
-      {link: `/projects/${project.id}`, icon: 'edit', tooltip: 'Editar'}
+      {link: `/requests/${project.id}`, icon: 'record_voice_over', tooltip: 'Solicitudes'}
     ]
     return actionsData.map((data, i) => (
       <Link
@@ -40,12 +40,7 @@ class Projects extends Component {
     ))
   }
   render() {
-    const {loading} = this.props;
-    const projects = [
-      {name: "Proyecto 1"},
-      {name: "Proyecto 2"},
-      {name: "Proyecto 3"}
-    ]
+    const {loading, projects, children} = this.props;
     return (
       <div className="projects"
            style={{padding: ".5em"}}>
@@ -60,29 +55,37 @@ class Projects extends Component {
           </section>
         </ShowOnMedia> */}
         {loading && <p className="color-primary">Cargando ... </p>}
-        <TooltipButton
-          floating
-          accent
-          tooltip="Nuevo proyecto"
-          tooltipPosition="left"
-          icon="add"
-          style={{
-            position: 'absolute',
-            top: '.75em',
-            right: '1em'
-          }}
-        />
+        <Link to="/projects/new">
+          <TooltipButton
+            floating
+            accent
+            tooltip="Nuevo proyecto"
+            tooltipPosition="left"
+            icon="add"
+            style={{
+              position: 'absolute',
+              top: '.75em',
+              right: '1em'
+            }}
+          />
+        </Link>
         <List className="list">
           {projects.map((project, i) => (
-            <ListItem
+            <Link
               key={i}
-              caption={project.name}
-              leftIcon="work"
-              className="list-item"
-              rightActions={this.renderListActions(project)}
-            />
+              style={{textDecoration: 'none', color: 'inherit'}}
+              to={`/projects/${project.id}`}
+            >
+              <ListItem
+                caption={project.name}
+                leftIcon="work"
+                className="list-item"
+                rightActions={this.renderListActions(project)}
+              />
+            </Link>
           ))}
         </List>
+        {children}
       </div>
     )
   }
