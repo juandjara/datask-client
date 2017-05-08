@@ -1,5 +1,5 @@
-[![Stories in Ready][1]](https://waffle.io/juandjara/open-crono)
-[![Stories in Progress][2]](https://waffle.io/juandjara/open-crono)
+[(![Stories in Ready][1])](https://waffle.io/juandjara/open-crono)
+[(![Stories in Ready][1])](https://waffle.io/juandjara/open-crono)
 # open-crono
 Herramienta de planificación de tareas y gestión de tiempo
 
