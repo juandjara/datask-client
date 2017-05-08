@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import Dialog from 'react-toolbox/lib/dialog/Dialog'
 import Input from 'react-toolbox/lib/input/Input'
 import Dropdown from 'react-toolbox/lib/dropdown/Dropdown'
+import Button from 'react-toolbox/lib/button/Button'
 import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import {
@@ -45,24 +46,28 @@ class EditProject extends Component {
       {label: "Cancelar", onClick: this.onCancel},
       {label: "Guardar", primary: true, onClick: this.onSubmit}
     ]
-    const {project, loading, error} = this.props;
+    const {project, loading, error, routeParams} = this.props;
     return (
       <div className="edit-project">
         <Dialog
           active={this.state.active}
           onEscKeyDown={this.onCancel}
           onOverlayClick={this.onCancel}
-          actions={dialogActions}
+          title={routeParams.id ? 'Editar proyecto':'Nuevo proyecto'}
         >
           {loading && <p className="color-primary">Cargando ...</p>}
           {error && <p className="color-error">Error !!</p>}
-          <form onSubmit={this.onSubmit}>
+          <form onSubmit={this.onSubmit}
+                style={{
+                  display: loading ? 'none':'block'
+                }}>
             <Input
               name="name"
               label="Nombre"
               value={project.name || ''}
               onChange={this.onChange}
             />
+            <h2>Estado</h2>
             <Dropdown
               name="status"
               label="Estado"
@@ -81,7 +86,7 @@ class EditProject extends Component {
               onChange={this.onChange}
               label="% completado estimado"
             />
-            <input hidden type="submit" onClick={this.onCancel} />
+            <Button primary raised label="Guardar" type="submit" onClick={this.onCancel} />
           </form>
         </Dialog>
       </div>
