@@ -6,7 +6,11 @@ import Button from 'react-toolbox/lib/button/Button'
 import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import {
-  fetchSingleProject, resetProject, updateProjectField, saveProject
+  fetchSingleProject,
+  resetProject,
+  updateProjectField,
+  saveProject,
+  createProject
 } from '../reducers/projects.reducer'
 
 class EditProject extends Component {
@@ -28,9 +32,15 @@ class EditProject extends Component {
     browserHistory.push('/projects')
   }
   onSubmit = (ev) => {
-    ev.preventDefault();
-    const { project, dispatch } = this.props;
-    dispatch(saveProject(project))
+    ev.preventDefault()
+    const { project, dispatch, routeParams } = this.props
+    let action = null
+    if(isNaN(routeParams.id)) {
+      action = createProject
+    } else {
+      action = saveProject
+    }
+    dispatch(action(project))
   }
   onChange = (text, ev) => {
     const name = ev.target.name;
@@ -53,10 +63,10 @@ class EditProject extends Component {
           active={this.state.active}
           onEscKeyDown={this.onCancel}
           onOverlayClick={this.onCancel}
-          title={routeParams.id ? 'Editar proyecto':'Nuevo proyecto'}
+          title={isNaN(routeParams.id) ? 'Nuevo proyecto':'Editar proyecto'}
         >
           {loading && <p className="color-primary">Cargando ...</p>}
-          {error && <p className="color-error">Error !!</p>}
+          {error && <p className="color-error">{error}</p>}
           <form onSubmit={this.onSubmit}
                 style={{
                   display: loading ? 'none':'block'
@@ -86,7 +96,11 @@ class EditProject extends Component {
               onChange={this.onChange}
               label="% completado estimado"
             />
-            <Button primary raised label="Guardar" type="submit" onClick={this.onCancel} />
+            <Button
+              primary raised
+              label="Guardar"
+              type="submit"
+            />
           </form>
         </Dialog>
       </div>
@@ -98,7 +112,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     error: state.projects.error,
     loading: state.projects.loading,
-    project: state.projects.activeProject || {name: 'Nuevo proyecto'}
+    project: state.projects.activeProject || {}
   }
 }
 

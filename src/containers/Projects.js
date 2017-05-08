@@ -8,7 +8,7 @@ import { Link } from 'react-router'
 import TaskQuickAccess from '../components/taskQuickAccess/TaskQuickAccess'
 import ShowOnMedia from '../components/ShowOnMedia'
 import { connect } from 'react-redux'
-import { fetchProjects } from '../reducers/projects.reducer'
+import { fetchProjects, deleteProject } from '../reducers/projects.reducer'
 
 const TooltipIcon = Tooltip(Icon);
 const TooltipButton = Tooltip(Button);
@@ -22,13 +22,18 @@ class Projects extends Component {
     const num = (percent * 100).toFixed(2)
     return `${num} %`;
   }
+  deleteProject = (ev, project) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    this.props.dispatch(deleteProject(project))
+  }
   renderListActions(project) {
     const actionsData = [
-      {link: `/projects/${project.id}`, icon: 'edit', tooltip: 'Editar'},
       {link: `/tasks/${project.id}`, icon: 'timer', tooltip: 'Tareas'},
-      {link: `/requests/${project.id}`, icon: 'record_voice_over', tooltip: 'Solicitudes'}
+      {link: `/requests/${project.id}`, icon: 'record_voice_over', tooltip: 'Solicitudes'},
+      {link: `/projects/${project.id}`, icon: 'edit', tooltip: 'Editar'}
     ]
-    return actionsData.map((data, i) => (
+    const actions = actionsData.map((data, i) => (
       <Link
         to={data.link}
         key={`action${i}project${project.id}`}
@@ -38,13 +43,27 @@ class Projects extends Component {
           value={data.icon} />
       </Link>
     ))
+    actions.push((
+      <TooltipIcon
+        tooltip="Borrar proyecto"
+        value="clear"
+        key={`action4project${project.id}`}
+        style={{color: '#757575'}}
+        onClick={(ev) => this.deleteProject(ev, project)}
+      />
+    ))
+    return actions;
   }
   render() {
-    const {loading, projects, children} = this.props;
+    const {loading, error, projects, children} = this.props;
     return (
       <div className="projects"
            style={{padding: ".5em"}}>
-        <h2 style={{margin: "1rem"}}>Proyectos</h2>
+        <div style={{margin: '1rem'}}>
+          <h2 style={{margin: '1rem 0'}}>Proyectos</h2>
+          {loading && <p className="color-primary">Cargando ... </p>}
+          {error && <p className="color-error">{error}</p>}
+        </div>
         {/* <ShowOnMedia mediaKey="small">
           <section style={{flex: 1, marginRight: '2px', marginBottom: '.5rem'}}>
             <p style={{display: 'flex', margin: '.75rem 0'}} >
@@ -54,7 +73,6 @@ class Projects extends Component {
             <TaskQuickAccess />
           </section>
         </ShowOnMedia> */}
-        {loading && <p className="color-primary">Cargando ... </p>}
         <Link to="/projects/new">
           <TooltipButton
             floating
@@ -93,7 +111,8 @@ class Projects extends Component {
 
 const mapStateToProps = state => ({
   projects: state.projects.currentPage,
-  loading: state.projects.loading
+  loading: state.projects.loading,
+  error: state.projects.error
 });
 
 export default connect(mapStateToProps)(Projects);
