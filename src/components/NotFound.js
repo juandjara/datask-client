@@ -4,7 +4,12 @@ import GoBack from './GoBack';
 const NotFound = () => {
   return (
     <div className="not-found-page">
-      <h3>404. P&aacute;gina no encontrada</h3>
+      <h3>
+        Aqu&iacute; no hay nada.
+        <p style={{fontSize: '2em', marginTop: '.5rem'}}>
+          ¯\_(ツ)_/¯
+        </p>
+      </h3>
       <GoBack />
     </div>
   )

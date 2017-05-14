@@ -4,8 +4,10 @@ import Button from 'react-toolbox/lib/button/Button';
 
 const NotFound = () => {
   return (
-    <Button onClick={() => browserHistory.goBack()}
-            label="Volver atr&aacute;s" />
+    <Button
+      primary
+      onClick={() => browserHistory.goBack()}
+      label="Volver atr&aacute;s" />
   )
 }
 

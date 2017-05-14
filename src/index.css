@@ -18,6 +18,11 @@ h1,h2,h3 {
 
 .not-found-page {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
 }
 
 .shadow-z1 {
