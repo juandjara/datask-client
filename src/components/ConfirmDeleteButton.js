@@ -23,7 +23,7 @@ class ConfirmDeleteButton extends Component {
     this.setState({ confirmationPopup: false })
   }
   render() {
-    const {tooltip, title, onDelete} = this.props;
+    const {tooltip, title} = this.props;
     return (
       <div className="delete-button">
         <TooltipIcon
