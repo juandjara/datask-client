@@ -4,9 +4,11 @@ import List from 'react-toolbox/lib/list/List'
 import ListItem from 'react-toolbox/lib/list/ListItem'
 import Tooltip from 'react-toolbox/lib/tooltip'
 import Button from 'react-toolbox/lib/button/Button'
+import Dialog from 'react-toolbox/lib/dialog/Dialog'
 import { Link } from 'react-router'
 import TaskQuickAccess from '../components/taskQuickAccess/TaskQuickAccess'
 import ShowOnMedia from '../components/ShowOnMedia'
+import ConfirmDeleteButton from '../components/ConfirmDeleteButton'
 import { connect } from 'react-redux'
 import { fetchProjects, deleteProject } from '../reducers/projects.reducer'
 
@@ -22,9 +24,7 @@ class Projects extends Component {
     const num = (percent * 100).toFixed(2)
     return `${num} %`;
   }
-  deleteProject = (ev, project) => {
-    ev.preventDefault();
-    ev.stopPropagation();
+  deleteProject = (project) => {
     this.props.dispatch(deleteProject(project))
   }
   renderListActions(project) {
@@ -44,12 +44,11 @@ class Projects extends Component {
       </Link>
     ))
     actions.push((
-      <TooltipIcon
+      <ConfirmDeleteButton
         tooltip="Borrar proyecto"
-        value="clear"
+        title={`Borrar proyecto ${project.name}`}
         key={`action4project${project.id}`}
-        style={{color: '#757575'}}
-        onClick={(ev) => this.deleteProject(ev, project)}
+        onDelete={() => this.deleteProject(project)}
       />
     ))
     return actions;

@@ -25,6 +25,9 @@ export const PROJECT_DELETE = "PROJECT_DELETE"
 export const PROJECT_DELETE_SUCCESS = "PROJECT_DELETE_SUCCESS"
 export const PROJECT_DELETE_ERROR = "PROJECT_DELETE_ERROR"
 
+// gets error message from server response
+const errorHandler = err => err.response.data.message;
+
 // action creators
 
 // receives pagination params
@@ -127,8 +130,6 @@ const createSuccess = (state, action) => {
   }
 }
 
-// gets error message from server response
-const errorHandler = err => err.response.data.message;
 
 // reducer
 export default (state = initialState, action) => {
