@@ -7,6 +7,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import Sidenav from '../components/sidenav/Sidenav';
 import Header from '../components/header/Header'
+import ShowOnMedia from '../components/ShowOnMedia'
+import TaskQuickAccess from '../components/taskQuickAccess/TaskQuickAccess'
 import { fetchProfile } from '../reducers/profile.reducer';
 import './App.css';
 
@@ -30,6 +32,9 @@ class App extends Component {
           <ReactTooltip effect="solid" place="right" />
           <ToastContainer autoClose={3000} position="bottom-right" />
           <Header />
+          <ShowOnMedia mediaKey="small">
+            <TaskQuickAccess />
+          </ShowOnMedia>
           <main className="main">{children}</main>
         </Panel>
       </Layout>

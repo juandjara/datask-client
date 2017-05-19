@@ -4,10 +4,8 @@ import List from 'react-toolbox/lib/list/List'
 import ListItem from 'react-toolbox/lib/list/ListItem'
 import Tooltip from 'react-toolbox/lib/tooltip'
 import Button from 'react-toolbox/lib/button/Button'
-import { Link } from 'react-router'
-import TaskQuickAccess from '../components/taskQuickAccess/TaskQuickAccess'
-import ShowOnMedia from '../components/ShowOnMedia'
 import ConfirmDeleteButton from '../components/ConfirmDeleteButton'
+import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { fetchProjects, deleteProject } from '../reducers/projects.reducer'
 
@@ -55,22 +53,12 @@ class Projects extends Component {
   render() {
     const {loading, error, projects, children} = this.props;
     return (
-      <div className="projects"
-           style={{padding: ".5em"}}>
+      <div className="projects" style={{padding: ".5em"}}>
         <div style={{margin: '1rem'}}>
           <h2 style={{margin: '1rem 0'}}>Proyectos</h2>
           {loading && <p className="color-primary">Cargando ... </p>}
           {error && <p className="color-error">{error}</p>}
         </div>
-        {/* <ShowOnMedia mediaKey="small">
-          <section style={{flex: 1, marginRight: '2px', marginBottom: '.5rem'}}>
-            <p style={{display: 'flex', margin: '.75rem 0'}} >
-              <Icon className="task-cards-star">star</Icon>
-              Tareas destacadas
-            </p>
-            <TaskQuickAccess />
-          </section>
-        </ShowOnMedia> */}
         <Link to="/projects/new">
           <TooltipButton
             floating

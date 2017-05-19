@@ -25,8 +25,8 @@
 }
 
 .task-cards-star {
-  font-size: 1em;
-  margin: 0 .5em;
+  padding-right: 4px;
+  font-size: inherit;
   color: var(--palette-amber-500);
 }
 

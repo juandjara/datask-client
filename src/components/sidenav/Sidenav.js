@@ -47,14 +47,6 @@ class Sidenav extends Component {
           <MenuLink onClick={this.logout} icon="clear" text="Cerrar sesión" />
         </div>
         <TimeCounters style={{height: 'auto'}} />
-        <p style={{margin: '.5em'}}>
-          <Icon value="star" style={{
-            fontSize: 'inherit',
-            color: 'var(--palette-amber-500)',
-            paddingRight: '4px'
-          }} />
-          Tareas destacadas
-        </p>
         <TaskQuickAccess style={{maxHeight: '140px'}} />
         <div className="sidenav-links">
           <MenuLink to="/projects" icon="work" text="Proyectos" />
