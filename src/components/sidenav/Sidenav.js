@@ -22,7 +22,7 @@ class Sidenav extends Component {
   render () {
     const {open, pinned, profile, dispatch} = this.props;
     const {profileMenuActive} = this.state;
-    const name = profile.loading ? 'Cargando ...' : `${profile.firstName} ${profile.lastName}`
+    const name = profile.loading ? 'Cargando ...' : `${profile.name} ${profile.surname}`
     return (
       <NavDrawer
         permanentAt="md"

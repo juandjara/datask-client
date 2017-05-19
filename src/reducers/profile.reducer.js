@@ -23,7 +23,7 @@ const ToastBody = ({text}) => (
 export function fetchProfile() {
   return (dispatch, getState) => {
     dispatch({ type: PROFILE_FETCH });
-    axios.get('/account')
+    axios.get('/user-data/me')
     .then(res => dispatch({ type: PROFILE_FETCH_SUCCESS, profile: res.data }))
     .catch(res => dispatch({ type: PROFILE_FETCH_ERROR, error: res.data }))
   }
@@ -36,7 +36,7 @@ export function updateProfileField(name, value) {
 export function saveProfile(profile) {
   return (dispatch, getState) => {
     dispatch({ type: PROFILE_UPDATE })
-    axios.post('/account', profile)
+    axios.put('/user-data', profile)
     .then(() => {
       toast.success(<ToastBody text="Perfil guardado" />)
       dispatch({ type: PROFILE_UPDATE_SUCCESS, profile })

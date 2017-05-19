@@ -44,20 +44,21 @@ class Profile extends Component {
         <div className="color-error">
           <pre>{JSON.stringify(profile.error)}</pre>
         </div>
-        <p>Creado el {this.parseDate(profile.createdDate)} </p>
-        <p>Ultima modificación el {this.parseDate(profile.lastModifiedDate)}</p>
         <form onSubmit={this.onSubmit}>
           <Input
             label="Email" icon="email" name="email" type="email"
             value={profile.email || ""} onChange={this.onChange} />
           <div style={{display: 'flex'}}>
             <Input
-              label="Nombre" icon="person_outline" name="firstName" type="text"
-              value={profile.firstName || ""} onChange={this.onChange} />
+              label="Nombre" icon="person_outline" name="name" type="text"
+              value={profile.name || ""} onChange={this.onChange} />
             <Input
-              label="Apellidos" name="lastName" type="text"
-              value={profile.lastName || ""} onChange={this.onChange} />
+              label="Apellidos" name="surname" type="text"
+              value={profile.surname || ""} onChange={this.onChange} />
           </div>
+          <Input
+            label="Teléfono" icon="phone" name="officePhone" type="text"
+            value={profile.officePhone || ''} onChange={this.onChange} />
           <Button type="submit" raised primary>
             Guardar
           </Button>
