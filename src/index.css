@@ -35,3 +35,7 @@ h1,h2,h3 {
 .color-error {
   color: var(--palette-red-500);
 }
+.link-reset {
+  text-decoration: none;
+  color: inherit; 
+}

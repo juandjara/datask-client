@@ -2,11 +2,12 @@ import React from 'react'
 import { IndexRedirect, Route } from 'react-router'
 
 import App from './containers/App';
-import Projects from './containers/Projects'
 import Profile from './containers/Profile'
-import NotFound from './components/NotFound'
-import Login from './containers/Login'
+import Projects from './containers/Projects'
 import EditProject from './containers/EditProject'
+import Users from './containers/Users'
+import Login from './containers/Login'
+import NotFound from './components/NotFound'
 import { requireAuth } from './utils/authService';
 
 export default (store) => {
@@ -16,6 +17,7 @@ export default (store) => {
       <Route path="projects" component={Projects}>
         <Route path=":id" component={EditProject} />
       </Route>
+      <Route path="users" component={Users}></Route>
       <Route path="profile" component={Profile} />
     </Route>,
     <Route path="/login" component={Login} />,

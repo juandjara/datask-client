@@ -39,11 +39,22 @@
   background: #333 !important;
 }
 
+.list-container {
+  padding: .5em;
+}
+.list-title-container {
+  margin: 1rem;
+}
+.list-title {
+  margin: 1rem 0;
+}
+.list-corner-fab {
+  position: absolute;
+  top: .75em;
+  right: 1em;
+}
 .list {
   padding: 0;
   background-color: white;
   box-shadow: var(--shadow-2p);
-}
-.list-item:not(:last-child) {
-  border-bottom: 1px solid #ccc;
 }

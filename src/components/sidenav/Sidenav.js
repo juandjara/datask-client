@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import NavDrawer from 'react-toolbox/lib/layout/NavDrawer'
-import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import IconButton from 'react-toolbox/lib/button/IconButton'
 import TaskQuickAccess from '../taskQuickAccess/TaskQuickAccess'
 import TimeCounters from '../timeCounters/TimeCounters'
