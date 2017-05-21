@@ -6,18 +6,18 @@ import Tooltip from 'react-toolbox/lib/tooltip'
 import Button from 'react-toolbox/lib/button/Button'
 import ConfirmDeleteButton from '../components/ConfirmDeleteButton'
 import { Link } from 'react-router'
-//import { connect } from 'react-redux'
-//import { fetchUsers, deleteUser } from '../reducers/users.reducer'
+import { connect } from 'react-redux'
+import { fetchUsers, deleteUser } from '../reducers/users.reducer'
 
 const TooltipIcon = Tooltip(Icon);
 const TooltipButton = Tooltip(Button);
 
 class Users extends Component {
   componentDidMount() {
-    //this.props.dispatch(fetchUsers());
+    this.props.dispatch(fetchUsers());
   }
   deleteUser = (user) => {
-    //this.props.dispatch(deleteUser(user);
+    this.props.dispatch(deleteUser(user));
   }
   renderListActions(user) {
     const actionsData = [
@@ -90,4 +90,4 @@ const mapStateToProps = state => ({
   error: state.users.error
 });
 
-export default /*connect(mapStateToProps)*/(Users);
+export default connect(mapStateToProps)(Users);
