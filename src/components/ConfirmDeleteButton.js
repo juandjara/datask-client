@@ -6,7 +6,7 @@ import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 const TooltipIcon = Tooltip(Icon);
 
 class ConfirmDeleteButton extends Component {
-  propTypes = {
+  static propTypes = {
     onDelete: React.PropTypes.func.isRequired,
     tooltip: React.PropTypes.string,
     title: React.PropTypes.string
