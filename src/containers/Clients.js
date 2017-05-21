@@ -47,7 +47,7 @@ class Clients extends Component {
     const {loading, error, children} = this.props;
     const clients = this.props.clients || [];
     return (
-      <div className="users list-container">
+      <div className="clients list-container">
         <div className="list-title-container">
           <h2 className="list-title">Clientes</h2>
           {loading && <p className="color-primary">Cargando ... </p>}
@@ -67,7 +67,7 @@ class Clients extends Component {
             <Link
               key={i}
               className="link-reset"
-              to={`/users/${client.id}`}
+              to={`/clients/${client.id}`}
             >
               <ListItem
                 caption={client.name}
