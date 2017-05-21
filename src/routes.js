@@ -6,6 +6,7 @@ import Profile from './containers/Profile'
 import Projects from './containers/Projects'
 import EditProject from './containers/EditProject'
 import Users from './containers/Users'
+import Clients from './containers/Clients'
 import Login from './containers/Login'
 import NotFound from './components/NotFound'
 import { requireAuth } from './utils/authService';
@@ -18,6 +19,7 @@ export default (store) => {
         <Route path=":id" component={EditProject} />
       </Route>
       <Route path="users" component={Users}></Route>
+      <Route path="clients" component={Clients}></Route>
       <Route path="profile" component={Profile} />
     </Route>,
     <Route path="/login" component={Login} />,
