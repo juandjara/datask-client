@@ -29,7 +29,7 @@ class EditClient extends Component {
   }
 
   onCancel = () => {
-    browserHistory.push('/users')
+    browserHistory.push('/clients')
   }
   onSubmit = (ev) => {
     ev.preventDefault()
@@ -77,8 +77,8 @@ class EditClient extends Component {
               onChange={this.onChange}
             />
             <Dropdown
-              name="typeUser"
-              label="Tipo de usuario"
+              name="typeCompany"
+              label="Tipo de cliente"
               icon="info"
               source={statusOptions}
               value={client.typeCompany || ''}
