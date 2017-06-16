@@ -1,10 +1,16 @@
 import { applyMiddleware, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
+import promiseMiddleware from 'redux-promise-middleware';
 import rootReducer from './reducers/index.reducer'
 import { mediaQueryTracker } from 'redux-mediaquery'
 import mediaQueries from './utils/mediaQueries'
 
-const middlewares = [thunk]
+const middlewares = [
+  thunk, 
+  promiseMiddleware({
+    promiseTypeSuffixes: ['LOADING', 'SUCCESS', 'ERROR']
+  })
+]
 let customCompose = compose
 
 if (process.env.NODE_ENV !== "production") {
