@@ -27,6 +27,7 @@ export const USER_DELETE_ERROR = "USER_DELETE_ERROR"
 
 // gets error message from server response
 const errorHandler = err => err.response.data.message;
+const endpoint = "/user";
 
 // action creators
 
@@ -35,7 +36,7 @@ const errorHandler = err => err.response.data.message;
 export function fetchUsers(params) {
   return (dispatch) => {
     dispatch({ type: USERS_FETCH });
-    axios.get('/user-data', {params})
+    axios.get(endpoint, {params})
     .then(res => dispatch({ type: USERS_FETCH_SUCCESS, users: res.data }))
     .catch(err => dispatch({ type: USERS_FETCH_ERROR, error: errorHandler(err) }))
   }
@@ -46,7 +47,7 @@ export function fetchUsers(params) {
 export function fetchSingleUser(id) {
   return (dispatch) => {
     dispatch({ type: USER_FETCH })
-    axios.get(`/user-data/${id}`)
+    axios.get(`${endpoint}/id/${id}`)
     .then(res => dispatch({ type: USER_FETCH_SUCCESS, user: res.data }))
     .catch(err => dispatch({ type: USER_FETCH_ERROR, error: errorHandler(err) }))
   }
@@ -68,7 +69,7 @@ export function updateUserField(name, value) {
 export function saveUser(user) {
   return (dispatch) => {
     dispatch({ type: USER_UPDATE })
-    axios.put('/user-data', user)
+    axios.put(`${endpoint}/id/${user.id}`, user)
     .then(res => {
       dispatch({ type: USER_UPDATE_SUCCESS, user: res.data })
       browserHistory.push('/users')
@@ -82,7 +83,7 @@ export function saveUser(user) {
 export function createUser(user) {
   return (dispatch) => {
     dispatch({ type: USER_CREATE })
-    axios.post('/user-data', user)
+    axios.post(endpoint, user)
     .then(res => {
       dispatch({ type: USER_CREATE_SUCCESS, user: res.data })
       browserHistory.push('/users')
@@ -96,7 +97,7 @@ export function createUser(user) {
 export function deleteUser(user) {
   return (dispatch) => {
     dispatch({ type: USER_DELETE })
-    axios.delete(`/user-data/${user.id}`)
+    axios.delete(`${endpoint}/id/${user.id}`)
     .then(res => dispatch({ type: USER_DELETE_SUCCESS, user }))
     .catch(err => dispatch({ type: USER_DELETE_ERROR, error: errorHandler(err) }))
   }
@@ -146,7 +147,7 @@ export default (state = initialState, action) => {
     case USERS_FETCH_SUCCESS:
       return {
         ...state,
-        currentPage: action.users,
+        currentPage: action.users.content,
         loading: false
       }
     case USER_FETCH_SUCCESS:

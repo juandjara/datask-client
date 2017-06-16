@@ -15,7 +15,7 @@ export function authenticate(credentials, rememberMe, nextLocation) {
       type: LOGIN_LOADING
     });
 
-    axios.post('/authenticate', credentials)
+    axios.post('/user/authenticate', credentials)
     .then(res => {
       const token = res.data.id_token
       const tokenData = getTokenData(token);

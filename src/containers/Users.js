@@ -53,7 +53,7 @@ class Users extends Component {
           {loading && <p className="color-primary">Cargando ... </p>}
           {error && <p className="color-error">{error}</p>}
         </div>
-        <Link to="/projects/new">
+        <Link to="/users/new">
           <TooltipButton
             icon="add"
             floating accent

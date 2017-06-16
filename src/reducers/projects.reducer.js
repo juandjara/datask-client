@@ -27,6 +27,7 @@ export const PROJECT_DELETE_ERROR = "PROJECT_DELETE_ERROR"
 
 // gets error message from server response
 const errorHandler = err => err.response.data.message;
+const endpoint = "/project"
 
 // action creators
 
@@ -35,7 +36,7 @@ const errorHandler = err => err.response.data.message;
 export function fetchProjects(params) {
   return (dispatch) => {
     dispatch({ type: PROJECTS_FETCH });
-    axios.get('/projects', {params})
+    axios.get(`${endpoint}`, {params})
     .then(res => dispatch({ type: PROJECTS_FETCH_SUCCESS, projects: res.data }))
     .catch(err => dispatch({ type: PROJECTS_FETCH_ERROR, error: errorHandler(err) }))
   }
@@ -46,7 +47,7 @@ export function fetchProjects(params) {
 export function fetchSingleProject(id) {
   return (dispatch) => {
     dispatch({ type: PROJECT_FETCH })
-    axios.get(`/projects/${id}`)
+    axios.get(`${endpoint}/id/${id}`)
     .then(res => dispatch({ type: PROJECT_FETCH_SUCCESS, project: res.data }))
     .catch(err => dispatch({ type: PROJECT_FETCH_ERROR, error: errorHandler(err) }))
   }
@@ -68,7 +69,7 @@ export function updateProjectField(name, value) {
 export function saveProject(project) {
   return (dispatch) => {
     dispatch({ type: PROJECT_UPDATE })
-    axios.put('/projects', project)
+    axios.put(`${endpoint}/id/${project.id}`, project)
     .then(res => {
       dispatch({ type: PROJECT_UPDATE_SUCCESS, project: res.data })
       browserHistory.push('/projects')
@@ -82,7 +83,7 @@ export function saveProject(project) {
 export function createProject(project) {
   return (dispatch) => {
     dispatch({ type: PROJECT_CREATE })
-    axios.post('/projects', project)
+    axios.post(endpoint, project)
     .then(res => {
       dispatch({ type: PROJECT_CREATE_SUCCESS, project: res.data })
       browserHistory.push('/projects')
@@ -96,7 +97,7 @@ export function createProject(project) {
 export function deleteProject(project) {
   return (dispatch) => {
     dispatch({ type: PROJECT_DELETE })
-    axios.delete(`/projects/${project.id}`)
+    axios.delete(`${endpoint}/id/${project.id}`)
     .then(res => dispatch({ type: PROJECT_DELETE_SUCCESS, project }))
     .catch(err => dispatch({ type: PROJECT_DELETE_ERROR, error: errorHandler(err) }))
   }
@@ -146,7 +147,7 @@ export default (state = initialState, action) => {
     case PROJECTS_FETCH_SUCCESS:
       return {
         ...state,
-        currentPage: action.projects,
+        currentPage: action.projects.content,
         loading: false
       }
     case PROJECT_FETCH_SUCCESS:

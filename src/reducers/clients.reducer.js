@@ -27,6 +27,7 @@ export const CLIENT_DELETE_ERROR = "CLIENT_DELETE_ERROR"
 
 // gets error message from server response
 const errorHandler = err => err.response.data.message;
+const endpoint = "/company"
 
 // action creators
 
@@ -35,7 +36,7 @@ const errorHandler = err => err.response.data.message;
 export function fetchClients(params) {
   return (dispatch) => {
     dispatch({ type: CLIENTS_FETCH });
-    axios.get('/companies', {params})
+    axios.get(endpoint, {params})
     .then(res => dispatch({ type: CLIENTS_FETCH_SUCCESS, clients: res.data }))
     .catch(err => dispatch({ type: CLIENTS_FETCH_ERROR, error: errorHandler(err) }))
   }
@@ -46,7 +47,7 @@ export function fetchClients(params) {
 export function fetchSingleClient(id) {
   return (dispatch) => {
     dispatch({ type: CLIENT_FETCH })
-    axios.get(`/companies/${id}`)
+    axios.get(`${endpoint}/id/${id}`)
     .then(res => dispatch({ type: CLIENT_FETCH_SUCCESS, client: res.data }))
     .catch(err => dispatch({ type: CLIENT_FETCH_ERROR, error: errorHandler(err) }))
   }
@@ -68,7 +69,7 @@ export function updateClientField(name, value) {
 export function saveClient(client) {
   return (dispatch) => {
     dispatch({ type: CLIENT_UPDATE })
-    axios.put('/companies', client)
+    axios.put(`${endpoint}/id/${client.id}`, client)
     .then(res => {
       dispatch({ type: CLIENT_UPDATE_SUCCESS, client: res.data })
       browserHistory.push('/clients')
@@ -96,7 +97,7 @@ export function createClient(client) {
 export function deleteClient(client) {
   return (dispatch) => {
     dispatch({ type: CLIENT_DELETE })
-    axios.delete(`/companies/${client.id}`)
+    axios.delete(`${endpoint}/id/${client.id}`)
     .then(res => dispatch({ type: CLIENT_DELETE_SUCCESS, client }))
     .catch(err => dispatch({ type: CLIENT_DELETE_ERROR, error: errorHandler(err) }))
   }
@@ -146,7 +147,7 @@ export default (state = initialState, action) => {
     case CLIENTS_FETCH_SUCCESS:
       return {
         ...state,
-        currentPage: action.clients,
+        currentPage: action.clients.content,
         loading: false
       }
     case CLIENT_FETCH_SUCCESS:
