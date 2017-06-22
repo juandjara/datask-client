@@ -103,7 +103,13 @@ export function deleteUser(user) {
   }
 }
 
-const initialState = {currentPage: []}
+const initialUser = {
+  activated: true
+}
+const initialState = {
+  currentPage: [],
+  activeUser: {...initialUser}
+}
 
 // computes a slice of the state for the USER_UPDATE_SUCCESS action
 const updateSuccess = (state, action) => {
@@ -126,7 +132,7 @@ const createSuccess = (state, action) => {
   return {
     ...state,
     currentPage: users,
-    activeUser: null,
+    activeUser: {...initialUser},
     loading: false
   }
 }
@@ -170,7 +176,7 @@ export default (state = initialState, action) => {
     case USER_RESET:
       return {
         ...state,
-        activeUser: null
+        activeUser: {...initialUser}
       }
     case USER_UPDATE_FIELD:
       return {

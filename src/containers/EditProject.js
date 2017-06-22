@@ -52,10 +52,6 @@ class EditProject extends Component {
       {value: "PAUSED", label: "En pausa"},
       {value: "COMPLETED", label: "Completado"}
     ]
-    const dialogActions = [
-      {label: "Cancelar", onClick: this.onCancel},
-      {label: "Guardar", primary: true, onClick: this.onSubmit}
-    ]
     const {project, loading, error, routeParams} = this.props;
     return (
       <div className="edit-project">

@@ -63,3 +63,12 @@
 .edit-dialog {
   overflow: auto;
 }
+.edit-dialog-active {
+  margin: 1em;
+}
+.edit-dialog-active [data-react-toolbox="label"] {
+  padding-left: 2.5em;
+}
+.edit-dialog-button {
+  margin: .5em;
+}

@@ -51,10 +51,6 @@ class EditClient extends Component {
       {value: "INTERNAL", label: "Interno"},
       {value: "CONTACT", label: "Contacto"},
     ]
-    const dialogActions = [
-      {label: "Cancelar", onClick: this.onCancel},
-      {label: "Guardar", primary: true, onClick: this.onSubmit}
-    ]
     const {client, loading, error, routeParams} = this.props;
     return (
       <div className="edit-client">

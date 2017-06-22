@@ -37,6 +37,13 @@ class EditUser extends Component {
   onSubmit = (ev) => {
     ev.preventDefault()
     const { user, dispatch } = this.props
+    if(user.password !== user.repeat_password) {
+      dispatch({
+        type: 'USER_UPDATE_ERROR',
+        error: 'Las contraseñas no coinciden'
+      })
+      return
+    }
     let action = null
     if(this.isEditMode()) {
       action = createUser 
@@ -54,7 +61,7 @@ class EditUser extends Component {
       {value: "INTERNAL", label: "Interno"},
       {value: "CONTACT", label: "Contacto"},
     ]
-    const {user, loading, error, routeParams} = this.props;
+    const {user, loading, error} = this.props;
     const editMode = this.isEditMode();
     return (
       <div className="edit-user">
@@ -65,43 +72,50 @@ class EditUser extends Component {
           onOverlayClick={this.onCancel}
           title={editMode ? 'Editar usuario':'Nuevo usuario'}
         >
-          {error && <p className="color-error">{error}</p>}
-          {loading ? <p className="color-primary">Cargando ...</p> : (
+          {error && (
+            <p style={{margin: '1em'}} className="color-error">{error}</p>
+          )}
+          {loading ? (
+            <p style={{margin: '1em'}} className="color-primary">Cargando ...</p>
+          ) : (
             <form onSubmit={this.onSubmit}>
               <Checkbox
+                className="edit-dialog-active"
                 name="activated"
                 checked={user.activated}
                 onChange={this.onChange}
                 label="Activado"
               />
               <Input
-                disabled={editMode}
                 icon="person_outline"
+                disabled={editMode}
                 name="login"
                 label="Nombre de usuario"
                 value={user.login || ''}
                 onChange={this.onChange}
-              />
+              />                
               {editMode ? null : (
                 <div style={{display: 'flex'}} >
                   <Input
-                    name="password"
                     type="password"
+                    name="password"
                     icon="lock"                  
                     label="Contraseña"
                     value={user.password || ''}
                     onChange={this.onChange}
                   />
                   <Input
-                    name="password"
                     type="password"
+                    name="repeat_password"
                     label="Repetir contraseña"
-                    value={user.password || ''}
+                    value={user.repeat_password || ''}
                     onChange={this.onChange}
                   />
                 </div>
               )}                
-              <div style={{display: 'flex'}}>
+              <div style={{
+                display: 'flex',
+              }}>
                 <Input
                   name="name"
                   label="Nombre"
@@ -142,15 +156,16 @@ class EditUser extends Component {
               />
               <Button
                 primary raised
+                className="edit-dialog-button"
                 label="Guardar"
                 type="submit"
               />
               <Button 
+                className="edit-dialog-button"
                 label="Cancelar"
-                style={{marginLeft: '.5em'}} 
                 onClick={this.onCancel} />
             </form>
-          )}            
+          )}
         </Dialog>
       </div>
     );
@@ -161,7 +176,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     error: state.users.error,
     loading: state.users.loading,
-    user: state.users.activeUser || {activated: true}
+    user: state.users.activeUser
   }
 }
 
