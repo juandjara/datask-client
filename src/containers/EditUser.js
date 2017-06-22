@@ -19,9 +19,8 @@ class EditUser extends Component {
   }
   componentDidMount() {
     const { routeParams, dispatch } = this.props;
-    const id = parseInt(routeParams.id, 10);
-    if(!isNaN(id)) {
-      dispatch(fetchSingleUser(id))
+    if(this.isEditMode()) {
+      dispatch(fetchSingleUser(routeParams.id))
     }
   }
   componentWillUnmount() {
@@ -31,12 +30,15 @@ class EditUser extends Component {
   onCancel = () => {
     browserHistory.push('/users')
   }
+  isEditMode() {
+    return !isNaN(this.props.routeParams.id)
+  }
   onSubmit = (ev) => {
     ev.preventDefault()
-    const { user, dispatch, routeParams } = this.props
+    const { user, dispatch } = this.props
     let action = null
-    if(isNaN(routeParams.id)) {
-      action = createUser
+    if(this.isEditMode()) {
+      action = createUser 
     } else {
       action = saveUser
     }
@@ -63,10 +65,10 @@ class EditUser extends Component {
           active={this.state.active}
           onEscKeyDown={this.onCancel}
           onOverlayClick={this.onCancel}
-          title={isNaN(routeParams.id) ? 'Nuevo usuario':'Editar usuario'}
+          title={this.isEditMode() ? 'Editar usuario':'Nuevo usuario'}
         >
-          {loading && <p className="color-primary">Cargando ...</p>}
           {error && <p className="color-error">{error}</p>}
+          {loading && <p className="color-primary">Cargando ...</p>}
           <form 
             onSubmit={this.onSubmit}
             style={{
