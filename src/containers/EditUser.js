@@ -3,6 +3,7 @@ import Dialog from 'react-toolbox/lib/dialog/Dialog'
 import Input from 'react-toolbox/lib/input/Input'
 import Dropdown from 'react-toolbox/lib/dropdown/Dropdown'
 import Button from 'react-toolbox/lib/button/Button'
+import Checkbox from 'react-toolbox/lib/checkbox/Checkbox'
 import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import {
@@ -53,11 +54,8 @@ class EditUser extends Component {
       {value: "INTERNAL", label: "Interno"},
       {value: "CONTACT", label: "Contacto"},
     ]
-    const dialogActions = [
-      {label: "Cancelar", onClick: this.onCancel},
-      {label: "Guardar", primary: true, onClick: this.onSubmit}
-    ]
     const {user, loading, error, routeParams} = this.props;
+    const editMode = this.isEditMode();
     return (
       <div className="edit-user">
         <Dialog
@@ -65,85 +63,94 @@ class EditUser extends Component {
           active={this.state.active}
           onEscKeyDown={this.onCancel}
           onOverlayClick={this.onCancel}
-          title={this.isEditMode() ? 'Editar usuario':'Nuevo usuario'}
+          title={editMode ? 'Editar usuario':'Nuevo usuario'}
         >
           {error && <p className="color-error">{error}</p>}
-          {loading && <p className="color-primary">Cargando ...</p>}
-          <form 
-            onSubmit={this.onSubmit}
-            style={{
-              display: loading ? 'none':'block',
-            }}>
-            <Input
-              icon="person"
-              name="login"
-              type="text"
-              label="Nombre de usuario"
-              value={user.login || ''}
-              onChange={this.onChange}
-            />
-            <div style={{display: 'flex'}} >
-              <Input
-                icon="lock"
-                name="password"
-                type="password"
-                label="Contraseña"
-                value={user.password || ''}
+          {loading ? <p className="color-primary">Cargando ...</p> : (
+            <form onSubmit={this.onSubmit}>
+              <Checkbox
+                name="activated"
+                checked={user.activated}
                 onChange={this.onChange}
+                label="Activado"
               />
               <Input
-                name="password"
-                type="password"
-                label="Repetir contraseña"
-                value={user.password || ''}
-                onChange={this.onChange}
-              />
-            </div>
-            <div style={{display: 'flex'}}>
-              <Input
-                name="name"
-                label="Nombre"
+                disabled={editMode}
                 icon="person_outline"
-                value={user.name || ''}
+                name="login"
+                label="Nombre de usuario"
+                value={user.login || ''}
+                onChange={this.onChange}
+              />
+              {editMode ? null : (
+                <div style={{display: 'flex'}} >
+                  <Input
+                    name="password"
+                    type="password"
+                    icon="lock"                  
+                    label="Contraseña"
+                    value={user.password || ''}
+                    onChange={this.onChange}
+                  />
+                  <Input
+                    name="password"
+                    type="password"
+                    label="Repetir contraseña"
+                    value={user.password || ''}
+                    onChange={this.onChange}
+                  />
+                </div>
+              )}                
+              <div style={{display: 'flex'}}>
+                <Input
+                  name="name"
+                  label="Nombre"
+                  icon="person"
+                  value={user.name || ''}
+                  onChange={this.onChange}
+                />
+                <Input
+                  name="surname"
+                  label="Apellidos"
+                  value={user.surname || ''}
+                  onChange={this.onChange}
+                />
+              </div>
+              <Dropdown
+                name="typeUser"
+                label="Tipo de usuario"
+                icon="info"
+                source={statusOptions}
+                value={user.typeUser || ''}
                 onChange={this.onChange}
               />
               <Input
-                name="surname"
-                label="Apellidos"
-                value={user.surname || ''}
+                icon="mail"
+                name="email"
+                type="email"
+                label="Email"
+                value={user.email || ''}
                 onChange={this.onChange}
               />
-            </div>
-            <Dropdown
-              name="typeUser"
-              label="Tipo de usuario"
-              icon="info"
-              source={statusOptions}
-              value={user.typeUser || ''}
-              onChange={this.onChange}
-            />
-            <Input
-              icon="mail"
-              name="email"
-              type="email"
-              label="Email"
-              value={user.email || ''}
-              onChange={this.onChange}
-            />
-            <Input
-              icon="phone"
-              name="officePhone"
-              type="number"
-              label="Teléfono"
-              value={user.officePhone || ''}
-              onChange={this.onChange}
-            />
-            <Button
-              primary raised
-              label="Guardar"
-              type="submit"
-            />
-          </form>
+              <Input
+                icon="phone"
+                name="officePhone"
+                type="number"
+                label="Teléfono"
+                value={user.officePhone || ''}
+                onChange={this.onChange}
+              />
+              <Button
+                primary raised
+                label="Guardar"
+                type="submit"
+              />
+              <Button 
+                label="Cancelar"
+                style={{marginLeft: '.5em'}} 
+                onClick={this.onCancel} />
+            </form>
+          )}            
         </Dialog>
       </div>
     );
@@ -154,7 +161,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     error: state.users.error,
     loading: state.users.loading,
-    user: state.users.activeUser || {}
+    user: state.users.activeUser || {activated: true}
   }
 }
 
