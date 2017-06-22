@@ -59,6 +59,7 @@ class EditUser extends Component {
     return (
       <div className="edit-user">
         <Dialog
+          className="edit-dialog"
           active={this.state.active}
           onEscKeyDown={this.onCancel}
           onOverlayClick={this.onCancel}
@@ -66,14 +67,41 @@ class EditUser extends Component {
         >
           {loading && <p className="color-primary">Cargando ...</p>}
           {error && <p className="color-error">{error}</p>}
-          <form onSubmit={this.onSubmit}
-                style={{
-                  display: loading ? 'none':'block'
-                }}>
+          <form 
+            onSubmit={this.onSubmit}
+            style={{
+              display: loading ? 'none':'block',
+            }}>
+            <Input
+              icon="person"
+              name="login"
+              type="text"
+              label="Nombre de usuario"
+              value={user.login || ''}
+              onChange={this.onChange}
+            />
+            <div style={{display: 'flex'}} >
+              <Input
+                icon="lock"
+                name="password"
+                type="password"
+                label="Contraseña"
+                value={user.password || ''}
+                onChange={this.onChange}
+              />
+              <Input
+                name="password"
+                type="password"
+                label="Repetir contraseña"
+                value={user.password || ''}
+                onChange={this.onChange}
+              />
+            </div>
             <div style={{display: 'flex'}}>
               <Input
                 name="name"
                 label="Nombre"
+                icon="person_outline"
                 value={user.name || ''}
                 onChange={this.onChange}
               />

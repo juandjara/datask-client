@@ -59,6 +59,7 @@ class EditClient extends Component {
     return (
       <div className="edit-client">
         <Dialog
+          className="edit-dialog"
           active={this.state.active}
           onEscKeyDown={this.onCancel}
           onOverlayClick={this.onCancel}

@@ -60,6 +60,7 @@ class EditProject extends Component {
     return (
       <div className="edit-project">
         <Dialog
+          className="edit-dialog"
           active={this.state.active}
           onEscKeyDown={this.onCancel}
           onOverlayClick={this.onCancel}

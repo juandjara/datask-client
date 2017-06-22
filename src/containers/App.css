@@ -58,3 +58,8 @@
   background-color: white;
   box-shadow: var(--shadow-2p);
 }
+
+
+.edit-dialog {
+  overflow: auto;
+}
