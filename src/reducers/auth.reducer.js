@@ -1,6 +1,7 @@
 import { getTokenData, JWT_KEY } from '../utils/authService'
 import { browserHistory } from 'react-router';
-import axios from '../utils/axiosWrapper'
+import axios from 'axios'
+import config from '../config'
 
 // action types
 export const LOG_IN = "AUTH_LOG_IN"
@@ -15,7 +16,7 @@ export function authenticate(credentials, rememberMe, nextLocation) {
       type: LOGIN_LOADING
     });
 
-    axios.post('/user/authenticate', credentials)
+    axios.post(`${config.api}/user/authenticate`, credentials)
     .then(res => {
       const token = res.data.id_token
       const tokenData = getTokenData(token);
