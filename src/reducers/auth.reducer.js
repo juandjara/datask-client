@@ -30,11 +30,12 @@ export function authenticate(credentials, rememberMe, nextLocation) {
       });
       browserHistory.push(nextLocation || '/');
     }).catch(res => {
+      const data = res.response;
       const errorMap = {
         401: 'Usuario o contraseña inválidos',
         400: 'Error de validación'
       }
-      let msg = errorMap[res.status] || `${res.status} ${res.statusText}`;
+      let msg = errorMap[data.status] || `${data.status} ${data.statusText}`;
       if(res.status >= 500) {
         msg = "Fallo del servidor";
       }
@@ -57,13 +58,20 @@ export function logout() {
 }
 
 const storedToken = localStorage.getItem(JWT_KEY);
-const initialState = Object.assign({token: storedToken}, getTokenData(storedToken));
+const initialData = getTokenData(storedToken)
+const initialState = {
+  token: storedToken, 
+  ...initialData
+}
 
 // reducer
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOG_IN:
-      return Object.assign({token: action.token}, action.data)
+      return {
+        token: action.token, 
+        ...action.data
+      }
     case LOG_OUT:
       return {}
     case LOGIN_ERROR:
