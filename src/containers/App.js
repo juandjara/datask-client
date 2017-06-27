@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Layout from 'react-toolbox/lib/layout/Layout';
 import Panel from 'react-toolbox/lib/layout/Panel';
-import ReactTooltip from 'react-tooltip';
 import { connect } from 'react-redux'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
