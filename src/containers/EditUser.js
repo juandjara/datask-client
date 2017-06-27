@@ -61,7 +61,7 @@ class EditUser extends Component {
       {value: "INTERNAL", label: "Interno"},
       {value: "CONTACT", label: "Contacto"},
     ]
-    const {user, loading, error} = this.props;
+    const {user, loading, error, companies} = this.props;
     const editMode = this.isEditMode();
     return (
       <div className="edit-user">
@@ -154,6 +154,14 @@ class EditUser extends Component {
                 value={user.officePhone || ''}
                 onChange={this.onChange}
               />
+              <Dropdown
+                name="companyId"
+                label="Empresa"
+                icon="business"
+                source={companies}
+                value={user.companyId || ''}
+                onChange={this.onChange}
+              />
               <Button
                 primary raised
                 className="edit-dialog-button"
@@ -176,7 +184,11 @@ const mapStateToProps = (state, ownProps) => {
   return {
     error: state.users.error,
     loading: state.users.loading,
-    user: state.users.activeUser
+    user: state.users.activeUser,
+    companies: state.clients.currentPage.map(comp => ({
+      value: comp.id,
+      label: comp.name
+    }))
   }
 }
 
