@@ -29,7 +29,6 @@ class App extends Component {
       <Layout>
         <Sidenav />
         <Panel style={containerStyle}>
-          <ReactTooltip effect="solid" place="right" />
           <ToastContainer autoClose={3000} position="bottom-right" />
           <Header />
           <ShowOnMedia mediaKey="small">
