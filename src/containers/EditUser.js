@@ -194,10 +194,12 @@ class EditUser extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  const user = state.users.activeUser
+  user.authorities = user.authorities.join(',')
   return {
     error: state.users.error,
     loading: state.users.loading,
-    user: state.users.activeUser,
+    user,
     companies: state.clients.currentPage.map(comp => ({
       id: comp.id,
       value: comp.id,
