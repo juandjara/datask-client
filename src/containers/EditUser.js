@@ -13,6 +13,7 @@ import {
   saveUser,
   createUser
 } from '../reducers/users.reducer'
+import { fetchClients } from '../reducers/clients.reducer'
 
 class EditUser extends Component {
   state = {
@@ -22,6 +23,9 @@ class EditUser extends Component {
     const { routeParams, dispatch } = this.props;
     if(this.isEditMode()) {
       dispatch(fetchSingleUser(routeParams.id))
+    }
+    if(!this.props.companies.length) {
+      dispatch(fetchClients())      
     }
   }
   componentWillUnmount() {
@@ -44,11 +48,12 @@ class EditUser extends Component {
       })
       return
     }
+    user.authorities = user.authorities.split(',')
     let action = null
     if(this.isEditMode()) {
-      action = createUser 
+      action = saveUser 
     } else {
-      action = saveUser
+      action = createUser
     }
     dispatch(action(user))
   }
@@ -154,12 +159,20 @@ class EditUser extends Component {
                 value={user.officePhone || ''}
                 onChange={this.onChange}
               />
+              <Input
+                icon="lock"
+                name="authorities"
+                type="text"
+                label="Roles"
+                value={user.authorities || ''}
+                onChange={this.onChange}
+              />
               <Dropdown
                 name="companyId"
                 label="Empresa"
                 icon="business"
                 source={companies}
-                value={user.companyId || ''}
+                value={user.companyId}
                 onChange={this.onChange}
               />
               <Button
@@ -186,6 +199,7 @@ const mapStateToProps = (state, ownProps) => {
     loading: state.users.loading,
     user: state.users.activeUser,
     companies: state.clients.currentPage.map(comp => ({
+      id: comp.id,
       value: comp.id,
       label: comp.name
     }))
