@@ -19,13 +19,11 @@ const errMapper = res => res.data && res.data.error.message
 
 // action creators
 export function fetchProfile() {
-  const payload = Promise.all([
-    axios.get('/account'),
-    axios.get('/account/data')
-  ]).then(res => {
-    return res.reduce((prev, next) => Object.assign(prev, next.data), {})
-  })
-  return { payload, type: PROFILE_FETCH }
+  const payload = axios.get('/account')
+  .then(res => res.data.id)
+  .then(id => axios.get(`/user/id/${id}`))
+  .then(res => res.data)
+  return { type: PROFILE_FETCH, payload }
 }
 
 export function updateProfileField(name, value) {
@@ -39,10 +37,7 @@ export function saveProfile(profile) {
     const error = `${res.status} ${res.statusText}`;
     toast.error(<ToastBody text={error} />)
   })
-  return {
-    type: PROFILE_UPDATE,
-    payload: promise
-  }
+  return { type: PROFILE_UPDATE, payload: promise }
 }
 
 // reducer
