@@ -3,11 +3,10 @@ import templateImage from '../assets/fuken-comic-avatar.jpg'
 import { connect } from 'react-redux'
 import Avatar from 'react-toolbox/lib/avatar/Avatar'
 
-const UserAvatar = (props) => {
-  const {name, surname} = props.profile
-  const title = `${name} ${surname}`
+const UserAvatar = ({profile, dispatch, ...props}) => {
+  const title = `${profile.name} ${profile.surname}`
   return (
-    <Avatar {...props} className="header-avatar" title={title} />
+    <Avatar {...props} className="header-avatar" title={title} />      
   )
 }
 
