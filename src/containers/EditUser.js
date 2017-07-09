@@ -195,7 +195,7 @@ class EditUser extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const user = state.users.activeUser
-  user.authorities = user.authorities.join(',')
+  user.authorities = (user.authorities || []).join(',')
   return {
     error: state.users.error,
     loading: state.users.loading,
