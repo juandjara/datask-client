@@ -1,10 +1,16 @@
 import React from 'react'
 import templateImage from '../assets/fuken-comic-avatar.jpg'
+import { connect } from 'react-redux'
+import Avatar from 'react-toolbox/lib/avatar/Avatar'
 
-const Avatar = (props) => {
+const UserAvatar = (props) => {
+  const {name, surname} = props.profile
+  const title = `${name} ${surname}`
   return (
-    <img {...props} src={templateImage} alt="Avatar"/>
+    <Avatar {...props} className="header-avatar" title={title} />
   )
 }
 
-export default Avatar
+const mapStateToProps = state => ({profile: state.profile})
+
+export default connect(mapStateToProps)(UserAvatar)

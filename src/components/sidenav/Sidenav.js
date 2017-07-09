@@ -31,7 +31,7 @@ class Sidenav extends Component {
         pinned={pinned}
         onOverlayClick={() => dispatch(toggleSidenavOpen())}>
         <Flex align="center">
-          <Avatar style={{borderRadius: '50%', padding: '.5em'}} />
+          <Avatar />
           <h3>{name}</h3>
           <IconButton
             icon={`arrow_drop_${profileMenuActive ? 'up':'down'}`}
