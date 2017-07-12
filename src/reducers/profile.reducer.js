@@ -1,6 +1,6 @@
-import { toast } from 'react-toastify';
 import React from 'react';
 import axios from '../utils/axiosWrapper';
+import toast from '../utils/toastWrapper'
 
 // action types
 export const PROFILE_FETCH = "PROFILE_FETCH"
@@ -32,11 +32,7 @@ export function updateProfileField(name, value) {
 
 export function saveProfile(profile) {
   const promise = axios.put(`/user/id/${profile.id}`, profile);
-  promise.then(() => toast.success(<ToastBody text="Perfil guardado" />))
-  .catch(res => {
-    const error = `${res.status} ${res.statusText}`;
-    toast.error(<ToastBody text={error} />)
-  })
+  promise.then(() => toast('success', 'Perfil guardado'))
   return { type: PROFILE_UPDATE, payload: promise }
 }
 

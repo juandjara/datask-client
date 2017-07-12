@@ -4,12 +4,22 @@ import promiseMiddleware from 'redux-promise-middleware';
 import rootReducer from './reducers/index.reducer'
 import { mediaQueryTracker } from 'redux-mediaquery'
 import mediaQueries from './utils/mediaQueries'
+import toast from './utils/toastWrapper'
+
+const errorToastMiddleware = store => next => action => {
+  const {error, payload = {}} = action
+  if(error) {
+    toast('error', payload.message)
+  }
+  return next(action)
+}
 
 const middlewares = [
   thunk, 
   promiseMiddleware({
     promiseTypeSuffixes: ['LOADING', 'SUCCESS', 'ERROR']
-  })
+  }),
+  errorToastMiddleware
 ]
 let customCompose = compose
 
