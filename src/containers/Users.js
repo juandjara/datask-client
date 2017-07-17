@@ -21,42 +21,30 @@ class Users extends Component {
   fetchPage(page) {
     this.props.fetchUsersPage(page, this.pageSize);
   }
-  deleteUser = (user) => {
-    this.props.deleteUser(user);
-  }
   renderListActions(user) {
-    const actionsData = [
-      {link: `/users/${user.id}`, icon: 'edit', tooltip: 'Editar'}
-    ]
-    const actions = actionsData.map((action, i) => (
+    return [
       <Link
-        to={action.link}
-        key={`action${i}_user${user.id}`}
+        to={`/users/${user.id}`}
+        key={`edit_user_${user.id}`}
         style={{color: '#757575'}} >
-        <TooltipIcon
-          tooltip={action.tooltip}
-          value={action.icon} />
-      </Link>
-    ))
-    actions.push((
+        <TooltipIcon tooltip="Editar" value="edit" />
+      </Link>,
       <ConfirmDeleteButton
-        tooltip="Borrar usuario"
+        tooltip="Borrar"
         title={`Borrar usuario ${user.name}`}
         key={`delete_user${user.id}`}
-        onDelete={() => this.deleteUser(user)}
+        onDelete={() => this.props.deleteUser(user)}
       />
-    ))
-    return actions;
+    ]
   }
   render() {
-    const {loading, error, children, pageParams} = this.props;
+    const {loading, children, pageParams} = this.props;
     const users = this.props.users || [];
     return (
       <div className="users list-container">
         <div className="list-title-container">
           <h2 className="list-title">Usuarios</h2>
           {loading && <p className="color-primary">Cargando ... </p>}
-          {error && <p className="color-error">{error}</p>}
         </div>
         <Link to="/users/new">
           <TooltipButton
@@ -69,11 +57,8 @@ class Users extends Component {
         </Link>
         <List className="list">
           {users.map((user, i) => (
-            <Link
-              key={i}
-              className="link-reset"
-              to={`/users/${user.id}`}
-            >
+            <Link key={i} className="link-reset" 
+                  to={`/users/${user.id}`}>
               <ListItem
                 caption={user.name}
                 leftIcon="work"
