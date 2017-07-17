@@ -7,17 +7,22 @@ import Button from 'react-toolbox/lib/button/Button'
 import ConfirmDeleteButton from '../components/ConfirmDeleteButton'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
-import { fetchUsers, deleteUser } from '../reducers/users.reducer'
+import { fetchUsersPage, deleteUser, getUsersPage } from '../reducers/users.reducer'
+import PaginationFooter from '../components/PaginationFooter'
 
 const TooltipIcon = Tooltip(Icon);
 const TooltipButton = Tooltip(Button);
 
 class Users extends Component {
+  pageSize = 5;
   componentDidMount() {
-    this.props.dispatch(fetchUsers());
+    this.fetchPage(0);
+  }
+  fetchPage(page) {
+    this.props.fetchUsersPage(page, this.pageSize);
   }
   deleteUser = (user) => {
-    this.props.dispatch(deleteUser(user));
+    this.props.deleteUser(user);
   }
   renderListActions(user) {
     const actionsData = [
@@ -44,7 +49,7 @@ class Users extends Component {
     return actions;
   }
   render() {
-    const {loading, error, children} = this.props;
+    const {loading, error, children, pageParams} = this.props;
     const users = this.props.users || [];
     return (
       <div className="users list-container">
@@ -78,16 +83,24 @@ class Users extends Component {
             </Link>
           ))}
         </List>
+        <PaginationFooter 
+          params={pageParams}
+          onPageChange={page => this.fetchPage(page)}
+        />
         {children}
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  users: state.users.currentPage,
-  loading: state.users.loading,
-  error: state.users.error
-});
+const mapStateToProps = state => {
+  const {items, loading, params} = getUsersPage(state)
+  return {
+    pageParams: params,
+    users: items,
+    loading
+  }
+}
+const actions = {fetchUsersPage, deleteUser}
 
-export default connect(mapStateToProps)(Users);
+export default connect(mapStateToProps, actions)(Users);

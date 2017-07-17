@@ -24,11 +24,11 @@ const middlewares = [
 let customCompose = compose
 
 if (process.env.NODE_ENV !== "production") {
-  /*
+  
   const createLogger = require('redux-logger');
   const logger = createLogger();
   middlewares.push(logger);
-  */
+  
   const devToolsCompose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
   if(typeof devToolsCompose === 'function') {
     customCompose = devToolsCompose

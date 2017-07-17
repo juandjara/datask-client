@@ -1,30 +1,30 @@
 import axios from '../utils/axiosWrapper'
 import { browserHistory } from 'react-router'
+import createPaginator from './createPaginator'
+import { combineReducers } from 'redux'
 
-// action types
-export const USERS_FETCH = "USERS_FETCH"
+const endpoint = "/user";
+const paginator = createPaginator(endpoint)
+
+// SELECTORS
+export const getUsersPage = state => paginator.selectors.pageSelector(
+  state.users.pagination,
+  state.users.entities
+)
+export const getUserById = (state, id) => state.users.entities[id] || {missing: true}
+
+// ACTION TYPES
+export const USERS_FETCH = paginator.types.FETCH_PAGE
 export const USER_FETCH = "USER_FETCH"
 export const USER_UPDATE = "USER_UPDATE"
 export const USER_CREATE = "USER_CREATE"
 export const USER_DELETE = "USER_DELETE"
 
-export const USER_RESET = "USER_RESET"
-export const USER_UPDATE_FIELD = "USER_UPDATE_FIELD"
+// ACTION CREATORS
 
-// gets error message from server response
-const errorHandler = err => err.response.data.message;
-const endpoint = "/user";
-
-// action creators
-
-// receives pagination params
-// and dispatches actions to fetch the list of users
-export function fetchUsers(params) {
-  return {
-    type: USERS_FETCH,
-    payload: axios.get(endpoint, {params}).then(res => res.data)
-  }
-}
+// receives page and page size
+// and dispatches actions to fetch a page from the list of users
+export const fetchUsersPage = paginator.actions.fetchPage
 
 // receives project id
 // and dispatches actions to fetch the user
@@ -32,153 +32,77 @@ export function fetchSingleUser(id) {
   return {
     type: USER_FETCH,
     payload: axios.get(`${endpoint}/id/${id}`)
-      .then(res => res.data)
-  }
-}
-
-// resets active client back to null
-// useful for creating a new user
-export function resetUser() {
-  return { type: USER_RESET }
-}
-
-// updates form field when user types
-export function updateUserField(name, value) {
-  return { name, value, type: USER_UPDATE_FIELD }
-}
-
-// receives user, sends data to backend,
-// and dispatch the related actions
-export function saveUser(user) {
-  const promise = axios.put(`${endpoint}/id/${user.id}`, user)
-    .then(res => res.data)
-  promise.then(() => {
-    browserHistory.push('/users')
-  })
-  return {
-    type: USER_UPDATE,
-    payload: promise
+                  .then(res => res.data)
   }
 }
 
 // receives user, sends data to backend,
 // and dispatch the related actions
-export function createUser(user) {
-  const promise = axios.post(endpoint, user)
-    .then(res => res.data)
+export function editUser(user, isEditMode) {
+  const promise = axios({
+    method: isEditMode ? 'put' : 'post',
+    url: isEditMode ? `${endpoint}/id/${user.id}` : endpoint,
+    data: user
+  }).then(res => res.data)
   promise.then(() => {
     browserHistory.push('/users')
   })
   return {
-    type: USER_CREATE,
+    type: isEditMode ? USER_UPDATE : USER_CREATE,
     payload: promise
   }
 }
+export const saveUser = user => editUser(user, true)
+export const createUser = user => editUser(user, false)
 
 // receives client, deletes data in backend,
 // and dispatch the related actions
 export function deleteUser(user) {
   return {
     type: USER_DELETE,
-    payload: axios.delete(`${endpoint}/id/${user.id}`)
+    payload: axios
+      .delete(`${endpoint}/id/${user.id}`)
       .then(res => res.data)
   }
 }
 
-const initialUser = {
-  activated: true
-}
-const initialState = {
-  currentPage: [],
-  activeUser: {...initialUser}
-}
-
-// computes a slice of the state for the USER_UPDATE_SUCCESS action
-const updateSuccess = (state, action) => {
-  const users = state.currentPage.map(user => {
-    return user.id === action.payload.id ?
-      action.payload :
-      user;
-  });
-  return {
-    ...state,
-    currentPage: users,
-    activeUser: action.payload,
-    loading: false
-  }
-}
-
-// computes a slice of the state for the USER_CREATE_SUCCESS action
-const createSuccess = (state, action) => {
-  const users = state.currentPage.concat(action.payload);
-  return {
-    ...state,
-    currentPage: users,
-    activeUser: {...initialUser},
-    loading: false
-  }
-}
-
-
-// reducer
-export default (state = initialState, action) => {
-  switch (action.type) {
-    case `${USERS_FETCH}_LOADING`:
+// REDUCER
+const usersReducer = (state = {}, action = {}) => {
+  const {type, payload = {}} = action
+  switch (type) {
     case `${USER_FETCH}_LOADING`:
     case `${USER_UPDATE}_LOADING`:
     case `${USER_CREATE}_LOADING`:
     case `${USER_DELETE}_LOADING`:
       return {
         ...state,
-        loading: true
-      }
-    case `${USERS_FETCH}_SUCCESS`:
-      return {
-        ...state,
-        currentPage: action.payload.content,
-        loading: false
+        [payload.id]: {loading: true}
       }
     case `${USER_FETCH}_SUCCESS`:
-      return {
-        ...state,
-        activeUser: action.payload,
-        loading: false
-      }
     case `${USER_UPDATE}_SUCCESS`:
-      return updateSuccess(state, action)
     case `${USER_CREATE}_SUCCESS`:
-      return createSuccess(state, action)
+      return {
+        ...state,
+        [payload.id]: payload
+      }
     case `${USER_DELETE}_SUCCESS`:
-      return {
-        ...state,
-        loading: false,
-        currentPage: state.currentPage
-          .filter(user => user.id !== action.payload.id)
-      }
-    case USER_RESET:
-      return {
-        ...state,
-        activeUser: {...initialUser}
-      }
-    case USER_UPDATE_FIELD:
-      return {
-        ...state,
-        activeUser: {
-          ...state.activeUser,
-          [action.name]: action.value
-        }
-      }
-    case `${USERS_FETCH}_ERROR`:
+      const copy = {...state}
+      delete copy[payload.id]
+      return copy
     case `${USER_FETCH}_ERROR`:
     case `${USER_UPDATE}_ERROR`:
     case `${USER_CREATE}_ERROR`:
     case `${USER_DELETE}_ERROR`:
       return {
         ...state,
-        error: action.error,
-        loading: false
+        [payload.id]: {loading: false, error: payload}
       }
     default:
-      return state;
+      return paginator.reducers.items(state, action);
   }
 }
+
+export default combineReducers({
+  entities: usersReducer,
+  pagination: paginator.reducers.pagination
+})
