@@ -7,11 +7,9 @@ import Checkbox from 'react-toolbox/lib/checkbox/Checkbox'
 import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import {
-  fetchSingleUser,
-  resetUser,
-  updateUserField,
-  saveUser,
-  createUser
+  fetchUserIfNeeded,
+  editUser,
+  getUserById
 } from '../reducers/users.reducer'
 import { fetchClients } from '../reducers/clients.reducer'
 
@@ -22,14 +20,11 @@ class EditUser extends Component {
   componentDidMount() {
     const { routeParams, dispatch } = this.props;
     if(this.isEditMode()) {
-      dispatch(fetchSingleUser(routeParams.id))
+      this.props.fetchUserIfNeeded(routeParams.id)
     }
     if(!this.props.companies.length) {
-      dispatch(fetchClients())      
+      this.props.fetchClients()
     }
-  }
-  componentWillUnmount() {
-    this.props.dispatch(resetUser())
   }
 
   onCancel = () => {
@@ -39,27 +34,27 @@ class EditUser extends Component {
     return !isNaN(this.props.routeParams.id)
   }
   onSubmit = (ev) => {
-    ev.preventDefault()
-    const { user, dispatch } = this.props
-    if(user.password !== user.repeat_password) {
-      dispatch({
-        type: 'USER_UPDATE_ERROR',
-        error: 'Las contraseñas no coinciden'
-      })
-      return
-    }
-    user.authorities = user.authorities.split(',')
-    let action = null
-    if(this.isEditMode()) {
-      action = saveUser 
-    } else {
-      action = createUser
-    }
-    dispatch(action(user))
+    // ev.preventDefault()
+    // const { user, dispatch } = this.props
+    // if(user.password !== user.repeat_password) {
+    //   dispatch({
+    //     type: 'USER_UPDATE_ERROR',
+    //     error: 'Las contraseñas no coinciden'
+    //   })
+    //   return
+    // }
+    // user.authorities = user.authorities.split(',')
+    // let action = null
+    // if(this.isEditMode()) {
+    //   action = saveUser 
+    // } else {
+    //   action = createUser
+    // }
+    // dispatch(action(user))
   }
   onChange = (text, ev) => {
-    const name = ev.target.name;
-    this.props.dispatch(updateUserField(name, text))
+    // const name = ev.target.name;
+    // this.props.dispatch(updateUserField(name, text))
   }
   render() {
     const statusOptions = [
@@ -194,11 +189,10 @@ class EditUser extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const user = state.users.activeUser
-  user.authorities = (user.authorities || []).join(',')
+  const user = getUserById(state, ownProps.routeParams.id)
   return {
     error: state.users.error,
-    loading: state.users.loading,
+    loading: user.loading,
     user,
     companies: state.clients.currentPage.map(comp => ({
       id: comp.id,
@@ -207,5 +201,6 @@ const mapStateToProps = (state, ownProps) => {
     }))
   }
 }
+const actions = {fetchUserIfNeeded, editUser, fetchClients}
 
-export default connect(mapStateToProps)(EditUser);
+export default connect(mapStateToProps, actions)(EditUser);

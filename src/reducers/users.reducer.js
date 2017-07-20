@@ -36,6 +36,14 @@ export function fetchSingleUser(id) {
   }
 }
 
+// check if given user is loaded and dispatches action to load it if not
+export const fetchUserIfNeeded = id => (dispatch, getState) => {
+  const {users} = getState()
+  if(!users.entities[id]) {
+    return dispatch(fetchSingleUser(id))
+  }
+}
+
 // receives user, sends data to backend,
 // and dispatch the related actions
 export function editUser(user, isEditMode) {

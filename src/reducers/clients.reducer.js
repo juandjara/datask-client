@@ -26,7 +26,7 @@ export const CLIENT_DELETE_SUCCESS = "CLIENT_DELETE_SUCCESS"
 export const CLIENT_DELETE_ERROR = "CLIENT_DELETE_ERROR"
 
 // gets error message from server response
-const errorHandler = err => err.response.data.message;
+const errorHandler = err => err.message || err.response.data.message
 const endpoint = "/company"
 
 // action creators
