@@ -5,64 +5,43 @@ import Dropdown from 'react-toolbox/lib/dropdown/Dropdown'
 import Button from 'react-toolbox/lib/button/Button'
 import Checkbox from 'react-toolbox/lib/checkbox/Checkbox'
 import { browserHistory } from 'react-router'
-import { connect } from 'react-redux'
-import {
-  fetchUserIfNeeded,
-  editUser,
-  getUserById
-} from '../reducers/users.reducer'
-import { fetchClients } from '../reducers/clients.reducer'
 
-class EditUser extends Component {
+class UserDialog extends Component {
   state = {
     active: true
   }
   componentDidMount() {
-    const { routeParams, dispatch } = this.props;
-    if(this.isEditMode()) {
-      this.props.fetchUserIfNeeded(routeParams.id)
+    const {id, isEditMode, fetchUserIfNeeded, fetchClients, companies} = this.props
+    if(isEditMode) {
+      fetchUserIfNeeded(id)
     }
-    if(!this.props.companies.length) {
-      this.props.fetchClients()
+    if(!companies.length) {
+      fetchClients()
     }
   }
-
+  componentWillUnmount = () => {
+    this.props.resetForm()
+  }
+  componentWillReceiveProps = ({user}) => {
+    if(user !== this.props.user && user && !user.loading && !user.missing) {
+      this.props.initForm({
+        ...user,
+        authorities: user.authorities.join(', ')
+      })
+    }
+  }
+  
   onCancel = () => {
     browserHistory.push('/users')
   }
-  isEditMode() {
-    return !isNaN(this.props.routeParams.id)
-  }
-  onSubmit = (ev) => {
-    // ev.preventDefault()
-    // const { user, dispatch } = this.props
-    // if(user.password !== user.repeat_password) {
-    //   dispatch({
-    //     type: 'USER_UPDATE_ERROR',
-    //     error: 'Las contraseñas no coinciden'
-    //   })
-    //   return
-    // }
-    // user.authorities = user.authorities.split(',')
-    // let action = null
-    // if(this.isEditMode()) {
-    //   action = saveUser 
-    // } else {
-    //   action = createUser
-    // }
-    // dispatch(action(user))
-  }
-  onChange = (text, ev) => {
-    // const name = ev.target.name;
-    // this.props.dispatch(updateUserField(name, text))
-  }
+
   render() {
     const statusOptions = [
       {value: "INTERNAL", label: "Interno"},
       {value: "CONTACT", label: "Contacto"},
     ]
-    const {user, loading, error, companies} = this.props;
-    const editMode = this.isEditMode();
+    const {model, loading, validationErrors, companies} = this.props
+    const editMode = this.props.isEditMode
     return (
       <div className="edit-user">
         <Dialog
@@ -72,18 +51,18 @@ class EditUser extends Component {
           onOverlayClick={this.onCancel}
           title={editMode ? 'Editar usuario':'Nuevo usuario'}
         >
-          {error && (
-            <p style={{margin: '1em'}} className="color-error">{error}</p>
-          )}
+          {validationErrors.map(msg => (
+            <p className="color-error">{msg}</p>
+          ))}
           {loading ? (
             <p style={{margin: '1em'}} className="color-primary">Cargando ...</p>
           ) : (
-            <form onSubmit={this.onSubmit}>
+            <form onSubmit={this.props.onSubmit}>
               <Checkbox
                 className="edit-dialog-active"
                 name="activated"
-                checked={user.activated}
-                onChange={this.onChange}
+                checked={model.activated}
+                onChange={this.props.onChange}
                 label="Activado"
               />
               <Input
@@ -91,8 +70,8 @@ class EditUser extends Component {
                 disabled={editMode}
                 name="login"
                 label="Nombre de usuario"
-                value={user.login || ''}
-                onChange={this.onChange}
+                value={model.login || ''}
+                onChange={this.props.onChange}
               />                
               {editMode ? null : (
                 <div style={{display: 'flex'}} >
@@ -101,15 +80,15 @@ class EditUser extends Component {
                     name="password"
                     icon="lock"                  
                     label="Contraseña"
-                    value={user.password || ''}
-                    onChange={this.onChange}
+                    value={model.password || ''}
+                    onChange={this.props.onChange}
                   />
                   <Input
                     type="password"
                     name="repeat_password"
                     label="Repetir contraseña"
-                    value={user.repeat_password || ''}
-                    onChange={this.onChange}
+                    value={model.repeat_password || ''}
+                    onChange={this.props.onChange}
                   />
                 </div>
               )}                
@@ -120,14 +99,14 @@ class EditUser extends Component {
                   name="name"
                   label="Nombre"
                   icon="person"
-                  value={user.name || ''}
-                  onChange={this.onChange}
+                  value={model.name || ''}
+                  onChange={this.props.onChange}
                 />
                 <Input
                   name="surname"
                   label="Apellidos"
-                  value={user.surname || ''}
-                  onChange={this.onChange}
+                  value={model.surname || ''}
+                  onChange={this.props.onChange}
                 />
               </div>
               <Dropdown
@@ -135,43 +114,44 @@ class EditUser extends Component {
                 label="Tipo de usuario"
                 icon="info"
                 source={statusOptions}
-                value={user.typeUser || ''}
-                onChange={this.onChange}
+                value={model.typeUser || ''}
+                onChange={this.props.onChange}
               />
               <Input
                 icon="mail"
                 name="email"
                 type="email"
                 label="Email"
-                value={user.email || ''}
-                onChange={this.onChange}
+                value={model.email || ''}
+                onChange={this.props.onChange}
               />
               <Input
                 icon="phone"
                 name="officePhone"
                 type="number"
                 label="Teléfono"
-                value={user.officePhone || ''}
-                onChange={this.onChange}
+                value={model.officePhone || ''}
+                onChange={this.props.onChange}
               />
               <Input
                 icon="lock"
                 name="authorities"
                 type="text"
                 label="Roles"
-                value={user.authorities || ''}
-                onChange={this.onChange}
+                value={model.authorities || ''}
+                onChange={this.props.onChange}
               />
               <Dropdown
                 name="companyId"
                 label="Empresa"
                 icon="business"
                 source={companies}
-                value={user.companyId}
-                onChange={this.onChange}
+                value={model.companyId}
+                onChange={this.props.onChange}
               />
               <Button
                 primary raised
+                disabled={loading}
                 className="edit-dialog-button"
                 label="Guardar"
                 type="submit"
@@ -188,19 +168,4 @@ class EditUser extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const user = getUserById(state, ownProps.routeParams.id)
-  return {
-    error: state.users.error,
-    loading: user.loading,
-    user,
-    companies: state.clients.currentPage.map(comp => ({
-      id: comp.id,
-      value: comp.id,
-      label: comp.name
-    }))
-  }
-}
-const actions = {fetchUserIfNeeded, editUser, fetchClients}
-
-export default connect(mapStateToProps, actions)(EditUser);
+export default UserDialog

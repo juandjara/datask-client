@@ -6,7 +6,7 @@ import Profile from './containers/Profile'
 import Projects from './containers/Projects'
 import ProjectDialog from './containers/ProjectDialog'
 import Users from './containers/Users'
-import UserDialog from './containers/UserDialog'
+import UserDialogContainer from './containers/UserDialogContainer'
 import Clients from './containers/Clients'
 import ClientDialog from './containers/ClientDialog'
 import Login from './containers/Login'
@@ -21,7 +21,7 @@ export default (store) => {
         <Route path=":id" component={ProjectDialog} />
       </Route>
       <Route path="users" component={Users}>
-        <Route path=":id" component={UserDialog} />
+        <Route path=":id" component={UserDialogContainer} />
       </Route>
       <Route path="clients" component={Clients}>
         <Route path=":id" component={ClientDialog} />
