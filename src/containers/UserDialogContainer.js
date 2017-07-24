@@ -1,26 +1,21 @@
 import React, {Component} from 'react'
-import UserDialog from './UserDialog'
+import UserDialog from '../components/UserDialog'
 import { connect } from 'react-redux'
 import {
   fetchUserIfNeeded,
   editUser,
   getUserById
 } from '../reducers/users.reducer'
-import { setProperty, initForm, resetForm } from '../reducers/form.reducer'
+import { setProperty, touchProperty, initForm, resetForm } from '../reducers/form.reducer'
 import { fetchClients } from '../reducers/clients.reducer'
-import validate from 'react-reformed/lib/validate'
+import validate, {isRequired, passwordMatch} from '../components/Validate'
 import { compose } from 'redux'
 
 class UserDialogContainer extends Component {
-  onSubmit = (ev) => {
-    ev.preventDefault()
-    const { user, editUser } = this.props
+  onSubmit = (user) => {
+    const { editUser } = this.props
     user.authorities = user.authorities.split(',').map(a => a.trim())
     editUser(user, this.isEditMode())
-  }
-  onChange = (text, ev) => {
-    const name = ev.target.name;
-    this.props.setProperty(name, text)
   }
   isEditMode() {
     return !isNaN(this.props.routeParams.id)
@@ -30,7 +25,8 @@ class UserDialogContainer extends Component {
       <UserDialog
         id={this.props.routeParams.id}
         isEditMode={this.isEditMode()} 
-        onChange={this.onChange} 
+        onChange={this.props.setProperty}
+        onBlur={this.props.touchProperty} 
         onSubmit={this.onSubmit}
         {...this.props} />
     )
@@ -39,10 +35,12 @@ class UserDialogContainer extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const user = getUserById(state, ownProps.routeParams.id)
+  const {model, touched} = state.ui.form
   return {
     loading: user.loading,
     user,
-    model: state.ui.form,
+    model,
+    touched,
     companies: state.clients.currentPage.map(comp => ({
       id: comp.id,
       value: comp.id,
@@ -52,17 +50,17 @@ const mapStateToProps = (state, ownProps) => {
 }
 const actions = {
   fetchUserIfNeeded, editUser, fetchClients,
-  setProperty, resetForm, initForm
+  setProperty, touchProperty, resetForm, initForm
 }
-const isRequired = key => ([
-  model => !!model[key],
-  `${key} es un campo obligatorio`
-])
 
 export default compose(
   connect(mapStateToProps, actions),
   validate([
     isRequired('login'),
-    isRequired('email')
+    isRequired('email'),
+    isRequired('password'),
+    isRequired('repeat_password'),
+    passwordMatch('password', 'repeat_password'),
+    passwordMatch('repeat_password', 'password')
   ])
 )(UserDialogContainer);

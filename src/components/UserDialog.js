@@ -23,14 +23,25 @@ class UserDialog extends Component {
     this.props.resetForm()
   }
   componentWillReceiveProps = ({user}) => {
-    if(user !== this.props.user && user && !user.loading && !user.missing) {
+    if(user !== this.props.user && !user.loading && !user.missing) {
       this.props.initForm({
         ...user,
         authorities: user.authorities.join(', ')
       })
     }
   }
-  
+  onSubmit = (ev) => {
+    ev.preventDefault()
+    this.props.onSubmit(this.props.model)
+  }
+  onChange = (text, ev) => {
+    const name = ev.target.name
+    this.props.onChange(name, text)
+  }
+  onBlur = (ev) => {
+    const name = ev.target.name
+    this.props.onBlur(name)
+  }
   onCancel = () => {
     browserHistory.push('/users')
   }
@@ -40,7 +51,7 @@ class UserDialog extends Component {
       {value: "INTERNAL", label: "Interno"},
       {value: "CONTACT", label: "Contacto"},
     ]
-    const {model, loading, validationErrors, companies} = this.props
+    const {model, loading, isValid, validationErrors, companies} = this.props
     const editMode = this.props.isEditMode
     return (
       <div className="edit-user">
@@ -51,18 +62,16 @@ class UserDialog extends Component {
           onOverlayClick={this.onCancel}
           title={editMode ? 'Editar usuario':'Nuevo usuario'}
         >
-          {validationErrors.map(msg => (
-            <p className="color-error">{msg}</p>
-          ))}
           {loading ? (
             <p style={{margin: '1em'}} className="color-primary">Cargando ...</p>
           ) : (
-            <form onSubmit={this.props.onSubmit}>
+            <form onSubmit={this.onSubmit}>
               <Checkbox
                 className="edit-dialog-active"
                 name="activated"
                 checked={model.activated}
-                onChange={this.props.onChange}
+                onChange={this.onChange}
+                onBlur={this.onBlur}
                 label="Activado"
               />
               <Input
@@ -71,7 +80,9 @@ class UserDialog extends Component {
                 name="login"
                 label="Nombre de usuario"
                 value={model.login || ''}
-                onChange={this.props.onChange}
+                error={validationErrors.login}
+                onChange={this.onChange}
+                onBlur={this.onBlur}
               />                
               {editMode ? null : (
                 <div style={{display: 'flex'}} >
@@ -81,14 +92,18 @@ class UserDialog extends Component {
                     icon="lock"                  
                     label="Contraseña"
                     value={model.password || ''}
-                    onChange={this.props.onChange}
+                    error={validationErrors.password}
+                    onChange={this.onChange}
+                    onBlur={this.onBlur}
                   />
                   <Input
                     type="password"
                     name="repeat_password"
                     label="Repetir contraseña"
                     value={model.repeat_password || ''}
-                    onChange={this.props.onChange}
+                    error={validationErrors.repeat_password}
+                    onChange={this.onChange}
+                    onBlur={this.onBlur}
                   />
                 </div>
               )}                
@@ -100,13 +115,17 @@ class UserDialog extends Component {
                   label="Nombre"
                   icon="person"
                   value={model.name || ''}
-                  onChange={this.props.onChange}
+                  error={validationErrors.name}
+                  onChange={this.onChange}
+                  onBlur={this.onBlur}
                 />
                 <Input
                   name="surname"
                   label="Apellidos"
                   value={model.surname || ''}
-                  onChange={this.props.onChange}
+                  error={validationErrors.surname}
+                  onChange={this.onChange}
+                  onBlur={this.onBlur}
                 />
               </div>
               <Dropdown
@@ -115,7 +134,9 @@ class UserDialog extends Component {
                 icon="info"
                 source={statusOptions}
                 value={model.typeUser || ''}
-                onChange={this.props.onChange}
+                error={validationErrors.typeUser}
+                onChange={this.onChange}
+                onBlur={this.onBlur}
               />
               <Input
                 icon="mail"
@@ -123,7 +144,9 @@ class UserDialog extends Component {
                 type="email"
                 label="Email"
                 value={model.email || ''}
-                onChange={this.props.onChange}
+                error={validationErrors.email}
+                onChange={this.onChange}
+                onBlur={this.onBlur}
               />
               <Input
                 icon="phone"
@@ -131,7 +154,9 @@ class UserDialog extends Component {
                 type="number"
                 label="Teléfono"
                 value={model.officePhone || ''}
-                onChange={this.props.onChange}
+                error={validationErrors.officePhone}
+                onChange={this.onChange}
+                onBlur={this.onBlur}
               />
               <Input
                 icon="lock"
@@ -139,7 +164,9 @@ class UserDialog extends Component {
                 type="text"
                 label="Roles"
                 value={model.authorities || ''}
-                onChange={this.props.onChange}
+                error={validationErrors.authorities}
+                onChange={this.onChange}
+                onBlur={this.onBlur}
               />
               <Dropdown
                 name="companyId"
@@ -147,11 +174,13 @@ class UserDialog extends Component {
                 icon="business"
                 source={companies}
                 value={model.companyId}
-                onChange={this.props.onChange}
+                error={validationErrors.companyId}
+                onChange={this.onChange}
+                onBlur={this.onBlur}
               />
               <Button
                 primary raised
-                disabled={loading}
+                disabled={!isValid || loading}
                 className="edit-dialog-button"
                 label="Guardar"
                 type="submit"
