@@ -1,46 +1,30 @@
 import axios from '../utils/axiosWrapper'
 import { browserHistory } from 'react-router'
+import createPaginator from './createPaginator'
+import { combineReducers } from 'redux'
 
-// action types
-export const CLIENTS_FETCH = "CLIENTS_FETCH"
-export const CLIENTS_FETCH_SUCCESS = "CLIENTS_FETCH_SUCCESS"
-export const CLIENTS_FETCH_ERROR = "CLIENTS_FETCH_ERROR"
-
-export const CLIENT_FETCH = "CLIENT_FETCH"
-export const CLIENT_FETCH_SUCCESS = "CLIENT_FETCH_SUCCESS"
-export const CLIENT_FETCH_ERROR = "CLIENT_FETCH_ERROR"
-
-export const CLIENT_RESET = "CLIENT_RESET"
-export const CLIENT_UPDATE_FIELD = "CLIENT_UPDATE_FIELD"
-
-export const CLIENT_UPDATE = "CLIENT_UPDATE"
-export const CLIENT_UPDATE_SUCCESS = "CLIENT_UPDATE_SUCCESS"
-export const CLIENT_UPDATE_ERROR = "CLIENT_UPDATE_ERROR"
-
-export const CLIENT_CREATE = "CLIENT_CREATE"
-export const CLIENT_CREATE_SUCCESS = "CLIENT_CREATE_SUCCESS"
-export const CLIENT_CREATE_ERROR = "CLIENT_CREATE_ERROR"
-
-export const CLIENT_DELETE = "CLIENT_DELETE"
-export const CLIENT_DELETE_SUCCESS = "CLIENT_DELETE_SUCCESS"
-export const CLIENT_DELETE_ERROR = "CLIENT_DELETE_ERROR"
-
-// gets error message from server response
-const errorHandler = err => err.message || err.response.data.message
 const endpoint = "/company"
+const paginator = createPaginator(endpoint)
 
-// action creators
+// SELECTORS
+export const getClientsPage = state => paginator.selectors.pageSelector(
+  state.clients.pagination,
+  state.clients.entities
+)
+export const getClientByID = (state, id) => state.clients.entities[id] || {missing: true}
+
+// ACTION TYPES
+export const CLIENTS_FETCH = paginator.types.FETCH_PAGE
+export const CLIENT_FETCH = "CLIENT_FETCH"
+export const CLIENT_UPDATE = "CLIENT_UPDATE"
+export const CLIENT_CREATE = "CLIENT_CREATE"
+export const CLIENT_DELETE = "CLIENT_DELETE"
+
+// ACTIONS CREATORS
 
 // receives pagination params
 // and dispatches actions to fetch the list of clients
-export function fetchClients(params) {
-  return (dispatch) => {
-    dispatch({ type: CLIENTS_FETCH });
-    axios.get(endpoint, {params})
-    .then(res => dispatch({ type: CLIENTS_FETCH_SUCCESS, clients: res.data }))
-    .catch(err => dispatch({ type: CLIENTS_FETCH_ERROR, error: errorHandler(err) }))
-  }
-}
+export const fetchClientsPage = paginator.actions.fetchPage
 
 // receives project id
 // and dispatches actions to fetch the client
@@ -88,94 +72,43 @@ export function deleteClient(client) {
   }
 }
 
-const initialState = {currentPage: []}
-
-// computes a slice of the state for the CLIENT_UPDATE_SUCCESS action
-const updateSuccess = (state, action) => {
-  const clients = state.currentPage.map(client => {
-    return client.id === action.client.id ?
-      action.client :
-      client;
-  });
-  return {
-    ...state,
-    currentPage: clients,
-    activeClient: action.client,
-    loading: false
-  }
-}
-
-// computes a slice of the state for the CLIENT_CREATE_SUCCESS action
-const createSuccess = (state, action) => {
-  const clients = state.currentPage.concat(action.client);
-  return {
-    ...state,
-    currentPage: clients,
-    activeClient: null,
-    loading: false
-  }
-}
-
-
-// reducer
-export default (state = initialState, action) => {
-  switch (action.type) {
-    case CLIENTS_FETCH:
-    case CLIENT_FETCH:
-    case CLIENT_UPDATE:
-    case CLIENT_CREATE:
-    case CLIENT_DELETE:
+// REDUCER
+const clientsReducer = (state = {}, action = {}) => {
+  const {type, payload = {}} = action
+  switch (type) {
+    case `${CLIENT_FETCH}_LOADING`:
+    case `${CLIENT_UPDATE}_LOADING`:
+    case `${CLIENT_CREATE}_LOADING`:
+    case `${CLIENT_DELETE}_LOADING`:
       return {
         ...state,
-        loading: true
+        [payload.id]: {loading: true}
       }
-    case CLIENTS_FETCH_SUCCESS:
+    case `${CLIENT_FETCH}_SUCCESS`:
+    case `${CLIENT_UPDATE}_SUCCESS`:
+    case `${CLIENT_CREATE}_SUCCESS`:
       return {
         ...state,
-        currentPage: action.clients.content,
-        loading: false
+        [payload.id]: payload
       }
-    case CLIENT_FETCH_SUCCESS:
+    case `${CLIENT_DELETE}_SUCCESS`:
+      const copy = {...state}
+      delete copy[payload.id]
+      return copy
+    case `${CLIENT_FETCH}_ERROR`:
+    case `${CLIENT_UPDATE}_ERROR`:
+    case `${CLIENT_CREATE}_ERROR`:
+    case `${CLIENT_DELETE}_ERROR`:
       return {
         ...state,
-        activeClient: action.client,
-        loading: false
-      }
-    case CLIENT_UPDATE_SUCCESS:
-      return updateSuccess(state, action)
-    case CLIENT_CREATE_SUCCESS:
-      return createSuccess(state, action)
-    case CLIENT_DELETE_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        currentPage: state.currentPage
-          .filter(client => client.id !== action.client.id)
-      }
-    case CLIENT_RESET:
-      return {
-        ...state,
-        activeClient: null
-      }
-    case CLIENT_UPDATE_FIELD:
-      return {
-        ...state,
-        activeClient: {
-          ...state.activeClient,
-          [action.name]: action.value
-        }
-      }
-    case CLIENTS_FETCH_ERROR:
-    case CLIENT_FETCH_ERROR:
-    case CLIENT_UPDATE_ERROR:
-    case CLIENT_CREATE_ERROR:
-    case CLIENT_DELETE_ERROR:
-      return {
-        ...state,
-        error: action.error,
-        loading: false
+        [payload.id]: {loading: false, error: payload}
       }
     default:
-      return state;
+      return paginator.reducers.items(state, action)
   }
 }
+
+export default combineReducers({
+  entities: clientsReducer,
+  pagination: paginator.reducers.pagination
+})
