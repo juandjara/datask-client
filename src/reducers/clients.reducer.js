@@ -45,11 +45,9 @@ export function fetchClients(params) {
 // receives project id
 // and dispatches actions to fetch the client
 export function fetchSingleClient(id) {
-  return (dispatch) => {
-    dispatch({ type: CLIENT_FETCH })
-    axios.get(`${endpoint}/id/${id}`)
-    .then(res => dispatch({ type: CLIENT_FETCH_SUCCESS, client: res.data }))
-    .catch(err => dispatch({ type: CLIENT_FETCH_ERROR, error: errorHandler(err) }))
+  return {
+    type: CLIENT_FETCH,
+    payload: axios.get(`${endpoint}/id/${id}`).then(res => res.data)
   }
 }
 
@@ -66,40 +64,27 @@ export function updateClientField(name, value) {
 
 // receives client, sends data to backend,
 // and dispatch the related actions
-export function saveClient(client) {
-  return (dispatch) => {
-    dispatch({ type: CLIENT_UPDATE })
-    axios.put(`${endpoint}/id/${client.id}`, client)
-    .then(res => {
-      dispatch({ type: CLIENT_UPDATE_SUCCESS, client: res.data })
-      browserHistory.push('/clients')
-    })
-    .catch(err => dispatch({ type: CLIENT_UPDATE_ERROR, error: errorHandler(err) }))
+export function editClient(client, isEditMode) {
+  const promise = axios({
+    method: isEditMode ? 'put' : 'post',
+    url: isEditMode ? `${endpoint}/id/${client.id}` : endpoint,
+    data: client
+  }).then(res => res.data)
+  promise.then(() => browserHistory.push('/clients'))
+  return {
+    type: isEditMode ? CLIENT_UPDATE : CLIENT_CREATE,
+    payload: promise
   }
 }
-
-// receives client, sends data to backend,
-// and dispatch the related actions
-export function createClient(client) {
-  return (dispatch) => {
-    dispatch({ type: CLIENT_CREATE })
-    axios.post('/companies', client)
-    .then(res => {
-      dispatch({ type: CLIENT_CREATE_SUCCESS, client: res.data })
-      browserHistory.push('/clients')
-    })
-    .catch(err => dispatch({ type: CLIENT_CREATE_ERROR, error: errorHandler(err) }))
-  }
-}
+export const saveClient = client => editClient(client, true)
+export const createClient = client => editClient(client, false)
 
 // receives client, deletes data in backend,
 // and dispatch the related actions
 export function deleteClient(client) {
-  return (dispatch) => {
-    dispatch({ type: CLIENT_DELETE })
-    axios.delete(`${endpoint}/id/${client.id}`)
-    .then(res => dispatch({ type: CLIENT_DELETE_SUCCESS, client }))
-    .catch(err => dispatch({ type: CLIENT_DELETE_ERROR, error: errorHandler(err) }))
+  return {
+    type: CLIENT_DELETE,
+    payload: axios.delete(`${endpoint}/id/${client.id}`).then(res => res.data)
   }
 }
 
