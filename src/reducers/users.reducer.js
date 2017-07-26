@@ -36,7 +36,7 @@ export function fetchSingleUser(id) {
   }
 }
 
-// check if given user is loaded and dispatches action to load it if not
+// checks if given user is loaded and dispatches action to load it if not
 export const fetchUserIfNeeded = id => (dispatch, getState) => {
   const {users} = getState()
   if(!users.entities[id]) {
