@@ -7,51 +7,43 @@ import Button from 'react-toolbox/lib/button/Button'
 import ConfirmDeleteButton from '../components/ConfirmDeleteButton'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
-import { fetchClients, deleteClient } from '../reducers/clients.reducer'
+import { fetchClientsPage, deleteClient, getClientsPage } from '../reducers/clients.reducer'
+import PaginationFooter from '../components/PaginationFooter'
 
 const TooltipIcon = Tooltip(Icon);
 const TooltipButton = Tooltip(Button);
 
 class Clients extends Component {
+  pageSize = 5;
   componentDidMount() {
-    this.props.dispatch(fetchClients());
+    this.fetchPage(0)
   }
-  deleteClient = (client) => {
-    this.props.dispatch(deleteClient(client));
+  fetchPage(page) {
+    this.props.fetchClientsPage(page, this.pageSize)
   }
   renderListActions(client) {
-    const actionsData = [
-      {link: `/clients/${client.id}`, icon: 'edit', tooltip: 'Editar'}
-    ]
-    const actions = actionsData.map((action, i) => (
+    return [
       <Link
-        to={action.link}
-        key={`action${i}_client${client.id}`}
+        to={`/clients/${client.id}`}
+        key={`edit_client${client.id}`}
         style={{color: '#757575'}} >
-        <TooltipIcon
-          tooltip={action.tooltip}
-          value={action.icon} />
-      </Link>
-    ))
-    actions.push((
+        <TooltipIcon tooltip="Editar" value="edit" />
+      </Link>,
       <ConfirmDeleteButton
         tooltip="Borrar cliente"
         title={`Borrar cliente ${client.name}`}
         key={`delete_client${client.id}`}
-        onDelete={() => this.deleteClient(client)}
+        onDelete={() => this.props.deleteClient(client)}
       />
-    ))
-    return actions;
+    ]
   }
   render() {
-    const {loading, error, children} = this.props;
-    const clients = this.props.clients || [];
+    const {loading, clients, children, pageParams} = this.props;
     return (
       <div className="clients list-container">
         <div className="list-title-container">
           <h2 className="list-title">Clientes</h2>
           {loading && <p className="color-primary">Cargando ... </p>}
-          {error && <p className="color-error">{error}</p>}
         </div>
         <Link to="/clients/new">
           <TooltipButton
@@ -64,11 +56,8 @@ class Clients extends Component {
         </Link>
         <List className="list">
           {clients.map((client, i) => (
-            <Link
-              key={i}
-              className="link-reset"
-              to={`/clients/${client.id}`}
-            >
+            <Link key={i} className="link-reset"
+                  to={`/clients/${client.id}`}>
               <ListItem
                 caption={client.name}
                 leftIcon="work"
@@ -78,16 +67,24 @@ class Clients extends Component {
             </Link>
           ))}
         </List>
+        <PaginationFooter
+          params={pageParams}
+          onPageChange={page => this.fetchPage(page)}
+        />
         {children}
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  clients: state.clients.currentPage,
-  loading: state.clients.loading,
-  error: state.clients.error
-});
+const mapStateToProps = state => {
+  const {items, loading, params} = getClientsPage(state)
+  return {
+    pageParams: params,
+    clients: items,
+    loading
+  }
+}
+const actions = {fetchClientsPage, deleteClient}
 
-export default connect(mapStateToProps)(Clients);
+export default connect(mapStateToProps, actions)(Clients);
