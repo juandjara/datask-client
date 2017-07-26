@@ -35,6 +35,14 @@ export function fetchSingleClient(id) {
   }
 }
 
+// checks if given client is loaded and dispatches action to load it if not
+export const fetchClientIfNeeded = id => (dispatch, getState) => {
+  const {clients} = getState()
+  if(!clients.entities[id]) {
+    return dispatch(fetchSingleClient(id))
+  }
+}
+
 // receives client, sends data to backend,
 // and dispatch the related actions
 export function editClient(client, isEditMode) {
