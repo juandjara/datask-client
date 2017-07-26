@@ -35,17 +35,6 @@ export function fetchSingleClient(id) {
   }
 }
 
-// resets active client back to null
-// useful for creating a new client
-export function resetClient() {
-  return { type: CLIENT_RESET }
-}
-
-// updates form field when user types
-export function updateClientField(name, value) {
-  return { name, value, type: CLIENT_UPDATE_FIELD }
-}
-
 // receives client, sends data to backend,
 // and dispatch the related actions
 export function editClient(client, isEditMode) {
