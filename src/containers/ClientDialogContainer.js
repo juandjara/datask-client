@@ -8,7 +8,7 @@ import {
   editClient, 
   getClientByID 
 } from '../reducers/clients.reducer'
-import ClientDialog from './ClientDialog'
+import ClientDialog from '../components/ClientDialog'
 
 class ClientDialogContainer extends Component {
   onSubmit = (client) => {
