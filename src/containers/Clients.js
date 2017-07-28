@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import List from 'react-toolbox/lib/list/List'
 import ListItem from 'react-toolbox/lib/list/ListItem'
 import Tooltip from 'react-toolbox/lib/tooltip'
@@ -10,7 +9,6 @@ import { connect } from 'react-redux'
 import { fetchClientsPage, deleteClient, getClientsPage } from '../reducers/clients.reducer'
 import PaginationFooter from '../components/PaginationFooter'
 
-const TooltipIcon = Tooltip(Icon);
 const TooltipButton = Tooltip(Button);
 
 class Clients extends Component {
@@ -23,12 +21,6 @@ class Clients extends Component {
   }
   renderListActions(client) {
     return [
-      <Link
-        to={`/clients/${client.id}`}
-        key={`edit_client${client.id}`}
-        style={{color: '#757575'}} >
-        <TooltipIcon tooltip="Editar" value="edit" />
-      </Link>,
       <ConfirmDeleteButton
         tooltip="Borrar cliente"
         title={`Borrar cliente ${client.name}`}
@@ -54,11 +46,12 @@ class Clients extends Component {
             className="list-corner-fab"
           />
         </Link>
-        <List className="list">
+        <List selectable className="list">
           {clients.map((client, i) => (
             <Link key={i} className="link-reset"
-                  to={`/clients/${client.id}`}>
+                  title="Editar cliente" to={`/clients/${client.id}`}>
               <ListItem
+                selectable
                 caption={client.name}
                 leftIcon="work"
                 className="list-item"

@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import List from 'react-toolbox/lib/list/List'
 import ListItem from 'react-toolbox/lib/list/ListItem'
 import Tooltip from 'react-toolbox/lib/tooltip'
@@ -53,7 +52,6 @@ class Users extends Component {
             <Link key={i} className="link-reset" 
                   title="Editar usuario" to={`/users/${user.id}`}>
               <ListItem
-                key={i}
                 selectable
                 caption={user.name}
                 leftIcon="work"

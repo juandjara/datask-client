@@ -24,8 +24,8 @@ class ClientDialogContainer extends Component {
         id={this.props.routeParams.id}
         isEditMode={this.isEditMode()}
         onChange={this.props.setProperty}
-        onSubmit={this.props.touchProperty}
         onSubmit={this.onSubmit}
+        onBlur={this.props.touchProperty}
         {...this.props} />
     )
   }
