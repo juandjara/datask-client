@@ -65,13 +65,16 @@ export const createUser = user => editUser(user, false)
 
 // receives client, deletes data in backend,
 // and dispatch the related actions
-export function deleteUser(user) {
-  return {
+export const deleteUser = (user) => (dispatch, getState) => {
+  const {users} = getState()
+  const promise = axios.delete(`${endpoint}/id/${user.id}`).then(res => res.data)
+  dispatch({
     type: USER_DELETE,
-    payload: axios
-      .delete(`${endpoint}/id/${user.id}`)
-      .then(res => res.data)
-  }
+    payload: promise
+  })
+  promise.then(() => {
+    dispatch(fetchUsersPage(users.pagination.page))
+  })
 }
 
 // REDUCER

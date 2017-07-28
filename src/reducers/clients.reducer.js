@@ -62,11 +62,16 @@ export const createClient = client => editClient(client, false)
 
 // receives client, deletes data in backend,
 // and dispatch the related actions
-export function deleteClient(client) {
-  return {
+export const deleteClient = (client) => (dispatch, getState) => {
+  const {clients} = getState()
+  const promise = axios.delete(`${endpoint}/id/${client.id}`).then(() => client)
+  dispatch({
     type: CLIENT_DELETE,
-    payload: axios.delete(`${endpoint}/id/${client.id}`).then(res => res.data)
-  }
+    payload: promise
+  })
+  promise.then(() => {
+    dispatch(fetchClientsPage(clients.pagination.page))
+  })
 }
 
 // REDUCER
