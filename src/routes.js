@@ -8,7 +8,7 @@ import ProjectDialog from './containers/ProjectDialog'
 import Users from './containers/Users'
 import UserDialogContainer from './containers/UserDialogContainer'
 import Clients from './containers/Clients'
-import ClientDialog from './containers/ClientDialog'
+import ClientDialogContainer from './containers/ClientDialogContainer'
 import Login from './containers/Login'
 import NotFound from './components/NotFound'
 import { requireAuth } from './utils/authService';
@@ -24,7 +24,7 @@ export default (store) => {
         <Route path=":id" component={UserDialogContainer} />
       </Route>
       <Route path="clients" component={Clients}>
-        <Route path=":id" component={ClientDialog} />
+        <Route path=":id" component={ClientDialogContainer} />
       </Route>
       <Route path="profile" component={Profile} />
     </Route>,
