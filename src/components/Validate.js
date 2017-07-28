@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const getValidationErrors = (rules = [], model = {}, touched = {}) =>
+const getValidationErrors = (rules = [], model = {}, touched = {}, ignoreTouched) =>
   rules.reduce((errors, [key, rule, errorMsg]) => {
-    const ruleHasError = !rule(model) && touched[key]
+    const ruleHasError = ignoreTouched ? !rule(model) : !rule(model) && touched[key]
     return ruleHasError ? Object.assign(errors, {[key]: errorMsg}) : errors
   }, {})
 const validateRules = (rules) => {
@@ -36,7 +36,8 @@ const Validate = (rules) => WrappedComponent => {
   validateRules(rules)
   const Wrapper = props => {
     const validationErrors = getValidationErrors(rules, props.model, props.touched)
-    const isValid = Object.keys(validationErrors).length === 0
+    const rawValidation = getValidationErrors(rules, props.model, props.touched, true)
+    const isValid = Object.keys(rawValidation).length === 0
     return (
       <WrappedComponent 
         {...props} 

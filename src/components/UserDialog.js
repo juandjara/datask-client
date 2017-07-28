@@ -57,7 +57,7 @@ class UserDialog extends Component {
       {value: "INTERNAL", label: "Interno"},
       {value: "CONTACT", label: "Contacto"},
     ]
-    const {model, loading, isValid, validationErrors, companies} = this.props
+    const {model, loading, validationErrors, companies} = this.props
     const editMode = this.props.isEditMode
     return (
       <div className="edit-user">
@@ -84,7 +84,7 @@ class UserDialog extends Component {
                 icon="person_outline"
                 disabled={editMode}
                 name="login"
-                label="Nombre de usuario"
+                label="Nombre de usuario*"
                 value={model.login || ''}
                 error={validationErrors.login}
                 onChange={this.onChange}
@@ -96,7 +96,7 @@ class UserDialog extends Component {
                     type="password"
                     name="password"
                     icon="lock"                  
-                    label="Contraseña"
+                    label="Contraseña*"
                     value={model.password || ''}
                     error={validationErrors.password}
                     onChange={this.onChange}
@@ -105,14 +105,24 @@ class UserDialog extends Component {
                   <Input
                     type="password"
                     name="repeat_password"
-                    label="Repetir contraseña"
+                    label="Repetir contraseña*"
                     value={model.repeat_password || ''}
                     error={validationErrors.repeat_password}
                     onChange={this.onChange}
                     onBlur={this.onBlur}
                   />
                 </div>
-              )}                
+              )}
+              <Input
+                icon="mail"
+                name="email"
+                type="email"
+                label="Email*"
+                value={model.email || ''}
+                error={validationErrors.email}
+                onChange={this.onChange}
+                onBlur={this.onBlur}
+              />               
               <div style={{
                 display: 'flex',
               }}>
@@ -145,26 +155,6 @@ class UserDialog extends Component {
                 onBlur={this.onBlur}
               />
               <Input
-                icon="mail"
-                name="email"
-                type="email"
-                label="Email"
-                value={model.email || ''}
-                error={validationErrors.email}
-                onChange={this.onChange}
-                onBlur={this.onBlur}
-              />
-              <Input
-                icon="phone"
-                name="officePhone"
-                type="number"
-                label="Teléfono"
-                value={model.officePhone || ''}
-                error={validationErrors.officePhone}
-                onChange={this.onChange}
-                onBlur={this.onBlur}
-              />
-              <Input
                 icon="lock"
                 name="authorities"
                 type="text"
@@ -184,9 +174,19 @@ class UserDialog extends Component {
                 onChange={this.onChange}
                 onBlur={this.onBlur}
               />
+              <Input
+                icon="phone"
+                name="officePhone"
+                type="number"
+                label="Teléfono"
+                value={model.officePhone || ''}
+                error={validationErrors.officePhone}
+                onChange={this.onChange}
+                onBlur={this.onBlur}
+              />
               <Button
                 primary raised
-                disabled={!isValid || loading}
+                disabled={loading}
                 className="edit-dialog-button"
                 label="Guardar"
                 type="submit"

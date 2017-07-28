@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { setProperty, touchProperty, initForm, resetForm } from '../reducers/form.reducer'
+import { setProperty, touchProperty, initForm, resetForm, setTouched } from '../reducers/form.reducer'
 import validate, {isRequired} from '../components/Validate'
 import { compose } from 'redux'
 import { 
@@ -13,7 +13,14 @@ import ClientDialog from './ClientDialog'
 class ClientDialogContainer extends Component {
   onSubmit = (client) => {
     const {editClient} = this.props
+    if(!this.props.isValid) {
+      this.touchAll()
+      return
+    }
     editClient(client, this.isEditMode())
+  }
+  touchAll() {
+    this.props.setTouched({name: true})
   }
   isEditMode() {
     return !isNaN(this.props.routeParams.id)
@@ -43,7 +50,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 const actions = {
   fetchClientIfNeeded, editClient,
-  setProperty, touchProperty, resetForm, initForm
+  setProperty, touchProperty, resetForm, initForm, setTouched
 }
 export default compose(
   connect(mapStateToProps, actions),

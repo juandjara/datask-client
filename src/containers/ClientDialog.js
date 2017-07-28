@@ -48,7 +48,7 @@ class ClientDialog extends Component {
       {value: "INTERNAL", label: "Interno"},
       {value: "CONTACT", label: "Contacto"},
     ]
-    const {model, loading, isEditMode, isValid, validationErrors} = this.props
+    const {model, loading, isEditMode, validationErrors} = this.props
     return (
       <div className="edit-client">
         <Dialog
@@ -56,14 +56,14 @@ class ClientDialog extends Component {
           className="edit-dialog"
           onEscKeyDown={this.onCancel}
           onOverlayClick={this.onCancel}
-          title={isEditMode ? 'Nuevo cliente':'Editar cliente'}>
+          title={isEditMode ? 'Editar cliente':'Nuevo cliente'}>
           {loading ? (
             <p className="color-primary">Cargando ...</p>
           ) : (
             <form onSubmit={this.onSubmit}>
               <Input
                 name="name"
-                label="Nombre"
+                label="Nombre*"
                 value={model.name || ''}
                 error={validationErrors.name}
                 onChange={this.onChange}
@@ -85,7 +85,7 @@ class ClientDialog extends Component {
               />
               <Button
                 primary raised
-                disabled={!isValid || loading}
+                disabled={loading}
                 className="edit-dialog-button"
                 label="Guardar"
                 type="submit"

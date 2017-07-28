@@ -6,16 +6,29 @@ import {
   editUser,
   getUserById
 } from '../reducers/users.reducer'
-import { setProperty, touchProperty, initForm, resetForm } from '../reducers/form.reducer'
+import { setProperty, touchProperty, initForm, resetForm, setTouched } from '../reducers/form.reducer'
 import { fetchClientsPage, getClientsPage } from '../reducers/clients.reducer'
 import validate, {isRequired, passwordMatch} from '../components/Validate'
 import { compose } from 'redux'
 
 class UserDialogContainer extends Component {
   onSubmit = (user) => {
+    if(!this.props.isValid) {
+      this.touchAll()
+      return
+    }
     const { editUser } = this.props
     user.authorities = user.authorities.split(',').map(a => a.trim())
     editUser(user, this.isEditMode())
+  }
+  touchAll() {
+    const touched = 'login,email,password,repeat_password'
+      .split(',')
+      .reduce((prev, next) => {
+        prev[next] = true
+        return prev
+      }, {})
+    this.props.setTouched(touched)
   }
   isEditMode() {
     return !isNaN(this.props.routeParams.id)
@@ -51,7 +64,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 const actions = {
   fetchUserIfNeeded, editUser, fetchClientsPage,
-  setProperty, touchProperty, resetForm, initForm
+  setProperty, touchProperty, resetForm, initForm, setTouched
 }
 
 export default compose(
