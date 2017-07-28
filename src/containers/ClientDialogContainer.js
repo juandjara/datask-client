@@ -16,7 +16,7 @@ class ClientDialogContainer extends Component {
     editClient(client, this.isEditMode())
   }
   isEditMode() {
-    return !!isNaN(this.props.routeParams.id)
+    return !isNaN(this.props.routeParams.id)
   }
   render() {
     return (
