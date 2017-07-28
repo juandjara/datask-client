@@ -10,7 +10,6 @@ import { connect } from 'react-redux'
 import { fetchUsersPage, deleteUser, getUsersPage } from '../reducers/users.reducer'
 import PaginationFooter from '../components/PaginationFooter'
 
-const TooltipIcon = Tooltip(Icon);
 const TooltipButton = Tooltip(Button);
 
 class Users extends Component {
@@ -23,12 +22,6 @@ class Users extends Component {
   }
   renderListActions(user) {
     return [
-      <Link
-        to={`/users/${user.id}`}
-        key={`edit_user_${user.id}`}
-        style={{color: '#757575'}} >
-        <TooltipIcon tooltip="Editar" value="edit" />
-      </Link>,
       <ConfirmDeleteButton
         tooltip="Borrar"
         title={`Borrar usuario ${user.name}`}
@@ -55,11 +48,13 @@ class Users extends Component {
             className="list-corner-fab"
           />
         </Link>
-        <List className="list">
+        <List selectable className="list">
           {users.map((user, i) => (
             <Link key={i} className="link-reset" 
-                  to={`/users/${user.id}`}>
+                  title="Editar usuario" to={`/users/${user.id}`}>
               <ListItem
+                key={i}
+                selectable
                 caption={user.name}
                 leftIcon="work"
                 className="list-item"
