@@ -11,19 +11,25 @@ class UserDialog extends Component {
     active: true
   }
   componentDidMount() {
-    const {id, isEditMode, fetchUserIfNeeded, fetchClients, companies} = this.props
+    const {id, isEditMode, fetchUserIfNeeded, fetchClientsPage, companies} = this.props
     if(isEditMode) {
       fetchUserIfNeeded(id)
     }
     if(!companies.length) {
-      fetchClients()
+      fetchClientsPage(0, 1000)
     }
+    this.initForm(this.props.user)
   }
   componentWillUnmount = () => {
     this.props.resetForm()
   }
-  componentWillReceiveProps = ({user}) => {
-    if(user !== this.props.user && !user.loading && !user.missing) {
+  componentWillReceiveProps = (nextProps) => {
+    if(nextProps.user !== this.props.user) {
+      this.initForm(nextProps.user)
+    }
+  }
+  initForm = (user) => {
+    if(!user.loading && !user.missing) {
       this.props.initForm({
         ...user,
         authorities: user.authorities.join(', ')
