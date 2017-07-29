@@ -7,23 +7,26 @@ import Button from 'react-toolbox/lib/button/Button'
 import ConfirmDeleteButton from '../components/ConfirmDeleteButton'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
-import { fetchProjects, deleteProject } from '../reducers/projects.reducer'
+import { 
+  fetchProjectsPage, deleteProject, getProjectsPage
+} from '../reducers/projects.reducer'
+import PaginationFooter from '../components/PaginationFooter'
 
 const TooltipIcon = Tooltip(Icon);
 const TooltipButton = Tooltip(Button);
 
 class Projects extends Component {
+  pageSize = 5;
   componentDidMount() {
-    this.props.dispatch(fetchProjects());
+    this.fetchPage(0)
   }
-  deleteProject = (project) => {
-    this.props.dispatch(deleteProject(project))
+  fetchPage() {
+    this.props.fetchProjectsPage(page, this.pageSize)
   }
   renderListActions(project) {
     const actionsData = [
       {link: `/tasks/${project.id}`, icon: 'timer', tooltip: 'Tareas'},
-      {link: `/requests/${project.id}`, icon: 'record_voice_over', tooltip: 'Solicitudes'},
-      {link: `/projects/${project.id}`, icon: 'edit', tooltip: 'Editar'}
+      {link: `/requests/${project.id}`, icon: 'record_voice_over', tooltip: 'Solicitudes'}
     ]
     const actions = actionsData.map((data, i) => (
       <Link
@@ -46,13 +49,12 @@ class Projects extends Component {
     return actions;
   }
   render() {
-    const {loading, error, projects, children} = this.props;
+    const {loading, projects, children, pageParams} = this.props;
     return (
       <div className="projects list-container">
         <div className="list-title-container">
           <h2 className="list-title">Proyectos</h2>
           {loading && <p className="color-primary">Cargando ... </p>}
-          {error && <p className="color-error">{error}</p>}
         </div>
         <Link to="/projects/new">
           <TooltipButton
@@ -63,14 +65,12 @@ class Projects extends Component {
             className="list-corner-fab"
           />
         </Link>
-        <List className="list">
+        <List selectable className="list">
           {projects.map((project, i) => (
-            <Link
-              key={i}
-              className="link-reset"
-              to={`/projects/${project.id}`}
-            >
+            <Link key={i} className="link-reset"
+                  title="Editar proyecto" to={`/projects/${project.id}`}>
               <ListItem
+                selectable
                 caption={project.name}
                 leftIcon="work"
                 className="list-item"
@@ -79,16 +79,24 @@ class Projects extends Component {
             </Link>
           ))}
         </List>
+        <PaginationFooter
+          params={pageParams}
+          onPageChange={page => this.fetchPage()}
+        />
         {children}
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  projects: state.projects.currentPage,
-  loading: state.projects.loading,
-  error: state.projects.error
-});
+const mapStateToProps = state => {
+  const {items, loading, params} = getProjectsPage(state)
+  return {
+    pageParams: params,
+    projects: items,
+    loading
+  }
+}
+const actions = {fetchProjectsPage, deleteProject}
 
-export default connect(mapStateToProps)(Projects);
+export default connect(mapStateToProps, actions)(Projects);
