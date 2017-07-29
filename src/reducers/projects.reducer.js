@@ -1,67 +1,45 @@
 import axios from '../utils/axiosWrapper'
 import { browserHistory } from 'react-router'
+import createPaginator from './createPaginator'
+import { combineReducers } from 'redux'
 
-// action types
-export const PROJECTS_FETCH = "PROJECTS_FETCH"
-export const PROJECTS_FETCH_SUCCESS = "PROJECTS_FETCH_SUCCESS"
-export const PROJECTS_FETCH_ERROR = "PROJECTS_FETCH_ERROR"
-
-export const PROJECT_FETCH = "PROJECT_FETCH"
-export const PROJECT_FETCH_SUCCESS = "PROJECT_FETCH_SUCCESS"
-export const PROJECT_FETCH_ERROR = "PROJECT_FETCH_ERROR"
-
-export const PROJECT_RESET = "PROJECT_RESET"
-export const PROJECT_UPDATE_FIELD = "PROJECT_UPDATE_FIELD"
-
-export const PROJECT_UPDATE = "PROJECT_UPDATE"
-export const PROJECT_UPDATE_SUCCESS = "PROJECT_UPDATE_SUCCESS"
-export const PROJECT_UPDATE_ERROR = "PROJECT_UPDATE_ERROR"
-
-export const PROJECT_CREATE = "PROJECT_CREATE"
-export const PROJECT_CREATE_SUCCESS = "PROJECT_CREATE_SUCCESS"
-export const PROJECT_CREATE_ERROR = "PROJECT_CREATE_ERROR"
-
-export const PROJECT_DELETE = "PROJECT_DELETE"
-export const PROJECT_DELETE_SUCCESS = "PROJECT_DELETE_SUCCESS"
-export const PROJECT_DELETE_ERROR = "PROJECT_DELETE_ERROR"
-
-// gets error message from server response
-const errorHandler = err => err.response.data.message;
 const endpoint = "/project"
+const paginator = createPaginator(endpoint)
 
-// action creators
+// SELECTORS
+export const getProjectsPage = state => paginator.selectors.pageSelector(
+  state.projects.pagination,
+  state.projects.entities
+)
+export const getProjectById = (state, id) => state.projects.entities[id] || {missing: true}
 
-// receives pagination params
-// and dispatches actions to fetch the list of projects
-export function fetchProjects(params) {
-  return (dispatch) => {
-    dispatch({ type: PROJECTS_FETCH });
-    axios.get(`${endpoint}`, {params})
-    .then(res => dispatch({ type: PROJECTS_FETCH_SUCCESS, projects: res.data }))
-    .catch(err => dispatch({ type: PROJECTS_FETCH_ERROR, error: errorHandler(err) }))
-  }
-}
+// ACTION TYPES
+export const PROJECTS_FETCH = paginator.types.FETCH_PAGE
+export const PROJECT_FETCH = "PROJECT_FETCH"
+export const PROJECT_UPDATE = "PROJECT_UPDATE"
+export const PROJECT_CREATE = "PROJECT_CREATE"
+export const PROJECT_DELETE = "PROJECT_DELETE"
+
+// ACTION CREATORS
+
+// receives page and page size
+// and dispatches actions to fetch a page from the list of users
+export const fetchProjectsPage = paginator.actions.fetchPage
 
 // receives project id
 // and dispatches actions to fetch the project
 export function fetchSingleProject(id) {
-  return (dispatch) => {
-    dispatch({ type: PROJECT_FETCH })
-    axios.get(`${endpoint}/id/${id}`)
-    .then(res => dispatch({ type: PROJECT_FETCH_SUCCESS, project: res.data }))
-    .catch(err => dispatch({ type: PROJECT_FETCH_ERROR, error: errorHandler(err) }))
+  return {
+    type: PROJECT_FETCH,
+    payload: axios.get(`${endpoint}/id/${id}`).then(res => res.data)
   }
 }
 
-// resets active project back to null
-// useful for creating a new project
-export function resetProject() {
-  return { type: PROJECT_RESET }
-}
-
-// updates form field when user types
-export function updateProjectField(name, value) {
-  return { name, value, type: PROJECT_UPDATE_FIELD }
+// checks if given user is loaded and dispatches action to load it if not
+export const fetchProjectIfNeeded = id => (dispatch, getState) => {
+  if(!getProjectById(getState(), id)) {
+    return dispatch(fetchSingleProject(id))
+  }
 }
 
 // receives project, sends data to backend,
@@ -78,119 +56,74 @@ export function saveProject(project) {
   }
 }
 
-// receives project, sends data to backend,
+// receive project, send data to backend,
 // and dispatch the related actions
-export function createProject(project) {
-  return (dispatch) => {
-    dispatch({ type: PROJECT_CREATE })
-    axios.post(endpoint, project)
-    .then(res => {
-      dispatch({ type: PROJECT_CREATE_SUCCESS, project: res.data })
-      browserHistory.push('/projects')
-    })
-    .catch(err => dispatch({ type: PROJECT_CREATE_ERROR, error: errorHandler(err) }))
+export function editProject(project, isEditMode) {
+  const promise = axios({
+    method: isEditMode ? 'put':'post',
+    url: isEditMode ? `${endpoint}/id/${id}` : endpoint,
+    data: project
+  }).then(res => res.data)
+  promise.then(() => {
+    browserHistory.push('/projects')
+  })
+  return {
+    type: isEditMode ? PROJECT_UPDATE : PROJECT_CREATE,
+    payload: promise
   }
 }
 
 // receives project, deletes data in backend,
 // and dispatch the related actions
-export function deleteProject(project) {
-  return (dispatch) => {
-    dispatch({ type: PROJECT_DELETE })
-    axios.delete(`${endpoint}/id/${project.id}`)
-    .then(res => dispatch({ type: PROJECT_DELETE_SUCCESS, project }))
-    .catch(err => dispatch({ type: PROJECT_DELETE_ERROR, error: errorHandler(err) }))
-  }
+export const deleteProject = project => (dispatch, getState) => {
+  const {projects} = getState()
+  const promise = axios.delete(`${endpoint}/id/${project.id}`).then(() => project)
+  dispatch({
+    type: PROJECT_DELETE,
+    payload: promise
+  })
+  promise.then(() => {
+    dispatch(fetchProjectsPage(projects.pagination.page))
+  })
 }
 
-const initialState = {currentPage: []}
-
-// computes a slice of the state for the PROJECT_UPDATE_SUCCESS action
-const updateSuccess = (state, action) => {
-  const projects = state.currentPage.map(project => {
-    return project.id === action.project.id ?
-      action.project :
-      project;
-  });
-  return {
-    ...state,
-    currentPage: projects,
-    activeProject: action.project,
-    loading: false
-  }
-}
-
-// computes a slice of the state for the PROJECT_CREATE_SUCCESS action
-const createSuccess = (state, action) => {
-  const projects = state.currentPage.concat(action.project);
-  return {
-    ...state,
-    currentPage: projects,
-    activeProject: null,
-    loading: false
-  }
-}
-
-
-// reducer
-export default (state = initialState, action) => {
+// REDUCER
+const projectsReducer = (state = {}, action = {}) => {
+  const {type, payload} = action
   switch (action.type) {
-    case PROJECTS_FETCH:
-    case PROJECT_FETCH:
-    case PROJECT_UPDATE:
-    case PROJECT_CREATE:
-    case PROJECT_DELETE:
+    case `${PROJECT_FETCH}_LOADING`:
+    case `${PROJECT_UPDATE}_LOADING`:
+    case `${PROJECT_CREATE}_LOADING`:
+    case `${PROJECT_DELETE}_LOADING`:
       return {
         ...state,
-        loading: true
+        [payload.id] :{loading: true}
       }
-    case PROJECTS_FETCH_SUCCESS:
+    case `${PROJECT_FETCH}_SUCCESS`:
+    case `${PROJECT_CREATE}_SUCCESS`:
+    case `${PROJECT_UPDATE}_SUCCESS`:
       return {
         ...state,
-        currentPage: action.projects.content,
-        loading: false
+        [payload.id]: payload
       }
-    case PROJECT_FETCH_SUCCESS:
+    case `${PROJECT_DELETE}_SUCCESS`:
+      const copy = {...state}
+      delete copy[payload.id]
+      return copy
+    case `${PROJECT_FETCH}_ERROR`:
+    case `${PROJECT_UPDATE}_ERROR`:
+    case `${PROJECT_CREATE}_ERROR`:
+    case `${PROJECT_DELETE}_ERROR`:
       return {
         ...state,
-        activeProject: action.project,
-        loading: false
-      }
-    case PROJECT_UPDATE_SUCCESS:
-      return updateSuccess(state, action)
-    case PROJECT_CREATE_SUCCESS:
-      return createSuccess(state, action)
-    case PROJECT_DELETE_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        currentPage: state.currentPage
-          .filter(project => project.id !== action.project.id)
-      }
-    case PROJECT_RESET:
-      return {
-        ...state,
-        activeProject: null
-      }
-    case PROJECT_UPDATE_FIELD:
-      return {
-        ...state,
-        activeProject: {
-          ...state.activeProject,
-          [action.name]: action.value
-        }
-      }
-    case PROJECTS_FETCH_ERROR:
-    case PROJECT_FETCH_ERROR:
-    case PROJECT_UPDATE_ERROR:
-    case PROJECT_CREATE_ERROR:
-    case PROJECT_DELETE_ERROR:
-      return {
-        ...state,
-        error: action.error,
-        loading: false
+        [payload.id]: {loading: false, error: payload}
       }
     default:
-      return state;
+      return paginator.reducers.items(state, action);
   }
 }
+
+export default combineReducers({
+  entities: projectsReducer,
+  pagination: paginator.reducers.pagination
+})
