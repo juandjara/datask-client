@@ -20,7 +20,7 @@ class Projects extends Component {
   componentDidMount() {
     this.fetchPage(0)
   }
-  fetchPage() {
+  fetchPage(page) {
     this.props.fetchProjectsPage(page, this.pageSize)
   }
   renderListActions(project) {
@@ -81,7 +81,7 @@ class Projects extends Component {
         </List>
         <PaginationFooter
           params={pageParams}
-          onPageChange={page => this.fetchPage()}
+          onPageChange={page => this.fetchPage(page)}
         />
         {children}
       </div>

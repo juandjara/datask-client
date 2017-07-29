@@ -42,26 +42,12 @@ export const fetchProjectIfNeeded = id => (dispatch, getState) => {
   }
 }
 
-// receives project, sends data to backend,
-// and dispatch the related actions
-export function saveProject(project) {
-  return (dispatch) => {
-    dispatch({ type: PROJECT_UPDATE })
-    axios.put(`${endpoint}/id/${project.id}`, project)
-    .then(res => {
-      dispatch({ type: PROJECT_UPDATE_SUCCESS, project: res.data })
-      browserHistory.push('/projects')
-    })
-    .catch(err => dispatch({ type: PROJECT_UPDATE_ERROR, error: errorHandler(err) }))
-  }
-}
-
 // receive project, send data to backend,
 // and dispatch the related actions
 export function editProject(project, isEditMode) {
   const promise = axios({
     method: isEditMode ? 'put':'post',
-    url: isEditMode ? `${endpoint}/id/${id}` : endpoint,
+    url: isEditMode ? `${endpoint}/id/${project.id}` : endpoint,
     data: project
   }).then(res => res.data)
   promise.then(() => {
@@ -90,7 +76,7 @@ export const deleteProject = project => (dispatch, getState) => {
 // REDUCER
 const projectsReducer = (state = {}, action = {}) => {
   const {type, payload} = action
-  switch (action.type) {
+  switch (type) {
     case `${PROJECT_FETCH}_LOADING`:
     case `${PROJECT_UPDATE}_LOADING`:
     case `${PROJECT_CREATE}_LOADING`:
