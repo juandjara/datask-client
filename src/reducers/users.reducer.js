@@ -67,7 +67,7 @@ export const createUser = user => editUser(user, false)
 // and dispatch the related actions
 export const deleteUser = (user) => (dispatch, getState) => {
   const {users} = getState()
-  const promise = axios.delete(`${endpoint}/id/${user.id}`).then(res => res.data)
+  const promise = axios.delete(`${endpoint}/id/${user.id}`).then(() => user)
   dispatch({
     type: USER_DELETE,
     payload: promise
