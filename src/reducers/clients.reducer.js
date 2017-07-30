@@ -29,9 +29,10 @@ export const fetchClientsPage = paginator.actions.fetchPage
 // receives project id
 // and dispatches actions to fetch the client
 export function fetchSingleClient(id) {
+  const promise = axios.get(`${endpoint}/id/${id}`).then(res => res.data)
   return {
     type: CLIENT_FETCH,
-    payload: axios.get(`${endpoint}/id/${id}`).then(res => res.data)
+    payload: {data: {id}, promise}
   }
 }
 
@@ -54,7 +55,7 @@ export function editClient(client, isEditMode) {
   promise.then(() => browserHistory.push('/clients'))
   return {
     type: isEditMode ? CLIENT_UPDATE : CLIENT_CREATE,
-    payload: promise
+    payload: {data: client, promise}
   }
 }
 export const saveClient = client => editClient(client, true)
@@ -67,7 +68,7 @@ export const deleteClient = (client) => (dispatch, getState) => {
   const promise = axios.delete(`${endpoint}/id/${client.id}`).then(() => client)
   dispatch({
     type: CLIENT_DELETE,
-    payload: promise
+    payload: {data: client, promise}
   })
   promise.then(() => {
     dispatch(fetchClientsPage(clients.pagination.page))

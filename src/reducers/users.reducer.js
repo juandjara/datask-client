@@ -29,10 +29,10 @@ export const fetchUsersPage = paginator.actions.fetchPage
 // receives project id
 // and dispatches actions to fetch the user
 export function fetchSingleUser(id) {
+  const promise = axios.get(`${endpoint}/id/${id}`).then(res => res.data)
   return {
     type: USER_FETCH,
-    payload: axios.get(`${endpoint}/id/${id}`)
-                  .then(res => res.data)
+    payload: {data: {id}, promise}
   }
 }
 
@@ -57,7 +57,7 @@ export function editUser(user, isEditMode) {
   })
   return {
     type: isEditMode ? USER_UPDATE : USER_CREATE,
-    payload: promise
+    payload: {data: user, promise}
   }
 }
 export const saveUser = user => editUser(user, true)
@@ -70,7 +70,7 @@ export const deleteUser = (user) => (dispatch, getState) => {
   const promise = axios.delete(`${endpoint}/id/${user.id}`).then(() => user)
   dispatch({
     type: USER_DELETE,
-    payload: promise
+    payload: {data: user, promise}
   })
   promise.then(() => {
     dispatch(fetchUsersPage(users.pagination.page))
