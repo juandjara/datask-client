@@ -57,41 +57,40 @@ class ClientDialog extends Component {
           onEscKeyDown={this.onCancel}
           onOverlayClick={this.onCancel}
           title={isEditMode ? 'Editar cliente':'Nuevo cliente'}>
-          {loading ? (
+          {loading && (
             <p className="color-primary">Cargando ...</p>
-          ) : (
-            <form onSubmit={this.onSubmit}>
-              <Input
-                name="name"
-                label="Nombre*"
-                value={model.name || ''}
-                error={validationErrors.name}
-                onChange={this.onChange}
-              />
-              <Dropdown
-                name="typeCompany"
-                label="Tipo de cliente"
-                icon="info"
-                source={statusOptions}
-                value={model.typeCompany || ''}
-                onChange={this.onChange}
-              />
-              <Input
-                icon="location_on"
-                name="address"
-                label="Dirección"
-                value={model.address || ''}
-                onChange={this.onChange}
-              />
-              <Button
-                primary raised
-                disabled={loading}
-                className="edit-dialog-button"
-                label="Guardar"
-                type="submit"
-              />
-            </form>
           )}
+          <form onSubmit={this.onSubmit}>
+            <Input
+              name="name"
+              label="Nombre*"
+              value={model.name || ''}
+              error={validationErrors.name}
+              onChange={this.onChange}
+            />
+            <Dropdown
+              name="typeCompany"
+              label="Tipo de cliente"
+              icon="info"
+              source={statusOptions}
+              value={model.typeCompany || ''}
+              onChange={this.onChange}
+            />
+            <Input
+              icon="location_on"
+              name="address"
+              label="Dirección"
+              value={model.address || ''}
+              onChange={this.onChange}
+            />
+            <Button
+              primary raised
+              disabled={loading}
+              className="edit-dialog-button"
+              label="Guardar"
+              type="submit"
+            />
+          </form>
         </Dialog>
       </div>
     );

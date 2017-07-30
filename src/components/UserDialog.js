@@ -68,135 +68,134 @@ class UserDialog extends Component {
           onOverlayClick={this.onCancel}
           title={editMode ? 'Editar usuario':'Nuevo usuario'}
         >
-          {loading ? (
+          {loading && (
             <p style={{margin: '1em'}} className="color-primary">Cargando ...</p>
-          ) : (
-            <form onSubmit={this.onSubmit}>
-              <Checkbox
-                className="edit-dialog-active"
-                name="activated"
-                checked={model.activated}
-                onChange={this.onChange}
-                onBlur={this.onBlur}
-                label="Activado"
-              />
-              <Input
-                icon="person_outline"
-                disabled={editMode}
-                name="login"
-                label="Nombre de usuario*"
-                value={model.login || ''}
-                error={validationErrors.login}
-                onChange={this.onChange}
-                onBlur={this.onBlur}
-              />                
-              {editMode ? null : (
-                <div style={{display: 'flex'}} >
-                  <Input
-                    type="password"
-                    name="password"
-                    icon="lock"                  
-                    label="Contraseña*"
-                    value={model.password || ''}
-                    error={validationErrors.password}
-                    onChange={this.onChange}
-                    onBlur={this.onBlur}
-                  />
-                  <Input
-                    type="password"
-                    name="repeat_password"
-                    label="Repetir contraseña*"
-                    value={model.repeat_password || ''}
-                    error={validationErrors.repeat_password}
-                    onChange={this.onChange}
-                    onBlur={this.onBlur}
-                  />
-                </div>
-              )}
-              <Input
-                icon="mail"
-                name="email"
-                type="email"
-                label="Email*"
-                value={model.email || ''}
-                error={validationErrors.email}
-                onChange={this.onChange}
-                onBlur={this.onBlur}
-              />               
-              <div style={{
-                display: 'flex',
-              }}>
+          )}
+          <form onSubmit={this.onSubmit}>
+            <Checkbox
+              className="edit-dialog-active"
+              name="activated"
+              checked={model.activated}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+              label="Activado"
+            />
+            <Input
+              icon="person_outline"
+              disabled={editMode}
+              name="login"
+              label="Nombre de usuario*"
+              value={model.login || ''}
+              error={validationErrors.login}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />                
+            {editMode ? null : (
+              <div style={{display: 'flex'}} >
                 <Input
-                  name="name"
-                  label="Nombre"
-                  icon="person"
-                  value={model.name || ''}
-                  error={validationErrors.name}
+                  type="password"
+                  name="password"
+                  icon="lock"                  
+                  label="Contraseña*"
+                  value={model.password || ''}
+                  error={validationErrors.password}
                   onChange={this.onChange}
                   onBlur={this.onBlur}
                 />
                 <Input
-                  name="surname"
-                  label="Apellidos"
-                  value={model.surname || ''}
-                  error={validationErrors.surname}
+                  type="password"
+                  name="repeat_password"
+                  label="Repetir contraseña*"
+                  value={model.repeat_password || ''}
+                  error={validationErrors.repeat_password}
                   onChange={this.onChange}
                   onBlur={this.onBlur}
                 />
               </div>
-              <Dropdown
-                name="typeUser"
-                label="Tipo de usuario"
-                icon="info"
-                source={statusOptions}
-                value={model.typeUser || ''}
-                error={validationErrors.typeUser}
+            )}
+            <Input
+              icon="mail"
+              name="email"
+              type="email"
+              label="Email*"
+              value={model.email || ''}
+              error={validationErrors.email}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />               
+            <div style={{
+              display: 'flex',
+            }}>
+              <Input
+                name="name"
+                label="Nombre"
+                icon="person"
+                value={model.name || ''}
+                error={validationErrors.name}
                 onChange={this.onChange}
                 onBlur={this.onBlur}
               />
               <Input
-                icon="lock"
-                name="authorities"
-                type="text"
-                label="Roles"
-                value={model.authorities || ''}
-                error={validationErrors.authorities}
+                name="surname"
+                label="Apellidos"
+                value={model.surname || ''}
+                error={validationErrors.surname}
                 onChange={this.onChange}
                 onBlur={this.onBlur}
               />
-              <Dropdown
-                name="companyId"
-                label="Empresa"
-                icon="business"
-                source={companies}
-                value={model.companyId}
-                error={validationErrors.companyId}
-                onChange={this.onChange}
-                onBlur={this.onBlur}
-              />
-              <Input
-                icon="phone"
-                name="officePhone"
-                type="number"
-                label="Teléfono"
-                value={model.officePhone || ''}
-                error={validationErrors.officePhone}
-                onChange={this.onChange}
-                onBlur={this.onBlur}
-              />
-              <Button
-                primary raised
-                disabled={loading}
-                className="edit-dialog-button"
-                label="Guardar"
-                type="submit"
-              />
-              <Button 
-                className="edit-dialog-button"
-                label="Cancelar"
-                onClick={this.onCancel} />
-            </form>
-          )}
+            </div>
+            <Dropdown
+              name="typeUser"
+              label="Tipo de usuario"
+              icon="info"
+              source={statusOptions}
+              value={model.typeUser || ''}
+              error={validationErrors.typeUser}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+            <Input
+              icon="lock"
+              name="authorities"
+              type="text"
+              label="Roles"
+              value={model.authorities || ''}
+              error={validationErrors.authorities}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+            <Dropdown
+              name="companyId"
+              label="Empresa"
+              icon="business"
+              source={companies}
+              value={model.companyId}
+              error={validationErrors.companyId}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+            <Input
+              icon="phone"
+              name="officePhone"
+              type="number"
+              label="Teléfono"
+              value={model.officePhone || ''}
+              error={validationErrors.officePhone}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+            <Button
+              primary raised
+              disabled={loading}
+              className="edit-dialog-button"
+              label="Guardar"
+              type="submit"
+            />
+            <Button 
+              className="edit-dialog-button"
+              label="Cancelar"
+              onClick={this.onCancel} />
+          </form>
         </Dialog>
       </div>
     );
