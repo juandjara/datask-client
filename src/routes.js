@@ -4,7 +4,7 @@ import { IndexRedirect, Route } from 'react-router'
 import App from './containers/App';
 import Profile from './containers/Profile'
 import Projects from './containers/Projects'
-import ProjectDialog from './containers/ProjectDialog'
+import ProjectDialogContainer from './containers/ProjectDialogContainer'
 import Users from './containers/Users'
 import UserDialogContainer from './containers/UserDialogContainer'
 import Clients from './containers/Clients'
@@ -18,7 +18,7 @@ export default (store) => {
     <Route path="/" component={App} onEnter={requireAuth(store)}>
       <IndexRedirect to="/projects" />
       <Route path="projects" component={Projects}>
-        <Route path=":id" component={ProjectDialog} />
+        <Route path=":id" component={ProjectDialogContainer} />
       </Route>
       <Route path="users" component={Users}>
         <Route path=":id" component={UserDialogContainer} />

@@ -11,12 +11,12 @@ import validate, {isRequired} from '../components/Validate'
 import { compose } from 'redux'
 
 class ProjectDialogContainer extends Component {
-  onSubmit = (user) => {
+  onSubmit = (project) => {
     if(!this.props.isValid) {
       this.touchAll()
       return
     }
-    this.props.editUser(user, this.isEditMode())
+    this.props.editProject(project, this.isEditMode())
   }
   touchAll() {
     const touched = 'name'

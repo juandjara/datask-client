@@ -75,7 +75,7 @@ export const deleteProject = project => (dispatch, getState) => {
 
 // REDUCER
 const projectsReducer = (state = {}, action = {}) => {
-  const {type, payload} = action
+  const {type, payload = {}} = action
   switch (type) {
     case `${PROJECT_FETCH}_LOADING`:
     case `${PROJECT_UPDATE}_LOADING`:
