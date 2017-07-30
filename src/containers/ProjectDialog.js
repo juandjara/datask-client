@@ -4,55 +4,55 @@ import Input from 'react-toolbox/lib/input/Input'
 import Dropdown from 'react-toolbox/lib/dropdown/Dropdown'
 import Button from 'react-toolbox/lib/button/Button'
 import { browserHistory } from 'react-router'
-import { connect } from 'react-redux'
-import {
-  fetchSingleProject,
-  resetProject,
-  updateProjectField,
-  saveProject,
-  createProject
-} from '../reducers/projects.reducer'
 
 class EditProject extends Component {
   state = {
     active: true
   }
   componentDidMount() {
-    const { routeParams, dispatch } = this.props;
-    const id = parseInt(routeParams.id, 10);
-    if(!isNaN(id)) {
-      dispatch(fetchSingleProject(id))
+    const {id, project, isEditMode, fetchProjectIfNeeded} = this.props
+    if(isEditMode) {
+      fetchProjectIfNeeded(id)
     }
+    this.initForm(project)
   }
   componentWillUnmount() {
-    this.props.dispatch(resetProject())
+    this.props.resetForm()
+  }
+  componentWillReceiveProps = ({project}) => {
+    if(project !== this.props.project) {
+      this.initForm(project)
+    }
+  }
+  initForm(project) {
+    if(!project.loading && !project.missing) {
+      this.props.initForm(project)
+    }
   }
 
-  onCancel = () => {
-    browserHistory.push('/projects')
-  }
   onSubmit = (ev) => {
     ev.preventDefault()
-    const { project, dispatch, routeParams } = this.props
-    let action = null
-    if(isNaN(routeParams.id)) {
-      action = createProject
-    } else {
-      action = saveProject
-    }
-    dispatch(action(project))
+    this.props.onSubmit(this.props.model)
   }
   onChange = (text, ev) => {
     const name = ev.target.name;
-    this.props.dispatch(updateProjectField(name, text))
+    this.props.onChange(name, text)
   }
+  onBlur = (ev) => {
+    const name = ev.target.name;
+    this.props.onBlur(name)    
+  }
+  onCancel = () => {
+    browserHistory.push('/projects')
+  }
+
   render() {
     const statusOptions = [
       {value: "ACTIVE", label: "Activo"},
       {value: "PAUSED", label: "En pausa"},
       {value: "COMPLETED", label: "Completado"}
     ]
-    const {project, loading, error, routeParams} = this.props;
+    const {model, loading, isEditMode, validationErrors} = this.props;
     return (
       <div className="edit-project">
         <Dialog
@@ -60,19 +60,18 @@ class EditProject extends Component {
           active={this.state.active}
           onEscKeyDown={this.onCancel}
           onOverlayClick={this.onCancel}
-          title={isNaN(routeParams.id) ? 'Nuevo proyecto':'Editar proyecto'}
+          title={isEditMode ? 'Editar proyecto':'Nuevo proyecto'}
         >
           {loading && <p className="color-primary">Cargando ...</p>}
-          {error && <p className="color-error">{error}</p>}
           <form onSubmit={this.onSubmit}
-                style={{
-                  display: loading ? 'none':'block'
-                }}>
+                style={{ display: loading ? 'none':'block'}}>
             <Input
               name="name"
               label="Nombre"
-              value={project.name || ''}
+              error={validationErrors.name}
+              value={model.name || ''}
               onChange={this.onChange}
+              onBlur={this.onBlur}
             />
             <h2>Estado</h2>
             <Dropdown
@@ -80,8 +79,9 @@ class EditProject extends Component {
               label="Estado"
               icon="info"
               source={statusOptions}
-              value={project.status || ''}
+              value={model.status || ''}
               onChange={this.onChange}
+              onBlur={this.onBlur}
             />
             <Input
               icon="lightbulb_outline"
@@ -89,12 +89,15 @@ class EditProject extends Component {
               type="number"
               min="0"
               max="100"
-              value={project.completedEstimated || 0}
+              value={model.completedEstimated || 0}
               onChange={this.onChange}
               label="% completado estimado"
+              onBlur={this.onBlur}
             />
             <Button
               primary raised
+              disabled={loading}
+              className="edit-dialog-button"
               label="Guardar"
               type="submit"
             />
@@ -105,12 +108,4 @@ class EditProject extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    error: state.projects.error,
-    loading: state.projects.loading,
-    project: state.projects.activeProject || {}
-  }
-}
-
-export default connect(mapStateToProps)(EditProject);
+export default EditProject
