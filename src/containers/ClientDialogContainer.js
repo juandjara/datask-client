@@ -12,8 +12,8 @@ import ClientDialog from '../components/ClientDialog'
 
 class ClientDialogContainer extends Component {
   onSubmit = (client) => {
-    const {editClient} = this.props
-    if(!this.props.isValid) {
+    const {editClient, isValid, loading} = this.props
+    if(!isValid || loading) {
       this.touchAll()
       return
     }

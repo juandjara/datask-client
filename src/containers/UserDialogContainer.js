@@ -13,11 +13,11 @@ import { compose } from 'redux'
 
 class UserDialogContainer extends Component {
   onSubmit = (user) => {
-    if(!this.props.isValid) {
+    const {isValid, editUser, loading} = this.props
+    if(loading || !isValid) {
       this.touchAll()
       return
     }
-    const { editUser } = this.props
     user.authorities = user.authorities.split(',').map(a => a.trim())
     editUser(user, this.isEditMode())
   }

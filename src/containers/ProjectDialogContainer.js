@@ -12,11 +12,12 @@ import { compose } from 'redux'
 
 class ProjectDialogContainer extends Component {
   onSubmit = (project) => {
-    if(!this.props.isValid) {
+    const {editProject, isValid, loading} = this.props
+    if(!isValid || loading) {
       this.touchAll()
       return
     }
-    this.props.editProject(project, this.isEditMode())
+    editProject(project, this.isEditMode())
   }
   touchAll() {
     const touched = 'name'
