@@ -20,13 +20,7 @@ class ProjectDialogContainer extends Component {
     editProject(project, this.isEditMode())
   }
   touchAll() {
-    const touched = 'name'
-      .split(',')
-      .reduce((prev, next) => {
-        prev[next] = true
-        return prev
-      }, {})
-    this.props.setTouched(touched)
+    this.props.setTouched(['name'])
   }
   isEditMode() {
     return !isNaN(this.props.routeParams.id)

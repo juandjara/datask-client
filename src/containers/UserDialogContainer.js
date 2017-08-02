@@ -22,12 +22,7 @@ class UserDialogContainer extends Component {
     editUser(user, this.isEditMode())
   }
   touchAll() {
-    const touched = 'login,email,password,repeat_password'
-      .split(',')
-      .reduce((prev, next) => {
-        prev[next] = true
-        return prev
-      }, {})
+    const touched = 'login,email,password,repeat_password'.split(',')
     this.props.setTouched(touched)
   }
   isEditMode() {

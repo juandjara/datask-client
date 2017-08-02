@@ -10,7 +10,14 @@ export const setProperty = (name, value) => ({type: SET_PROP, payload: {name, va
 export const touchProperty = name => ({type: TOUCH_PROP, payload: {name}})
 export const initForm = model => ({type: INIT, payload: model})
 export const resetForm = () => ({type: RESET})
-export const setTouched = touched => ({type: SET_TOUCHED, payload: touched})
+export const setTouched = touched => ({
+  type: SET_TOUCHED, 
+  payload: touched
+    .reduce((prev, next) => {
+      prev[next] = true
+      return prev
+    }, {})
+})
 
 function modelReducer(state = {}, action = {}) {
   const {type, payload} = action
