@@ -6,6 +6,7 @@ import {
   editProject,
   getProjectById
 } from '../reducers/projects.reducer'
+import { fetchClientsPage, getClientsSelect } from '../reducers/clients.reducer'
 import { setProperty, touchProperty, initForm, resetForm, setTouched } from '../reducers/form.reducer'
 import validate, {isRequired} from '../components/Validate'
 import { compose } from 'redux'
@@ -40,16 +41,18 @@ class ProjectDialogContainer extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const project = getProjectById(state, ownProps.routeParams.id)
+  const companies = getClientsSelect(state)
   const {model, touched} = state.ui.form
   return {
     loading: project.loading,
     project,
     model,
-    touched
+    touched,
+    companies
   }
 }
 const actions = {
-  fetchProjectIfNeeded, editProject,
+  fetchProjectIfNeeded, editProject, fetchClientsPage,
   setProperty, touchProperty, resetForm, initForm, setTouched
 }
 

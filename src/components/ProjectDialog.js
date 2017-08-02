@@ -7,9 +7,15 @@ import { browserHistory } from 'react-router'
 
 class EditProject extends Component {
   componentDidMount() {
-    const {id, project, isEditMode, fetchProjectIfNeeded} = this.props
+    const {
+      id, project, isEditMode, companies,
+      fetchProjectIfNeeded, fetchClientsPage
+    } = this.props
     if(isEditMode) {
       fetchProjectIfNeeded(id)
+    }
+    if(!companies.length) {
+      fetchClientsPage(0, 1000)
     }
     this.initForm(project)
   }
@@ -49,7 +55,7 @@ class EditProject extends Component {
       {value: "PAUSED", label: "En pausa"},
       {value: "COMPLETED", label: "Completado"}
     ]
-    const {model, loading, isEditMode, validationErrors} = this.props;
+    const {model, loading, companies, isEditMode, validationErrors} = this.props;
     return (
       <div className="edit-project">
         <Dialog
@@ -89,6 +95,17 @@ class EditProject extends Component {
               value={model.completedEstimated || 0}
               onChange={this.onChange}
               label="% completado estimado"
+              onBlur={this.onBlur}
+            />
+            <Dropdown
+              name="companyId"
+              label="Empresa"
+              icon="business"
+              disabled={isEditMode}
+              source={companies}
+              value={model.companyId}
+              error={validationErrors.companyId}
+              onChange={this.onChange}
               onBlur={this.onBlur}
             />
             <Button

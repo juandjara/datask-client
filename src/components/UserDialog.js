@@ -8,14 +8,17 @@ import { browserHistory } from 'react-router'
 
 class UserDialog extends Component {
   componentDidMount() {
-    const {id, isEditMode, fetchUserIfNeeded, fetchClientsPage, companies} = this.props
+    const {
+      id, user, isEditMode, companies,
+      fetchUserIfNeeded, fetchClientsPage
+    } = this.props
     if(isEditMode) {
       fetchUserIfNeeded(id)
     }
     if(!companies.length) {
       fetchClientsPage(0, 1000)
     }
-    this.initForm(this.props.user)
+    this.initForm(user)
   }
   componentWillUnmount = () => {
     this.props.resetForm()
