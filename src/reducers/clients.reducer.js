@@ -11,6 +11,13 @@ export const getClientsPage = state => paginator.selectors.pageSelector(
   state.clients.pagination,
   state.clients.entities
 )
+export const getClientsSelect = state => {
+  return getClientsPage(state).items.map(client => ({
+    id: client.id,
+    value: client.id,
+    label: client.name
+  }))
+}
 export const getClientByID = (state, id) => state.clients.entities[id] || {missing: true}
 
 // ACTION TYPES

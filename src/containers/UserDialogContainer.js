@@ -7,7 +7,7 @@ import {
   getUserById
 } from '../reducers/users.reducer'
 import { setProperty, touchProperty, initForm, resetForm, setTouched } from '../reducers/form.reducer'
-import { fetchClientsPage, getClientsPage } from '../reducers/clients.reducer'
+import { fetchClientsPage, getClientsSelect } from '../reducers/clients.reducer'
 import validate, {isRequired, passwordMatch} from '../components/Validate'
 import { compose } from 'redux'
 
@@ -43,18 +43,14 @@ class UserDialogContainer extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const user = getUserById(state, ownProps.routeParams.id)
-  const companies = getClientsPage(state).items
+  const companies = getClientsSelect(state)
   const {model, touched} = state.ui.form
   return {
     loading: user.loading,
     user,
     model,
     touched,
-    companies: companies.map(comp => ({
-      id: comp.id,
-      value: comp.id,
-      label: comp.name
-    }))
+    companies
   }
 }
 const actions = {
