@@ -43,7 +43,7 @@ class Projects extends Component {
         tooltip="Borrar proyecto"
         title={`Borrar proyecto ${project.name}`}
         key={`delete_project_${project.id}`}
-        onDelete={() => this.deleteProject(project)}
+        onDelete={() => this.props.deleteProject(project)}
       />
     ))
     return actions;
