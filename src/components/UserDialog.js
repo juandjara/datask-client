@@ -7,9 +7,6 @@ import Checkbox from 'react-toolbox/lib/checkbox/Checkbox'
 import { browserHistory } from 'react-router'
 
 class UserDialog extends Component {
-  state = {
-    active: true
-  }
   componentDidMount() {
     const {id, isEditMode, fetchUserIfNeeded, fetchClientsPage, companies} = this.props
     if(isEditMode) {
@@ -63,7 +60,7 @@ class UserDialog extends Component {
       <div className="edit-user">
         <Dialog
           className="edit-dialog"
-          active={this.state.active}
+          active={true}
           onEscKeyDown={this.onCancel}
           onOverlayClick={this.onCancel}
           title={editMode ? 'Editar usuario':'Nuevo usuario'}

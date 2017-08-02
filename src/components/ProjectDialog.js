@@ -6,9 +6,6 @@ import Button from 'react-toolbox/lib/button/Button'
 import { browserHistory } from 'react-router'
 
 class EditProject extends Component {
-  state = {
-    active: true
-  }
   componentDidMount() {
     const {id, project, isEditMode, fetchProjectIfNeeded} = this.props
     if(isEditMode) {
@@ -57,7 +54,7 @@ class EditProject extends Component {
       <div className="edit-project">
         <Dialog
           className="edit-dialog"
-          active={this.state.active}
+          active={true}
           onEscKeyDown={this.onCancel}
           onOverlayClick={this.onCancel}
           title={isEditMode ? 'Editar proyecto':'Nuevo proyecto'}
