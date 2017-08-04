@@ -68,6 +68,7 @@ export default function createPaginator(
       case `${FETCH_PAGE}_SUCCESS`:
         return {
           ...state,
+          page: payload.number,
           totalPages: payload.totalPages,
           first: payload.first,
           last: payload.last,
