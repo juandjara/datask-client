@@ -12,9 +12,10 @@ export default function createPaginator(
   // this action creator is suposed to be used
   // with redux-promise-middleware
   // so propper actions are dispatched
-  const fetchPage = (page, size = 5) => {
+  const fetchPage = (page, size = 5, id = "") => {
+    const url = id ? `${endpoint}/${id}` : endpoint
     const promise = axios
-      .get(endpoint, { params: {page, size} })
+      .get(url, { params: {page, size} })
       .then(res => res.data)
     return {
       type: FETCH_PAGE, 

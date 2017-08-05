@@ -4,7 +4,8 @@ import createPaginator from './createPaginator'
 import { combineReducers } from 'redux'
 
 const endpoint = "/project"
-const paginator = createPaginator(`${endpoint}/by_principal`)
+const paginator = createPaginator(endpoint)
+//const paginator = createPaginator(`${endpoint}/by_principal`)
 
 // SELECTORS
 export const getProjectsPage = state => paginator.selectors.pageSelector(
