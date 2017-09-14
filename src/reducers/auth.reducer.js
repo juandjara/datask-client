@@ -18,7 +18,7 @@ export function authenticate(credentials, rememberMe, nextLocation) {
 
     axios.post(`${config.api}/user/authenticate`, credentials)
     .then(res => {
-      const token = res.data.id_token
+      const token = res.data.token
       const tokenData = getTokenData(token);
       if(rememberMe) {
         localStorage.setItem(JWT_KEY, token);
@@ -35,7 +35,7 @@ export function authenticate(credentials, rememberMe, nextLocation) {
         401: 'Usuario o contraseña inválidos',
         400: 'Error de validación'
       }
-      let msg = errorMap[data.status] || `${data.status} ${data.statusText}`;
+      let msg = errorMap[data.status] || `${data.error} ${data.message}`;
       if(res.status >= 500) {
         msg = "Fallo del servidor";
       }

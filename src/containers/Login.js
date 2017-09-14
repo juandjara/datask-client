@@ -10,7 +10,7 @@ class Login extends Component {
   state = {
     rememberMe: true,
     form: {
-      username: '',
+      email: '',
       password: ''
     }
   }
@@ -42,9 +42,9 @@ class Login extends Component {
           <p style={{color: 'tomato', textAlign: 'center'}}>{error}</p>
           <form onSubmit={this.onSubmit} className="login-form shadow-z1">
             <Input
-              label="Usuario" icon="person"
-              name="username" type="text" required
-              value={form.username} onChange={this.onChange} />
+              label="Correo electronico" icon="email"
+              name="email" type="text" required
+              value={form.email} onChange={this.onChange} />
             <Input
               minLength={4}
               label="Contraseña" type="password"

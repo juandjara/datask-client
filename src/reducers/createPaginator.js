@@ -2,7 +2,7 @@ import axios from '../utils/axiosWrapper'
 
 /* eslint no-case-declarations:0 */
 export default function createPaginator(
-  endpoint, contentKey = 'content', idKey = 'id'
+  endpoint, contentKey = 'docs', idKey = '_id'
 ) {
   // action types
   const FETCH_PAGE = `${endpoint} FETCH_PAGE`
@@ -69,7 +69,7 @@ export default function createPaginator(
       case `${FETCH_PAGE}_SUCCESS`:
         return {
           ...state,
-          page: payload.number,
+          page: payload.page,
           totalPages: payload.totalPages,
           first: payload.first,
           last: payload.last,

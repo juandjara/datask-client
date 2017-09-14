@@ -19,9 +19,7 @@ const errMapper = res => res.data && res.data.error.message
 
 // action creators
 export function fetchProfile() {
-  const payload = axios.get('/account')
-  .then(res => res.data.id)
-  .then(id => axios.get(`/user/id/${id}`))
+  const payload = axios.get('/user/me')
   .then(res => res.data)
   return { type: PROFILE_FETCH, payload }
 }
@@ -31,7 +29,7 @@ export function updateProfileField(name, value) {
 }
 
 export function saveProfile(profile) {
-  const promise = axios.put(`/user/id/${profile.id}`, profile);
+  const promise = axios.put('/user/me', profile);
   promise.then(() => toast('success', 'Perfil guardado'))
   return { type: PROFILE_UPDATE, payload: promise }
 }

@@ -30,7 +30,7 @@ export const fetchProjectsPage = paginator.actions.fetchPage
 // receives project id
 // and dispatches actions to fetch the project
 export function fetchSingleProject(id) {
-  const promise = axios.get(`${endpoint}/id/${id}`).then(res => res.data)
+  const promise = axios.get(`${endpoint}/${id}`).then(res => res.data)
   return {
     type: PROJECT_FETCH,
     payload: {data: {id}, promise}
@@ -49,7 +49,7 @@ export const fetchProjectIfNeeded = id => (dispatch, getState) => {
 export function editProject(project, isEditMode) {
   const promise = axios({
     method: isEditMode ? 'put':'post',
-    url: isEditMode ? `${endpoint}/id/${project.id}` : endpoint,
+    url: isEditMode ? `${endpoint}/${project.id}` : endpoint,
     data: project
   }).then(res => res.data)
   promise.then(() => {
@@ -65,7 +65,7 @@ export function editProject(project, isEditMode) {
 // and dispatch the related actions
 export const deleteProject = project => (dispatch, getState) => {
   const {projects} = getState()
-  const promise = axios.delete(`${endpoint}/id/${project.id}`).then(() => project)
+  const promise = axios.delete(`${endpoint}/${project.id}`).then(() => project)
   dispatch({
     type: PROJECT_DELETE,
     payload: {data: project, promise}
