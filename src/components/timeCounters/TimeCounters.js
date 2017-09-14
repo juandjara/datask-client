@@ -1,10 +1,6 @@
 import React from 'react'
 import Icon from 'react-toolbox/lib/font_icon/FontIcon'
-import Tooltip from 'react-toolbox/lib/tooltip'
 import './TimeCounters.css';
-
-const TooltipText = Tooltip(({children, theme, ...props}) => 
-  <span {...props}>{children}</span>)
 
 const timeData = [
   {time: "00:00:00", icon: "timer", tooltip: "Tiempo actual", label: "Ahora"},
@@ -16,8 +12,10 @@ const timeData = [
 const Counter = ({time, tooltip, icon, label}) => (
   <div className="time-counters-item">
     <Icon value={icon} />
-    <TooltipText tooltip={tooltip}>{time}</TooltipText>
-    <span style={{padding: '0 10px'}}>{label}</span>
+    <div>
+      <div>{time}</div>
+      <div style={{fontSize: 12}}>{tooltip}</div>
+    </div>
   </div>
 )
 
