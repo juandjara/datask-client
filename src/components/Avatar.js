@@ -1,5 +1,4 @@
 import React from 'react'
-import templateImage from '../assets/fuken-comic-avatar.jpg'
 import { connect } from 'react-redux'
 import Avatar from 'react-toolbox/lib/avatar/Avatar'
 

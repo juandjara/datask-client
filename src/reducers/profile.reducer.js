@@ -1,4 +1,3 @@
-import React from 'react';
 import axios from '../utils/axiosWrapper';
 import toast from '../utils/toastWrapper'
 
@@ -7,13 +6,6 @@ export const PROFILE_FETCH = "PROFILE_FETCH"
 
 export const PROFILE_UPDATE = "PROFILE_UPDATE"
 export const PROFILE_UPDATE_FIELD = "PROFILE_UPDATE_FIELD"
-
-const ToastBody = ({text}) => (
-  <p style={{
-    background: '#333',
-    color: 'white'
-  }}>{text}</p>
-)
 
 const errMapper = res => res.data && res.data.error.message
 
