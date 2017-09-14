@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Avatar from 'react-toolbox/lib/avatar/Avatar'
 
 const UserAvatar = ({profile, dispatch, ...props}) => {
-  const title = `${profile.name} ${profile.surname}`
+  const title = profile.full_name
   return (
     <Avatar {...props} className="header-avatar" title={title} />      
   )
