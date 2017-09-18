@@ -32,7 +32,7 @@ class UserDialog extends Component {
     if(!user.loading && !user.missing) {
       this.props.initForm({
         ...user,
-        //authorities: user.authorities.join(', ')
+        roles: user.roles.join(', ')
       })
     }
   }
@@ -128,11 +128,11 @@ class UserDialog extends Component {
             </div>
             <Input
               icon="lock"
-              name="authorities"
+              name="roles"
               type="text"
               label="Roles"
-              value={model.authorities || ''}
-              error={validationErrors.authorities}
+              value={model.roles || ''}
+              error={validationErrors.roles}
               onChange={this.onChange}
               onBlur={this.onBlur}
             />
