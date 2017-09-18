@@ -22,7 +22,7 @@ class UserDialogContainer extends Component {
     editUser(user, this.isEditMode())
   }
   touchAll() {
-    const touched = 'login,email,password,repeat_password'.split(',')
+    const touched = 'email,password,repeat_password'.split(',')
     this.props.setTouched(touched)
   }
   isEditMode() {
@@ -61,7 +61,6 @@ const actions = {
 export default compose(
   connect(mapStateToProps, actions),
   validate([
-    isRequired('login'),
     isRequired('email'),
     isRequired('password'),
     isRequired('repeat_password'),

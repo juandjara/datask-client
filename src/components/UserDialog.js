@@ -32,7 +32,7 @@ class UserDialog extends Component {
     if(!user.loading && !user.missing) {
       this.props.initForm({
         ...user,
-        authorities: user.authorities.join(', ')
+        //authorities: user.authorities.join(', ')
       })
     }
   }
@@ -53,10 +53,6 @@ class UserDialog extends Component {
   }
 
   render() {
-    const statusOptions = [
-      {value: "INTERNAL", label: "Interno"},
-      {value: "CONTACT", label: "Contacto"},
-    ]
     const {model, loading, validationErrors, companies} = this.props
     const editMode = this.props.isEditMode
     return (
@@ -79,40 +75,7 @@ class UserDialog extends Component {
               onChange={this.onChange}
               onBlur={this.onBlur}
               label="Activado"
-            />
-            <Input
-              icon="person_outline"
-              disabled={editMode}
-              name="login"
-              label="Nombre de usuario*"
-              value={model.login || ''}
-              error={validationErrors.login}
-              onChange={this.onChange}
-              onBlur={this.onBlur}
-            />                
-            {editMode ? null : (
-              <div style={{display: 'flex'}} >
-                <Input
-                  type="password"
-                  name="password"
-                  icon="lock"                  
-                  label="Contraseña*"
-                  value={model.password || ''}
-                  error={validationErrors.password}
-                  onChange={this.onChange}
-                  onBlur={this.onBlur}
-                />
-                <Input
-                  type="password"
-                  name="repeat_password"
-                  label="Repetir contraseña*"
-                  value={model.repeat_password || ''}
-                  error={validationErrors.repeat_password}
-                  onChange={this.onChange}
-                  onBlur={this.onBlur}
-                />
-              </div>
-            )}
+            />  
             <Input
               icon="mail"
               name="email"
@@ -122,10 +85,8 @@ class UserDialog extends Component {
               error={validationErrors.email}
               onChange={this.onChange}
               onBlur={this.onBlur}
-            />               
-            <div style={{
-              display: 'flex',
-            }}>
+            />   
+            <div style={{display: 'flex'}}>
               <Input
                 name="name"
                 label="Nombre"
@@ -144,16 +105,27 @@ class UserDialog extends Component {
                 onBlur={this.onBlur}
               />
             </div>
-            <Dropdown
-              name="typeUser"
-              label="Tipo de usuario"
-              icon="info"
-              source={statusOptions}
-              value={model.typeUser || ''}
-              error={validationErrors.typeUser}
-              onChange={this.onChange}
-              onBlur={this.onBlur}
-            />
+            <div style={{display: 'flex'}}>
+              <Input
+                type="password"
+                name="password"
+                icon="lock"                  
+                label="Contraseña*"
+                value={model.password || ''}
+                error={validationErrors.password}
+                onChange={this.onChange}
+                onBlur={this.onBlur}
+              />
+              <Input
+                type="password"
+                name="repeat_password"
+                label="Repetir contraseña*"
+                value={model.repeat_password || ''}
+                error={validationErrors.repeat_password}
+                onChange={this.onChange}
+                onBlur={this.onBlur}
+              />
+            </div>
             <Input
               icon="lock"
               name="authorities"
@@ -194,7 +166,8 @@ class UserDialog extends Component {
             <Button 
               className="edit-dialog-button"
               label="Cancelar"
-              onClick={this.onCancel} />
+              onClick={this.onCancel}
+            />
           </form>
         </Dialog>
       </div>
