@@ -18,7 +18,7 @@ class UserDialogContainer extends Component {
       this.touchAll()
       return
     }
-    user.authorities = user.authorities.split(',').map(a => a.trim())
+    user.roles = user.roles.split(',').map(a => a.trim())
     editUser(user, this.isEditMode())
   }
   touchAll() {
@@ -26,7 +26,7 @@ class UserDialogContainer extends Component {
     this.props.setTouched(touched)
   }
   isEditMode() {
-    return !isNaN(this.props.routeParams._id)
+    return !!(this.props.routeParams._id)
   }
   render() {
     return (

@@ -23,7 +23,7 @@ class ClientDialogContainer extends Component {
     this.props.setTouched(['name'])
   }
   isEditMode() {
-    return !isNaN(this.props.routeParams._id)
+    return !!(this.props.routeParams._id)
   }
   render() {
     return (
