@@ -25,13 +25,13 @@ class Projects extends Component {
   }
   renderListActions(project) {
     const actionsData = [
-      {link: `/tasks/${project.id}`, icon: 'timer', tooltip: 'Tareas'},
-      {link: `/requests/${project.id}`, icon: 'record_voice_over', tooltip: 'Solicitudes'}
+      {link: `/tasks/${project._id}`, icon: 'timer', tooltip: 'Tareas'},
+      {link: `/requests/${project._id}`, icon: 'record_voice_over', tooltip: 'Solicitudes'}
     ]
     const actions = actionsData.map((data, i) => (
       <Link
         to={data.link}
-        key={`action${i}_project${project.id}`}
+        key={`action${i}_project${project._id}`}
         style={{color: '#757575'}} >
         <TooltipIcon
           tooltip={data.tooltip}
@@ -42,7 +42,7 @@ class Projects extends Component {
       <ConfirmDeleteButton
         tooltip="Borrar proyecto"
         title={`Borrar proyecto ${project.name}`}
-        key={`delete_project_${project.id}`}
+        key={`delete_project_${project._id}`}
         onDelete={() => this.props.deleteProject(project)}
       />
     ))
@@ -68,7 +68,7 @@ class Projects extends Component {
         <List selectable className="list">
           {projects.map((project, i) => (
             <Link key={i} className="link-reset"
-                  title="Editar proyecto" to={`/projects/${project.id}`}>
+                  title="Editar proyecto" to={`/projects/${project._id}`}>
               <ListItem
                 selectable
                 caption={project.name}

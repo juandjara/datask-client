@@ -23,12 +23,12 @@ class ClientDialogContainer extends Component {
     this.props.setTouched(['name'])
   }
   isEditMode() {
-    return !isNaN(this.props.routeParams.id)
+    return !isNaN(this.props.routeParams._id)
   }
   render() {
     return (
       <ClientDialog 
-        id={this.props.routeParams.id}
+        id={this.props.routeParams._id}
         isEditMode={this.isEditMode()}
         onChange={this.props.setProperty}
         onSubmit={this.onSubmit}
@@ -39,7 +39,7 @@ class ClientDialogContainer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const client = getClientByID(state, ownProps.routeParams.id)
+  const client = getClientByID(state, ownProps.routeParams._id)
   const {model, touched} = state.ui.form
   return {
     loading: client.loading,

@@ -49,7 +49,7 @@ export const fetchProjectIfNeeded = id => (dispatch, getState) => {
 export function editProject(project, isEditMode) {
   const promise = axios({
     method: isEditMode ? 'put':'post',
-    url: isEditMode ? `${endpoint}/${project.id}` : endpoint,
+    url: isEditMode ? `${endpoint}/${project._id}` : endpoint,
     data: project
   }).then(res => res.data)
   promise.then(() => {
@@ -65,7 +65,7 @@ export function editProject(project, isEditMode) {
 // and dispatch the related actions
 export const deleteProject = project => (dispatch, getState) => {
   const {projects} = getState()
-  const promise = axios.delete(`${endpoint}/${project.id}`).then(() => project)
+  const promise = axios.delete(`${endpoint}/${project._id}`).then(() => project)
   dispatch({
     type: PROJECT_DELETE,
     payload: {data: project, promise}
@@ -85,18 +85,18 @@ const projectsReducer = (state = {}, action = {}) => {
     case `${PROJECT_DELETE}_LOADING`:
       return {
         ...state,
-        [payload.id] :{loading: true}
+        [payload._id] :{loading: true}
       }
     case `${PROJECT_FETCH}_SUCCESS`:
     case `${PROJECT_CREATE}_SUCCESS`:
     case `${PROJECT_UPDATE}_SUCCESS`:
       return {
         ...state,
-        [payload.id]: payload
+        [payload._id]: payload
       }
     case `${PROJECT_DELETE}_SUCCESS`:
       const copy = {...state}
-      delete copy[payload.id]
+      delete copy[payload._id]
       return copy
     case `${PROJECT_FETCH}_ERROR`:
     case `${PROJECT_UPDATE}_ERROR`:
@@ -104,7 +104,7 @@ const projectsReducer = (state = {}, action = {}) => {
     case `${PROJECT_DELETE}_ERROR`:
       return {
         ...state,
-        [payload.id]: {loading: false, error: payload}
+        [payload._id]: {loading: false, error: payload}
       }
     default:
       return paginator.reducers.items(state, action);

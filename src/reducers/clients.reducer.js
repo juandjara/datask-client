@@ -13,8 +13,8 @@ export const getClientsPage = state => paginator.selectors.pageSelector(
 )
 export const getClientsSelect = state => {
   return getClientsPage(state).items.map(client => ({
-    id: client.id,
-    value: client.id,
+    id: client._id,
+    value: client._id,
     label: client.name
   }))
 }
@@ -56,7 +56,7 @@ export const fetchClientIfNeeded = id => (dispatch, getState) => {
 export function editClient(client, isEditMode) {
   const promise = axios({
     method: isEditMode ? 'put' : 'post',
-    url: isEditMode ? `${endpoint}/${client.id}` : endpoint,
+    url: isEditMode ? `${endpoint}/${client._id}` : endpoint,
     data: client
   }).then(res => res.data)
   promise.then(() => browserHistory.push('/clients'))
@@ -72,7 +72,7 @@ export const createClient = client => editClient(client, false)
 // and dispatch the related actions
 export const deleteClient = (client) => (dispatch, getState) => {
   const {clients} = getState()
-  const promise = axios.delete(`${endpoint}/${client.id}`).then(() => client)
+  const promise = axios.delete(`${endpoint}/${client._id}`).then(() => client)
   dispatch({
     type: CLIENT_DELETE,
     payload: {data: client, promise}
@@ -92,18 +92,18 @@ const clientsReducer = (state = {}, action = {}) => {
     case `${CLIENT_DELETE}_LOADING`:
       return {
         ...state,
-        [payload.id]: {loading: true}
+        [payload._id]: {loading: true}
       }
     case `${CLIENT_FETCH}_SUCCESS`:
     case `${CLIENT_UPDATE}_SUCCESS`:
     case `${CLIENT_CREATE}_SUCCESS`:
       return {
         ...state,
-        [payload.id]: payload
+        [payload._id]: payload
       }
     case `${CLIENT_DELETE}_SUCCESS`:
       const copy = {...state}
-      delete copy[payload.id]
+      delete copy[payload._id]
       return copy
     case `${CLIENT_FETCH}_ERROR`:
     case `${CLIENT_UPDATE}_ERROR`:
@@ -111,7 +111,7 @@ const clientsReducer = (state = {}, action = {}) => {
     case `${CLIENT_DELETE}_ERROR`:
       return {
         ...state,
-        [payload.id]: {loading: false, error: payload}
+        [payload._id]: {loading: false, error: payload}
       }
     default:
       return paginator.reducers.items(state, action)

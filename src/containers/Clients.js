@@ -24,7 +24,7 @@ class Clients extends Component {
       <ConfirmDeleteButton
         tooltip="Borrar cliente"
         title={`Borrar cliente ${client.name}`}
-        key={`delete_client${client.id}`}
+        key={`delete_client${client._id}`}
         onDelete={() => this.props.deleteClient(client)}
       />
     ]
@@ -49,7 +49,7 @@ class Clients extends Component {
         <List selectable className="list">
           {clients.map((client, i) => (
             <Link key={i} className="link-reset"
-                  title="Editar cliente" to={`/clients/${client.id}`}>
+                  title="Editar cliente" to={`/clients/${client._id}`}>
               <ListItem
                 selectable
                 caption={client.name}

@@ -24,7 +24,7 @@ class Users extends Component {
       <ConfirmDeleteButton
         tooltip="Borrar"
         title={`Borrar usuario ${user.name}`}
-        key={`delete_user${user.id}`}
+        key={`delete_user${user._id}`}
         onDelete={() => this.props.deleteUser(user)}
       />
     ]
@@ -50,7 +50,7 @@ class Users extends Component {
         <List selectable className="list">
           {users.map((user, i) => (
             <Link key={i} className="link-reset" 
-                  title="Editar usuario" to={`/users/${user.id}`}>
+                  title="Editar usuario" to={`/users/${user._id}`}>
               <ListItem
                 selectable
                 caption={user.name}

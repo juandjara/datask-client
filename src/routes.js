@@ -18,13 +18,13 @@ export default (store) => {
     <Route path="/" component={App} onEnter={requireAuth(store)}>
       <IndexRedirect to="/projects" />
       <Route path="projects" component={Projects}>
-        <Route path=":id" component={ProjectDialogContainer} />
+        <Route path=":_id" component={ProjectDialogContainer} />
       </Route>
       <Route path="users" component={Users}>
-        <Route path=":id" component={UserDialogContainer} />
+        <Route path=":_id" component={UserDialogContainer} />
       </Route>
       <Route path="clients" component={Clients}>
-        <Route path=":id" component={ClientDialogContainer} />
+        <Route path=":_id" component={ClientDialogContainer} />
       </Route>
       <Route path="profile" component={Profile} />
     </Route>,

@@ -49,7 +49,7 @@ export const fetchUserIfNeeded = id => (dispatch, getState) => {
 export function editUser(user, isEditMode) {
   const promise = axios({
     method: isEditMode ? 'put' : 'post',
-    url: isEditMode ? `${endpoint}/${user.id}` : endpoint,
+    url: isEditMode ? `${endpoint}/${user._id}` : endpoint,
     data: user
   }).then(res => res.data)
   promise.then(() => {
@@ -67,7 +67,7 @@ export const createUser = user => editUser(user, false)
 // and dispatch the related actions
 export const deleteUser = (user) => (dispatch, getState) => {
   const {users} = getState()
-  const promise = axios.delete(`${endpoint}/${user.id}`).then(() => user)
+  const promise = axios.delete(`${endpoint}/${user._id}`).then(() => user)
   dispatch({
     type: USER_DELETE,
     payload: {data: user, promise}
@@ -87,18 +87,18 @@ const usersReducer = (state = {}, action = {}) => {
     case `${USER_DELETE}_LOADING`:
       return {
         ...state,
-        [payload.id]: {loading: true}
+        [payload._id]: {loading: true}
       }
     case `${USER_FETCH}_SUCCESS`:
     case `${USER_UPDATE}_SUCCESS`:
     case `${USER_CREATE}_SUCCESS`:
       return {
         ...state,
-        [payload.id]: payload
+        [payload._id]: payload
       }
     case `${USER_DELETE}_SUCCESS`:
       const copy = {...state}
-      delete copy[payload.id]
+      delete copy[payload._id]
       return copy
     case `${USER_FETCH}_ERROR`:
     case `${USER_UPDATE}_ERROR`:
@@ -106,7 +106,7 @@ const usersReducer = (state = {}, action = {}) => {
     case `${USER_DELETE}_ERROR`:
       return {
         ...state,
-        [payload.id]: {loading: false, error: payload}
+        [payload._id]: {loading: false, error: payload}
       }
     default:
       return paginator.reducers.items(state, action);

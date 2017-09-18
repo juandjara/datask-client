@@ -26,12 +26,12 @@ class UserDialogContainer extends Component {
     this.props.setTouched(touched)
   }
   isEditMode() {
-    return !isNaN(this.props.routeParams.id)
+    return !isNaN(this.props.routeParams._id)
   }
   render() {
     return (
       <UserDialog
-        id={this.props.routeParams.id}
+        id={this.props.routeParams._id}
         isEditMode={this.isEditMode()} 
         onChange={this.props.setProperty}
         onBlur={this.props.touchProperty} 
@@ -42,7 +42,7 @@ class UserDialogContainer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const user = getUserById(state, ownProps.routeParams.id)
+  const user = getUserById(state, ownProps.routeParams._id)
   const companies = getClientsSelect(state)
   const {model, touched} = state.ui.form
   return {
