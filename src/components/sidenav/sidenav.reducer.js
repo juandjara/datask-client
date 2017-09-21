@@ -7,7 +7,7 @@ export const TOGGLE_SIDENAV_OPEN="TOGGLE_SIDENAV_OPEN"
 // action creator
 export function toggleSidenavOpen() {
   return { type: TOGGLE_SIDENAV_OPEN }
-}ç
+}
 
 const initialState = {
   open: false,
