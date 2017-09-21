@@ -2,14 +2,15 @@ import React, {Component} from 'react';
 import Dialog from 'react-toolbox/lib/dialog/Dialog'
 import Tooltip from 'react-toolbox/lib/tooltip'
 import Icon from 'react-toolbox/lib/font_icon/FontIcon'
+import PropTypes from 'prop-types'
 
 const TooltipIcon = Tooltip(Icon);
 
 class ConfirmDeleteButton extends Component {
   static propTypes = {
-    onDelete: React.PropTypes.func.isRequired,
-    tooltip: React.PropTypes.string,
-    title: React.PropTypes.string
+    onDelete: PropTypes.func.isRequired,
+    tooltip: PropTypes.string,
+    title: PropTypes.string
   }
   state = {
     confirmationPopup: false
