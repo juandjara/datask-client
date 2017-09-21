@@ -53,7 +53,7 @@ class EditProject extends Component {
     const statusOptions = [
       {value: "ACTIVE", label: "Activo"},
       {value: "PAUSED", label: "En pausa"},
-      {value: "COMPLETED", label: "Completado"}
+      {value: "FINISHED", label: "Completado"}
     ]
     const {model, loading, companies, isEditMode, validationErrors} = this.props;
     return (
@@ -98,13 +98,13 @@ class EditProject extends Component {
               onBlur={this.onBlur}
             />
             <Dropdown
-              name="companyId"
+              name="company"
               label="Empresa"
               icon="business"
               disabled={isEditMode}
               source={companies}
-              value={model.companyId}
-              error={validationErrors.companyId}
+              value={model.company}
+              error={validationErrors.company}
               onChange={this.onChange}
               onBlur={this.onBlur}
             />

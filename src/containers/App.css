@@ -76,3 +76,23 @@
 .edit-dialog-button {
   margin: .5em;
 }
+
+.select .Select-control {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+}
+.select {
+  margin-top: 1em;
+  flex: 1;
+}
+.select-label {
+  margin-top: 1em;
+  padding: 12px;
+  display: block;
+  padding-right: 28px;
+}
+.select.is-focused .Select-control {
+  border-color: var(--palette-teal-500);
+}

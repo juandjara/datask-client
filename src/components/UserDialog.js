@@ -4,7 +4,13 @@ import Input from 'react-toolbox/lib/input/Input'
 import Dropdown from 'react-toolbox/lib/dropdown/Dropdown'
 import Button from 'react-toolbox/lib/button/Button'
 import Checkbox from 'react-toolbox/lib/checkbox/Checkbox'
+import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import { browserHistory } from 'react-router'
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
+
+const ROLES = ['ADMIN', 'DEVELOPER', 'CUSTOMER']
+.map(role => ({label: role, value: role}))
 
 class UserDialog extends Component {
   componentDidMount() {
@@ -31,8 +37,7 @@ class UserDialog extends Component {
   initForm = (user) => {
     if(!user.loading && !user.missing) {
       this.props.initForm({
-        ...user,
-        roles: user.roles.join(', ')
+        ...user
       })
     }
   }
@@ -43,6 +48,9 @@ class UserDialog extends Component {
   onChange = (text, ev) => {
     const name = ev.target.name
     this.props.onChange(name, text)
+  }
+  onRoleSelect = (roles) => {
+    this.props.onChange('roles', roles.map(r => r.value))
   }
   onBlur = (ev) => {
     const name = ev.target.name
@@ -126,16 +134,19 @@ class UserDialog extends Component {
                 onBlur={this.onBlur}
               />
             </div>
-            <Input
-              icon="lock"
-              name="roles"
-              type="text"
-              label="Roles"
-              value={model.roles || ''}
-              error={validationErrors.roles}
-              onChange={this.onChange}
-              onBlur={this.onBlur}
-            />
+            <div style={{display: 'flex'}}>
+              <label className="select-label" htmlFor="roles">
+                <Icon>lock_outline</Icon>
+              </label>
+              <Select 
+                multi
+                name="roles"
+                value={model.roles}
+                className="select"
+                options={ROLES}
+                onChange={this.onRoleSelect}
+              />
+            </div>
             <Dropdown
               name="companyId"
               label="Empresa"

@@ -24,7 +24,7 @@ class ProjectDialogContainer extends Component {
     this.props.setTouched(['name'])
   }
   isEditMode() {
-    return !!(this.props.routeParams._id)
+    return this.props.routeParams._id !== "new"
   }
   render() {
     return (
