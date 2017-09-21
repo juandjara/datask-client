@@ -1,11 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const getValidationErrors = (rules = [], model = {}, touched = {}, ignoreTouched) =>
-  rules.reduce((errors, [key, rule, errorMsg]) => {
-    const ruleHasError = ignoreTouched ? !rule(model) : !rule(model) && touched[key]
-    return ruleHasError ? Object.assign(errors, {[key]: errorMsg}) : errors
+function getValidationErrors(
+  rules = [], model = {}, touched = {}, ignoreTouched = false
+) {
+  const rulesWithError = rules.filter(rule => {
+    const [key, validator] = rule
+    let ruleHasError = !validator(model)
+    if(!ignoreTouched) {
+      ruleHasError = ruleHasError && touched[key]
+    }
+    return ruleHasError
+  })
+  return rulesWithError.reduce((errors, rule) => {
+    const key = rule[0]
+    const errorMessage = rule[2]
+    errors[key] = errorMessage
+    return errors
   }, {})
+}
 const validateRules = (rules) => {
   if(!rules.every(rule => rule.length === 3)) {
     throw new Error('Expected every rule to be an array of 3 elements')
