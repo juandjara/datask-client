@@ -43,3 +43,4 @@ jspm_packages
 .env
 yarn-debug.log*
 yarn-error.log*
+.vscode
