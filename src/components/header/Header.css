@@ -1,22 +1,11 @@
 .Header {
-  padding: 2px .5em;
-  padding-left: 2px;
-  border-bottom: 1px solid #ccc;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid #ccc;
 }
-.header-appbar-title {
-  font-weight: normal !important;
-  font-size: 1.3rem !important;
-}
-.header-appbar {
-  background-color: var(--palette-teal-500) !important;
-}
-
-.header-avatar {
-  margin: .5em;
-  display: block;
-  border-radius: 50%;
-  cursor: pointer;
+.Header-title {
+  text-align: center;
+  flex: 1;
+  margin: .5rem;
 }

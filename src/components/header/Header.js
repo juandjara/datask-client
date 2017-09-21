@@ -1,9 +1,10 @@
 import React from 'react'
 import IconButton from 'react-toolbox/lib/button/IconButton'
 import { connect } from 'react-redux'
-import { logout } from '../../reducers/auth.reducer'
+import { bindActionCreators } from 'redux'
 import ShowOnMedia from '../ShowOnMedia'
-import { toggleSidenavOpen } from '../../reducers/sidenav.reducer'
+import { reducer as auth } from '../../features/login'
+import { reducer as sidenav } from '../../components/sidenav'
 import './Header.css'
 
 class Header extends React.Component {
@@ -11,29 +12,29 @@ class Header extends React.Component {
     showMenu: false
   }
   onToggleMenu = () => {
-    this.props.dispatch(toggleSidenavOpen())
+    this.actions.toggleSidenavOpen()
   }
   onLogout = () => {
-    this.props.dispatch(logout());
+    this.actions.logout();
   }
   render() {
     return (
-        <header style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          borderBottom: '1px solid #ccc'
-        }}>
-          <ShowOnMedia mediaKey="small">
-            <IconButton onClick={this.onToggleMenu} icon="menu" />
-          </ShowOnMedia>
-          <h2 style={{textAlign: 'center', flex: 1, margin: '.5rem'}}>Datask</h2>
-        </header>
+      <header className="Header">
+        <ShowOnMedia mediaKey="small">
+          <IconButton onClick={this.onToggleMenu} icon="menu" />
+        </ShowOnMedia>
+        <h2 className="Header-title">Datask</h2>
+      </header>
     )
   }
 }
 
-const mapStateToProps = state => {
-  return { username: `${state.profile.firstName} ${state.profile.lastName}` }
-}
-export default connect(mapStateToProps)(Header)
+const mapStateToProps = (state) => ({})
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({
+    logout: auth.logout,
+    toggleSidenavOpen: sidenav.toggleSidenavOpen
+  }, dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)
