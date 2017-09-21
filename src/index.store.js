@@ -1,18 +1,11 @@
 import { applyMiddleware, compose, createStore } from 'redux'
-import thunk from 'redux-thunk'
-import promiseMiddleware from 'redux-promise-middleware';
-import rootReducer from './reducers/index.reducer'
 import { mediaQueryTracker } from 'redux-mediaquery'
-import mediaQueries from './utils/mediaQueries'
-import toast from './utils/toastWrapper'
+import promiseMiddleware from 'redux-promise-middleware'
+import thunk from 'redux-thunk'
 
-const errorToastMiddleware = store => next => action => {
-  const {error, payload = {}} = action
-  if(error) {
-    toast('error', payload.message)
-  }
-  return next(action)
-}
+import rootReducer from './index.reducer'
+import mediaQueries from './helpers/mediaQueries'
+import errorToastMiddleware from './helpers/errorToastMiddleware'
 
 const middlewares = [
   thunk, 
@@ -37,16 +30,19 @@ if (process.env.NODE_ENV !== "production") {
   }
 }
 
-const initialState = {}
-const store = createStore(rootReducer, initialState, customCompose(applyMiddleware(...middlewares)))
+const store = createStore(
+  rootReducer, 
+  {}, 
+  customCompose(applyMiddleware(...middlewares))
+)
 
 store.dispatch(mediaQueryTracker({
   small: mediaQueries.small
 }))
 
 if(module.hot) {
-  module.hot.accept('./reducers/index.reducer', () => {
-    const nextRootReducer = require('./reducers/index.reducer').default
+  module.hot.accept('./index.reducer', () => {
+    const nextRootReducer = require('./index.reducer').default
     store.replaceReducer(nextRootReducer)
   })
 }
