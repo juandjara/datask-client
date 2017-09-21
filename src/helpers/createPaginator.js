@@ -1,4 +1,4 @@
-import axios from '../utils/axiosWrapper'
+import axios from './axiosWrapper'
 
 /* eslint no-case-declarations:0 */
 export default function createPaginator(
