@@ -1,18 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router';
 import MenuItem from 'react-toolbox/lib/menu/MenuItem';
-import { toggleSidenavOpen } from '../../reducers/sidenav.reducer'
 import { connect } from 'react-redux'
+import { reducer as sidenav } from '../../components/sidenav'
 
-const MenuLink = ({to, icon, text, toggleSidenavOpen, onClick, ...rest}) => {
+const MenuLink = ({
+  to, icon, text, toggleSidenavOpen, onClick = () => {}, ...rest
+}) => {
   const clickHandler = (ev) => {
     toggleSidenavOpen()
-    if (typeof onClick === 'function') {
-      onClick(ev)
-    }
+    onClick(ev)
   }
   return (
-    <Link to={to} onClick={clickHandler} activeClassName="sidenav-link-active" {...rest}>
+    <Link to={to} onClick={clickHandler} 
+          activeClassName="sidenav-link-active" {...rest}>
       <MenuItem
         icon={icon}
         caption={text}
@@ -21,4 +22,7 @@ const MenuLink = ({to, icon, text, toggleSidenavOpen, onClick, ...rest}) => {
   );
 };
 
-export default connect(() => ({}), {toggleSidenavOpen})(MenuLink);
+const actions = {
+  toggleSidenav: sidenav.toggleSidenavOpen
+}
+export default connect(() => ({}), actions)(MenuLink);
