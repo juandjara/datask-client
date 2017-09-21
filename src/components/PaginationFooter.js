@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import Tooltip from 'react-toolbox/lib/tooltip'
 import IconButton from 'react-toolbox/lib/button/IconButton'
 
