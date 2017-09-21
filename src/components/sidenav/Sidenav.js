@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import NavDrawer from 'react-toolbox/lib/layout/NavDrawer'
 import IconButton from 'react-toolbox/lib/button/IconButton'
-import TaskQuickAccess from '../taskQuickAccess/TaskQuickAccess'
-import TimeCounters from '../timeCounters/TimeCounters'
+
+import {TaskQuickAccess} from '../taskQuickAccess'
+import {TimeCounters} from '../timeCounters'
 import Avatar from '../Avatar'
 import Flex from '../Flex'
 import MenuLink from './MenuLink'
-import { connect } from 'react-redux'
-import { toggleSidenavOpen } from '../../reducers/sidenav.reducer'
-import { logout } from '../../reducers/auth.reducer'
+import { reducer as sidenavReducer } from './sidenav.reducer'
+import { reducer as authReducer } from '../../features/login'
 import './Sidenav.css'
 
 class Sidenav extends Component {
@@ -17,28 +19,29 @@ class Sidenav extends Component {
     this.setState(({profileMenuActive}) => ({profileMenuActive: !profileMenuActive}))
   }
   logout = () => {
-    this.props.dispatch(logout())
+    this.actions.logout()
   }
   render () {
-    const {open, pinned, profile, dispatch} = this.props;
+    const {open, pinned, profile, actions} = this.props;
     const {profileMenuActive} = this.state;
     const name = profile.loading ? 'Cargando ...' : profile.full_name
     return (
       <NavDrawer
         permanentAt="md"
-        className={`sidenav ${open? '':''}`}
+        className="sidenav"
         active={open}
         pinned={pinned}
-        onOverlayClick={() => dispatch(toggleSidenavOpen())}>
+        onOverlayClick={actions.toggleSidenavOpen}>
         <Flex align="center">
           <Avatar />
           <h3>{name}</h3>
           <IconButton
-            icon={`arrow_drop_${profileMenuActive ? 'up':'down'}`}
-            inverse onClick={this.toggleProfileMenu} />
+            inverse
+            icon={`arrow_drop_${profileMenuActive ? 'up':'down'}`} 
+            onClick={this.toggleProfileMenu} 
+          />
         </Flex>
         <div className="sidenav-links" style={{
-          marginTop: 0,
           display: profileMenuActive? 'block':'none'
         }}>
           <MenuLink to="/profile" icon="account_circle" text="Perfil" />
@@ -58,13 +61,14 @@ class Sidenav extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    open: state.sidenav.open,
-    pinned: state.sidenav.pinned,
-    responsive: state.responsive,
-    profile: state.profile
-  }
-}
+const mapStateToProps = ({sidenav, profile, responsive}) => ({
+  ...sidenav, responsive, profile
+})
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators({
+    logout: authReducer.logout,
+    toggleSidenavOpen: sidenavReducer.toggleSidenavOpen
+  }, dispatch)
+})
 
-export default connect(mapStateToProps)(Sidenav)
+export default connect(mapStateToProps, mapDispatchToProps)(Sidenav)
