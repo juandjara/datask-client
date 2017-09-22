@@ -3,7 +3,7 @@ import Input from 'react-toolbox/lib/input/Input'
 import Checkbox from 'react-toolbox/lib/checkbox/Checkbox'
 import Button from 'react-toolbox/lib/button/Button'
 import { connect } from 'react-redux'
-import { authenticate } from '../reducers/auth.reducer'
+import { authenticate } from 'reducers/auth.reducer'
 import './Login.css'
 
 class Login extends Component {

@@ -6,16 +6,16 @@ import { bindActionCreators } from 'redux'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
-import {Sidenav} from '../../components/sidenav';
-import {Header} from '../../components/header'
-import ShowOnMedia from '../../components/ShowOnMedia'
-import {TaskQuickAccess} from '../../components/taskQuickAccess'
-import { reducer as profileReducer } from '../profile';
+import {Header} from 'components/shared/header'
+import {Sidenav} from 'components/shared/sidenav';
+import ShowOnMedia from 'components/shared/ShowOnMedia'
+import {TaskQuickAccess} from 'components/shared/taskQuickAccess'
+import {fetchProfile} from 'reducers/profile.reducer'
 import './App.css';
 
 class App extends Component {
   componentDidMount() {
-    this.actions.fetchProfile()
+    this.props.actions.fetchProfile()
   }
 
   render() {
@@ -44,9 +44,7 @@ class App extends Component {
 
 const mapStateToProps = ({sidenav}) => ({sidenav})
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators({
-    fetchProfile: profileReducer.fetchProfile
-  }, dispatch)
+  actions: bindActionCreators({fetchProfile}, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

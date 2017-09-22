@@ -1,14 +1,18 @@
 import React, {Component} from 'react'
-import ProjectDialog from '../components/ProjectDialog'
+import ProjectDialog from './ProjectDialog'
 import { connect } from 'react-redux'
 import {
   fetchProjectIfNeeded,
   editProject,
   getProjectById
-} from '../reducers/projects.reducer'
-import { fetchClientsPage, getClientsSelect } from '../reducers/clients.reducer'
-import { setProperty, touchProperty, initForm, resetForm, setTouched } from '../reducers/form.reducer'
-import validate, {isRequired} from '../components/Validate'
+} from 'reducers/projects.reducer'
+import { 
+  fetchClientsPage, getClientsSelect 
+} from 'reducers/clients.reducer'
+import { 
+  setProperty, touchProperty, initForm, resetForm, setTouched 
+} from 'reducers/form.reducer'
+import validate, {isRequired} from 'components/shared/Validate'
 import { compose } from 'redux'
 
 class ProjectDialogContainer extends Component {

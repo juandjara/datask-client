@@ -1,14 +1,18 @@
 import React, {Component} from 'react'
-import UserDialog from '../components/UserDialog'
+import UserDialog from './UserDialog'
 import { connect } from 'react-redux'
 import {
   fetchUserIfNeeded,
   editUser,
   getUserById
-} from '../reducers/users.reducer'
-import { setProperty, touchProperty, initForm, resetForm, setTouched } from '../reducers/form.reducer'
-import { fetchClientsPage, getClientsSelect } from '../reducers/clients.reducer'
-import validate, {isRequired, passwordMatch} from '../components/Validate'
+} from 'reducers/users.reducer'
+import { 
+  setProperty, touchProperty, initForm, resetForm, setTouched 
+} from 'reducers/form.reducer'
+import { 
+  fetchClientsPage, getClientsSelect 
+} from 'reducers/clients.reducer'
+import validate, {isRequired, passwordMatch} from 'components/shared/Validate'
 import { compose } from 'redux'
 
 class UserDialogContainer extends Component {

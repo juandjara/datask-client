@@ -3,11 +3,13 @@ import List from 'react-toolbox/lib/list/List'
 import ListItem from 'react-toolbox/lib/list/ListItem'
 import Tooltip from 'react-toolbox/lib/tooltip'
 import Button from 'react-toolbox/lib/button/Button'
-import ConfirmDeleteButton from '../components/ConfirmDeleteButton'
+import ConfirmDeleteButton from 'components/shared/ConfirmDeleteButton'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
-import { fetchUsersPage, deleteUser, getUsersPage } from '../reducers/users.reducer'
-import PaginationFooter from '../components/PaginationFooter'
+import { 
+  fetchUsersPage, deleteUser, getUsersPage 
+} from 'reducers/users.reducer'
+import PaginationFooter from 'components/shared/PaginationFooter'
 
 const TooltipButton = Tooltip(Button);
 

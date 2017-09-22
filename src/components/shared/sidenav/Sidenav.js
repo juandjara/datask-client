@@ -9,8 +9,8 @@ import {TimeCounters} from '../timeCounters'
 import Avatar from '../Avatar'
 import Flex from '../Flex'
 import MenuLink from './MenuLink'
-import { reducer as sidenavReducer } from './sidenav.reducer'
-import { reducer as authReducer } from '../../features/login'
+import {logout} from 'reducers/auth.reducer'
+import {toggleSidenavOpen} from 'reducers/sidenav.reducer'
 import './Sidenav.css'
 
 class Sidenav extends Component {
@@ -19,7 +19,7 @@ class Sidenav extends Component {
     this.setState(({profileMenuActive}) => ({profileMenuActive: !profileMenuActive}))
   }
   logout = () => {
-    this.actions.logout()
+    this.props.actions.logout()
   }
   render () {
     const {open, pinned, profile, actions} = this.props;
@@ -65,10 +65,7 @@ const mapStateToProps = ({sidenav, profile, responsive}) => ({
   ...sidenav, responsive, profile
 })
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators({
-    logout: authReducer.logout,
-    toggleSidenavOpen: sidenavReducer.toggleSidenavOpen
-  }, dispatch)
+  actions: bindActionCreators({ logout, toggleSidenavOpen }, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidenav)

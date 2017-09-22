@@ -1,14 +1,16 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { setProperty, touchProperty, initForm, resetForm, setTouched } from '../reducers/form.reducer'
-import validate, {isRequired} from '../components/Validate'
+import { 
+  setProperty, touchProperty, initForm, resetForm, setTouched 
+} from 'reducers/form.reducer'
+import validate, {isRequired} from 'components/shared/Validate'
 import { compose } from 'redux'
 import { 
   fetchClientIfNeeded, 
   editClient, 
   getClientByID 
-} from '../reducers/clients.reducer'
-import ClientDialog from '../components/ClientDialog'
+} from 'reducers/clients.reducer'
+import ClientDialog from './ClientDialog'
 
 class ClientDialogContainer extends Component {
   onSubmit = (client) => {

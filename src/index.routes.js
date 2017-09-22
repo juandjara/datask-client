@@ -1,16 +1,16 @@
 import React from 'react'
 import { IndexRedirect, Route } from 'react-router'
 
-import {App} from './features/app';
-import {Login} from './features/login'
-import NotFound from './components/NotFound'
+import {App} from 'components/pages/app'
+import {Login} from 'components/pages/login'
+import NotFound from 'components/shared/NotFound'
 
-import {Profile} from './features/profile'
-import {ProjectList, ProjectDialogContainer} from './features/projects'
-import {UserList,    UserDialogContainer}    from './features/users'
-import {ClientList,  ClientDialogContainer}  from './features/clients'
+import {Profile} from 'components/pages/profile'
+import {UserList, UserDialogContainer} from 'components/pages/users'
+import {ClientList, ClientDialogContainer} from 'components/pages/clients'
+import {ProjectList, ProjectDialogContainer} from 'components/pages/projects'
 
-import { requireAuth } from './services/authService';
+import { requireAuth } from 'services/authService';
 
 export default (store) => {
   return [

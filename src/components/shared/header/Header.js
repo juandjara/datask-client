@@ -1,10 +1,10 @@
 import React from 'react'
 import IconButton from 'react-toolbox/lib/button/IconButton'
+import ShowOnMedia from '../ShowOnMedia'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import ShowOnMedia from '../ShowOnMedia'
-import { reducer as auth } from '../../features/login'
-import { reducer as sidenav } from '../../components/sidenav'
+import {logout} from 'reducers/auth.reducer'
+import {toggleSidenavOpen} from 'reducers/sidenav.reducer'
 import './Header.css'
 
 class Header extends React.Component {
@@ -12,10 +12,10 @@ class Header extends React.Component {
     showMenu: false
   }
   onToggleMenu = () => {
-    this.actions.toggleSidenavOpen()
+    this.props.actions.toggleSidenavOpen()
   }
   onLogout = () => {
-    this.actions.logout();
+    this.props.actions.logout();
   }
   render() {
     return (
@@ -30,11 +30,8 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = (state) => ({})
-const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({
-    logout: auth.logout,
-    toggleSidenavOpen: sidenav.toggleSidenavOpen
-  }, dispatch)
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators({ logout, toggleSidenavOpen }, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header)

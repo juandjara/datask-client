@@ -1,5 +1,5 @@
 import axios from 'axios'
-import config from '../config'
+import config from 'index.config'
 import { JWT_KEY } from './authService'
 
 const instance = axios.create({

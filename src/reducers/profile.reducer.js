@@ -1,5 +1,5 @@
-import axios from '../utils/axiosWrapper';
-import toast from '../utils/toastWrapper'
+import axios from 'services/axiosWrapper';
+import toast from 'services/toastWrapper'
 
 // action types
 export const PROFILE_FETCH = "PROFILE_FETCH"

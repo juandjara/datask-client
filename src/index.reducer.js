@@ -1,14 +1,13 @@
 import { combineReducers } from 'redux'
 import { reducer as responsive } from 'redux-mediaquery'
 
-import { reducer as sidenav } from './components/sidenav'
-import { reducer as form } from './components/formValidation'
-
-import { reducer as auth } from './features/login'
-import { reducer as profile } from './features/profile'
-import { reducer as projects } from './features/projects'
-import { reducer as clients } from './features/clients'
-import { reducer as users } from './features/users'
+import sidenav from 'reducers/sidenav.reducer'
+import form from 'reducers/form.reducer'
+import auth from 'reducers/auth.reducer'
+import users from 'reducers/users.reducer'
+import profile from 'reducers/profile.reducer'
+import clients from 'reducers/clients.reducer'
+import projects from 'reducers/projects.reducer'
 
 export default combineReducers({
   responsive,

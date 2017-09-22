@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import MenuItem from 'react-toolbox/lib/menu/MenuItem';
 import { connect } from 'react-redux'
-import { reducer as sidenav } from '../../components/sidenav'
+import {toggleSidenavOpen} from 'reducers/sidenav.reducer'
 
 const MenuLink = ({
   to, icon, text, toggleSidenavOpen, onClick = () => {}, ...rest
@@ -22,7 +22,5 @@ const MenuLink = ({
   );
 };
 
-const actions = {
-  toggleSidenav: sidenav.toggleSidenavOpen
-}
+const actions = {toggleSidenavOpen}
 export default connect(() => ({}), actions)(MenuLink);

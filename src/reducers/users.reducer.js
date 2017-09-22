@@ -1,7 +1,7 @@
-import axios from '../utils/axiosWrapper'
 import { browserHistory } from 'react-router'
-import createPaginator from './createPaginator'
 import { combineReducers } from 'redux'
+import axios from 'services/axiosWrapper'
+import createPaginator from 'services/createPaginator'
 
 const endpoint = "/user";
 const paginator = createPaginator(endpoint)

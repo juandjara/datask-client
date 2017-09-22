@@ -1,5 +1,6 @@
 import {MEDIA_CHANGED} from 'redux-mediaquery'
-import mediaKeys from '../../services/mediaQueries'
+import config from 'index.config'
+const {mediaQueries} = config
 
 // action type
 export const TOGGLE_SIDENAV_OPEN="TOGGLE_SIDENAV_OPEN"
@@ -11,7 +12,7 @@ export function toggleSidenavOpen() {
 
 const initialState = {
   open: false,
-  pinned: !window.matchMedia(mediaKeys.small).matches
+  pinned: !window.matchMedia(mediaQueries.small).matches
 }
 
 // reducer

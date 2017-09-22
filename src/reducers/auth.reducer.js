@@ -1,7 +1,7 @@
-import { getTokenData, JWT_KEY } from '../../services/authService'
+import { getTokenData, JWT_KEY } from 'services/authService'
 import { browserHistory } from 'react-router';
 import axios from 'axios'
-import config from '../../index.config'
+import config from 'index.config'
 
 // action types
 export const LOG_IN = "AUTH_LOG_IN"
