@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "cross-env": "^5.0.5",
     "react-scripts": "^1.0.13",
     "react-toolbox-themr": "^1.0.2"
   },
@@ -34,9 +35,9 @@
   },
   "scripts": {
     "toolbox": "react-toolbox-themr",
-    "start": "react-scripts start",
+    "start": "cross-env NODE_PATH=src react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "cross-env NODE_PATH=src react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
 }
