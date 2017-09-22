@@ -10,7 +10,7 @@ import {ProjectList, ProjectDialogContainer} from './features/projects'
 import {UserList,    UserDialogContainer}    from './features/users'
 import {ClientList,  ClientDialogContainer}  from './features/clients'
 
-import { requireAuth } from './helpers/authService';
+import { requireAuth } from './services/authService';
 
 export default (store) => {
   return [

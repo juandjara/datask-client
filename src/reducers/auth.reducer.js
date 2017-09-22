@@ -1,4 +1,4 @@
-import { getTokenData, JWT_KEY } from '../../helpers/authService'
+import { getTokenData, JWT_KEY } from '../../services/authService'
 import { browserHistory } from 'react-router';
 import axios from 'axios'
 import config from '../../index.config'

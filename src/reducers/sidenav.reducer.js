@@ -1,5 +1,5 @@
 import {MEDIA_CHANGED} from 'redux-mediaquery'
-import mediaKeys from '../../helpers/mediaQueries'
+import mediaKeys from '../../services/mediaQueries'
 
 // action type
 export const TOGGLE_SIDENAV_OPEN="TOGGLE_SIDENAV_OPEN"

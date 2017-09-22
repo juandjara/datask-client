@@ -4,9 +4,10 @@ import promiseMiddleware from 'redux-promise-middleware'
 import thunk from 'redux-thunk'
 
 import rootReducer from './index.reducer'
-import mediaQueries from './helpers/mediaQueries'
-import errorToastMiddleware from './helpers/errorToastMiddleware'
+import config from './index.config'
+import errorToastMiddleware from './services/errorToastMiddleware'
 
+const {mediaQueries} = config
 const middlewares = [
   thunk, 
   promiseMiddleware({
