@@ -5,7 +5,7 @@ import Avatar from 'react-toolbox/lib/avatar/Avatar'
 const UserAvatar = ({profile, dispatch, ...props}) => {
   const title = profile.full_name
   return (
-    <Avatar {...props} className="header-avatar" title={title} />      
+    <Avatar {...props} style={{margin: '0 .5em'}} title={title} />      
   )
 }
 
