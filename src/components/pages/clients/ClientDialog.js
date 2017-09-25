@@ -69,11 +69,11 @@ class ClientDialog extends Component {
               onChange={this.onChange}
             />
             <Dropdown
-              name="typeCompany"
+              name="type"
               label="Tipo de cliente"
               icon="info"
               source={statusOptions}
-              value={model.typeCompany || ''}
+              value={model.type || ''}
               onChange={this.onChange}
             />
             <Input
