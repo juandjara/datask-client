@@ -148,22 +148,12 @@ class UserDialog extends Component {
               />
             </div>
             <Dropdown
-              name="companyId"
+              name="company"
               label="Empresa"
               icon="business"
               source={companies}
-              value={model.companyId}
-              error={validationErrors.companyId}
-              onChange={this.onChange}
-              onBlur={this.onBlur}
-            />
-            <Input
-              icon="phone"
-              name="officePhone"
-              type="number"
-              label="Teléfono"
-              value={model.officePhone || ''}
-              error={validationErrors.officePhone}
+              value={model.company}
+              error={validationErrors.company}
               onChange={this.onChange}
               onBlur={this.onBlur}
             />
