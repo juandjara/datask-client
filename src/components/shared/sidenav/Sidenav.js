@@ -24,7 +24,8 @@ class Sidenav extends Component {
   render () {
     const {open, pinned, profile, actions} = this.props;
     const {profileMenuActive} = this.state;
-    const name = profile.loading ? 'Cargando ...' : profile.full_name
+    const {loading, name, surname} = profile
+    const fullname = loading ? 'Cargando ...' : `${name} ${surname}`
     return (
       <NavDrawer
         permanentAt="md"
@@ -34,7 +35,7 @@ class Sidenav extends Component {
         onOverlayClick={actions.toggleSidenavOpen}>
         <Flex align="center">
           <Avatar />
-          <h3>{name}</h3>
+          <h3>{fullname}</h3>
           <IconButton
             inverse
             icon={`arrow_drop_${profileMenuActive ? 'up':'down'}`} 

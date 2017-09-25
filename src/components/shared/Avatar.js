@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Avatar from 'react-toolbox/lib/avatar/Avatar'
+import Avatar from 'react-avatar'
 
 const UserAvatar = ({profile, dispatch, ...props}) => {
-  const title = profile.full_name
+  const name = `${profile.name} ${profile.surname}`
   return (
-    <Avatar {...props} style={{margin: '0 .5em'}} title={title} />      
+    <Avatar name={name} round={true} size={50} {...props} style={{margin: '.5em'}} />      
   )
 }
 
