@@ -7,6 +7,14 @@ import Flex from 'components/shared/Flex'
 import {
   fetchProfile, saveProfile, updateProfileField
 } from 'reducers/profile.reducer'
+import styled from 'styled-components'
+
+const InputGroup = styled.div`
+  display: flex;
+  [data-react-toolbox="input"] {
+    flex: 1;
+  } 
+`
 
 class Profile extends Component {
   componentDidMount() {
@@ -34,7 +42,7 @@ class Profile extends Component {
     const { profile } = this.props;
     return (
       <div style={{padding: '1em'}}>
-        <h2 style={{marginBottom: 0}}>Perfil</h2>
+        <h2 className="type-headline">Mi cuenta</h2>
         {profile.loading && (
           <Flex align="center" className="color-primary">
             <ProgressBar type='circular' mode='indeterminate' />
@@ -48,17 +56,14 @@ class Profile extends Component {
           <Input
             label="Email" icon="email" name="email" type="email"
             value={profile.email || ""} onChange={this.onChange} />
-          <div style={{display: 'flex'}}>
+          <InputGroup>
             <Input
               label="Nombre" icon="person_outline" name="name" type="text"
               value={profile.name || ""} onChange={this.onChange} />
             <Input
               label="Apellidos" name="surname" type="text"
               value={profile.surname || ""} onChange={this.onChange} />
-          </div>
-          <Input
-            label="Teléfono" icon="phone" name="officePhone" type="text"
-            value={profile.officePhone || ''} onChange={this.onChange} />
+          </InputGroup>
           <Button type="submit" raised primary>
             Guardar
           </Button>

@@ -45,7 +45,7 @@ class Sidenav extends Component {
         <div className="sidenav-links" style={{
           display: profileMenuActive? 'block':'none'
         }}>
-          <MenuLink to="/profile" icon="account_circle" text="Perfil" />
+          <MenuLink to="/profile" icon="account_circle" text="Mi cuenta" />
           <MenuLink to="/prefs" icon="settings" text="Preferencias" />
           <MenuLink onClick={this.logout} icon="clear" text="Cerrar sesión" />
         </div>
