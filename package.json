@@ -24,7 +24,8 @@
     "redux-logger": "^2.8.2",
     "redux-mediaquery": "^0.10.0",
     "redux-promise-middleware": "^4.3.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "styled-components": "^2.1.2"
   },
   "reactToolbox": {
     "output": "src/assets/rtoolbox",
