@@ -10,6 +10,7 @@ import {
   fetchUsersPage, deleteUser, getUsersPage 
 } from 'reducers/users.reducer'
 import PaginationFooter from 'components/shared/PaginationFooter'
+import Avatar from 'react-avatar'
 
 const TooltipButton = Tooltip(Button);
 
@@ -31,6 +32,25 @@ class Users extends Component {
       />
     ]
   }
+  renderUserNameLink(user) {
+    return (
+      <Link style={{marginLeft: '.5em', flex: 1}} 
+            key={user._id}
+            className="link-reset" 
+            to={`/users/${user._id}`}>
+        <p>{user.name}</p>
+      </Link>      
+    )
+  }
+  renderUserAvatar(user) {
+    return (
+      <Avatar 
+        name={`${user.name} ${user.surname}`} 
+        round={true} 
+        size={50}
+      />
+    )
+  }
   render() {
     const {loading, children, pageParams} = this.props;
     const users = this.props.users || [];
@@ -49,18 +69,14 @@ class Users extends Component {
             className="list-corner-fab"
           />
         </Link>
-        <List selectable className="list">
+        <List>
           {users.map((user, i) => (
-            <Link key={i} className="link-reset" 
-                  title="Editar usuario" to={`/users/${user._id}`}>
-              <ListItem
-                selectable
-                caption={user.name}
-                leftIcon="work"
-                className="list-item"
-                rightActions={this.renderListActions(user)}
-              />
-            </Link>
+            <ListItem
+              key={user._id || i}
+              itemContent={this.renderUserNameLink(user)}
+              leftIcon={this.renderUserAvatar(user)}
+              rightActions={this.renderListActions(user)}
+            />
           ))}
         </List>
         <PaginationFooter 
