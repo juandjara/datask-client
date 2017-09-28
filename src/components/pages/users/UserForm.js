@@ -88,6 +88,7 @@ class UserForm extends React.Component {
           name="roles"
           className="select"
           options={ROLES}
+          placeholder="Roles"
           normalize={roles => roles.map(r => r.value)}
           component={renderSelect}
         />
