@@ -1,5 +1,5 @@
-import UserDialogContainer from './UserDialogContainer'
-import UserDialog from './UserDialog'
 import UserList from './Users'
+import UserFormDialog from './UserFormDialog'
+import UserForm from './UserForm'
 
-export {UserDialog, UserDialogContainer, UserList}
+export {UserForm, UserFormDialog, UserList}

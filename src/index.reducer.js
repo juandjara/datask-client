@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux'
 import { reducer as responsive } from 'redux-mediaquery'
+import { reducer as form } from 'redux-form'
 
 import sidenav from 'reducers/sidenav.reducer'
-import form from 'reducers/form.reducer'
+import formCustom from 'reducers/form.reducer'
 import auth from 'reducers/auth.reducer'
 import users from 'reducers/users.reducer'
 import profile from 'reducers/profile.reducer'
@@ -17,5 +18,6 @@ export default combineReducers({
   projects,
   clients,
   users,
-  ui: combineReducers({form})
+  ui: combineReducers({form: formCustom}),
+  form
 })
