@@ -150,6 +150,12 @@ UserForm = connect(
     if(user.missing) {
       user.activated = true
     }
+    if(user.company && user.company._id) {
+      user.company = {
+        value: user.company._id,
+        label: user.company.name
+      }
+    }
     return {
       loading: user.loading,
       initialValues: user

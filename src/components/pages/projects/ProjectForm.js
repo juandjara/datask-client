@@ -149,6 +149,12 @@ ProjectForm = connect(
       project.budget.startDate = new Date(project.budget.startDate)
       project.budget.endDate = new Date(project.budget.endDate)      
     }
+    if(project.company && project.company._id) {
+      project.company = {
+        value: project.company._id,
+        label: project.company.name
+      }
+    }
     return {
       loading: project.loading,
       initialValues: project
