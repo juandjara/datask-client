@@ -17,6 +17,19 @@ const ROLES = ['ADMIN', 'DEVELOPER', 'CUSTOMER']
 const {required, minLength, matchKey, email} = validators
 const {renderCheckbox, renderInput, renderSelect, renderAsyncSelect} = FormFields
 
+const passwordValidators = [
+  matchKey('repeat_password'),
+  minLength(8)
+]
+const passRepeatValidators = [
+  matchKey('password'),
+  minLength(8)
+]
+const emailValidators = [
+  email, 
+  required
+]
+
 class UserForm extends React.Component {
   componentDidMount() {
     const {routeParams, fetchSingleUser} = this.props
@@ -44,7 +57,11 @@ class UserForm extends React.Component {
   render() {
     const {handleSubmit, submitting, loading} = this.props    
     const editMode = this.isEditMode()
-    const passwordRequired = editMode ? () => undefined : required
+    
+    if(!editMode) {
+      passRepeatValidators.push(required)
+      passwordValidators.push(required)
+    }
     return (
       <form onSubmit={handleSubmit(this.saveUser.bind(this))}>
         <Field
@@ -59,7 +76,7 @@ class UserForm extends React.Component {
           icon="mail"
           label="Correo electrónico" 
           component={renderInput}
-          validate={[email, required]} 
+          validate={emailValidators} 
         />
         <div style={{display: 'flex'}}>
           <Field 
@@ -83,14 +100,14 @@ class UserForm extends React.Component {
             label="Contraseña" 
             type="password" 
             component={renderInput}
-            validate={[matchKey('repeat_password'), minLength(8), passwordRequired]} 
+            validate={passwordValidators} 
           />
           <Field 
             name="repeat_password" 
             label="Repeitr contraseña" 
             type="password" 
             component={renderInput} 
-            validate={[matchKey('password'), minLength(8), passwordRequired]}
+            validate={passRepeatValidators}
           />
         </div>
         <Field

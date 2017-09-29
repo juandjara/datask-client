@@ -1,6 +1,6 @@
 const required = value => (value ? undefined : 'Este campo es obligatorio')
 const matchKey = matchKey => (value, model) => (
-  value && value === model[matchKey] ? undefined : 'Las contraseñas deben coincidir'
+  value === model[matchKey] ? undefined : 'Las contraseñas deben coincidir'
 )
 const minLength = min => value => (
   value && value.length < min ? `Debe tener ${min} caracteres como minimo` : undefined
