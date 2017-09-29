@@ -8,7 +8,7 @@ import NotFound from 'components/shared/NotFound'
 import {Profile} from 'components/pages/profile'
 import {UserList, UserFormDialog} from 'components/pages/users'
 import {ClientList, ClientDialogContainer} from 'components/pages/clients'
-import {ProjectList, ProjectDialogContainer} from 'components/pages/projects'
+import {ProjectList, ProjectFormDialog} from 'components/pages/projects'
 
 import { requireAuth } from 'services/authService';
 
@@ -17,7 +17,7 @@ export default (store) => {
     <Route path="/" component={App} onEnter={requireAuth(store)}>
       <IndexRedirect to="/projects" />
       <Route path="projects" component={ProjectList}>
-        <Route path=":_id" component={ProjectDialogContainer} />
+        <Route path=":_id" component={ProjectFormDialog} />
       </Route>
       <Route path="users" component={UserList}>
         <Route path=":_id" component={UserFormDialog} />

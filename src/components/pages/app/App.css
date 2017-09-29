@@ -67,11 +67,7 @@
   max-width: 768px;
   margin: 0 2em;
 }
-.select-outer-top .Select-menu-outer {
-  top: unset;
-  bottom: 60px !important;
-  border-radius: 0px !important;
-}
+
 .edit-dialog-active {
   margin: 1em;
 }
@@ -100,4 +96,12 @@
 }
 .select.is-focused .Select-control {
   border-color: var(--palette-teal-500);
+}
+.select .Select-menu-outer {
+  top: 40px !important;
+}
+.select.select-outer-top .Select-menu-outer {
+  top: unset !important;
+  bottom: 60px !important;
+  border-radius: 0px !important;
 }

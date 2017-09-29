@@ -1,5 +1,5 @@
-import ProjectDialogContainer from './ProjectDialogContainer'
-import ProjectDialog from './ProjectDialog'
+import ProjectForm from './ProjectForm'
+import ProjectFormDialog from './ProjectFormDialog'
 import ProjectList from './Projects'
 
-export {ProjectDialog, ProjectDialogContainer, ProjectList}
+export {ProjectForm, ProjectFormDialog, ProjectList}
