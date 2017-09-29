@@ -31,8 +31,8 @@ class ProjectForm extends React.Component {
     return this.props.routeParams._id !== "new"
   }
   saveProject(data) {
-    data.status  = data.status.value
-    data.company = data.company.value
+    data.status  = data.status && data.status.value
+    data.company = data.status && data.company.value
     const editMode = this.isEditMode()
     return this.props.editProject(data, editMode)
   }
@@ -57,6 +57,14 @@ class ProjectForm extends React.Component {
           placeholder="Estado"
         />
         <Field
+          icon="business"
+          name="company"
+          className="select select-outer-top"
+          placeholder="Escribe para buscar"
+          loadOptions={searchCompanies}
+          component={renderAsyncSelect}
+        />
+        <Field
           icon="lightbulb_outline"
           name="completedEstimated"
           type="number"
@@ -64,13 +72,22 @@ class ProjectForm extends React.Component {
           label="% completado estimado"
           component={renderInput}
         />
+        <h2>Presupuesto</h2>
         <Field
-          icon="business"
-          name="company"
-          className="select select-outer-top"
-          placeholder="Escribe para buscar"
-          loadOptions={searchCompanies}
-          component={renderAsyncSelect}
+          type="number"
+          min="0"
+          icon="timer"
+          label="Importe propio"
+          name="budget.ownAmount"
+          component={renderInput}
+        />
+        <Field
+          type="number"
+          min="0"
+          icon="euro_symbol"
+          label="Horas"
+          name="budget.hours"
+          component={renderInput}
         />
         <div style={{marginTop: '2em'}}>
           <Button
