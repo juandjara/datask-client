@@ -17,11 +17,11 @@ const ROLES = ['ADMIN', 'DEVELOPER', 'CUSTOMER']
 const {required, minLength, matchKey, email} = validators
 const {renderCheckbox, renderInput, renderSelect, renderAsyncSelect} = FormFields
 
-const passwordValidators = [
+const passwordRules = [
   matchKey('repeat_password'),
   minLength(8)
 ]
-const passRepeatValidators = [
+const passRepeatRules = [
   matchKey('password'),
   minLength(8)
 ]
@@ -41,7 +41,9 @@ class UserForm extends React.Component {
     return this.props.routeParams._id !== "new"
   }
   saveUser(data) {
-    return this.props.editUser(data, this.isEditMode())
+    data.company = data.company.value
+    const editMode = this.isEditMode()
+    return this.props.editUser(data, editMode)
   }
   searchCompanies(query) {
     const companyMapper = ({_id, name}) => ({
@@ -57,10 +59,11 @@ class UserForm extends React.Component {
   render() {
     const {handleSubmit, submitting, loading} = this.props    
     const editMode = this.isEditMode()
-    
+    let passRepeatValidators = passRepeatRules
+    let passwordValidators   = passwordRules
     if(!editMode) {
-      passRepeatValidators.push(required)
-      passwordValidators.push(required)
+      passwordValidators   = passwordRules.concat(required)
+      passRepeatValidators = passRepeatRules.concat(required)
     }
     return (
       <form onSubmit={handleSubmit(this.saveUser.bind(this))}>
