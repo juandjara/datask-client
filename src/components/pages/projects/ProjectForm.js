@@ -18,7 +18,12 @@ const statusOptions = [
 ]
 
 const {required} = validators
-const {renderInput, renderSelect, renderAsyncSelect} = FormFields
+const {
+  renderInput, 
+  renderSelect, 
+  renderAsyncSelect, 
+  renderDatepicker
+} = FormFields
 
 class ProjectForm extends React.Component {
   componentDidMount() {
@@ -31,8 +36,7 @@ class ProjectForm extends React.Component {
     return this.props.routeParams._id !== "new"
   }
   saveProject(data) {
-    data.status  = data.status && data.status.value
-    data.company = data.status && data.company.value
+    data.company = data.company && data.company.value
     const editMode = this.isEditMode()
     return this.props.editProject(data, editMode)
   }
@@ -89,6 +93,30 @@ class ProjectForm extends React.Component {
           name="budget.hours"
           component={renderInput}
         />
+        <Field
+          icon="date_range"
+          label="Fecha contratación"
+          name="budget.billingDate"
+          locale="es"
+          autoOk
+          component={renderDatepicker}
+        />
+        <Field
+          icon="date_range"
+          label="Fecha inicion"
+          name="budget.startDate"
+          locale="es"
+          autoOk
+          component={renderDatepicker}
+        />
+        <Field
+          icon="date_range"
+          label="Fecha fin"
+          name="budget.endDate"
+          locale="es"
+          autoOk
+          component={renderDatepicker}
+        />
         <div style={{marginTop: '2em'}}>
           <Button
             primary raised
@@ -116,6 +144,11 @@ ProjectForm = reduxForm({
 ProjectForm = connect(
   (state, props) => {
     const project = getProjectById(state, props.routeParams._id)
+    if(project.budget) {
+      project.budget.billingDate = new Date(project.budget.billingDate)
+      project.budget.startDate = new Date(project.budget.startDate)
+      project.budget.endDate = new Date(project.budget.endDate)      
+    }
     return {
       loading: project.loading,
       initialValues: project

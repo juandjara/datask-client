@@ -4,6 +4,7 @@ import Input from 'react-toolbox/lib/input/Input'
 import Checkbox from 'react-toolbox/lib/checkbox/Checkbox'
 import Select from 'react-select';
 import Icon from 'react-toolbox/lib/font_icon/FontIcon'
+import DatePicker from 'react-toolbox/lib/date_picker/DatePicker';
 import 'react-select/dist/react-select.css';
 
 const renderInput = ({
@@ -69,5 +70,34 @@ const renderAsyncSelect = ({
     />
   </div>
 )
+const renderDatepicker = ({
+  input,
+  label,
+  meta,
+  icon,
+  name,
+  ...otherProps
+}) => (
+  <div style={{display: 'flex'}}>
+    <label className="select-label">
+      <Icon>{icon}</Icon>
+    </label>
+    <DatePicker
+      label={label}
+      name={name}
+      value={input.value}
+      onChange={input.onChange}
+      cancelLabel="Cancelar"
+      style={{flex: 1}}
+      {...otherProps}
+    />
+  </div>
+)
 
-export default {renderCheckbox, renderInput, renderSelect, renderAsyncSelect}
+export default {
+  renderCheckbox, 
+  renderInput, 
+  renderSelect, 
+  renderAsyncSelect,
+  renderDatepicker
+}
