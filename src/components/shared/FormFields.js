@@ -34,13 +34,35 @@ const renderSelect = ({
   label,
   meta: {touched, error},
   icon,
+  name,
   ...otherProps
 }) => (
   <div style={{display: 'flex'}}>
-    <label className="select-label" htmlFor="roles">
+    <label className="select-label" htmlFor={name}>
       <Icon>{icon}</Icon>
     </label>
-    <Select 
+    <Select
+      name={name} 
+      value={input.value}
+      onChange={input.onChange}
+      {...otherProps}
+    />
+  </div>
+)
+const renderAsyncSelect = ({
+  input,
+  label,
+  meta: { touched, error, warning },
+  icon,
+  name,
+  ...otherProps
+}) => (
+  <div style={{display: 'flex'}}>
+    <label className="select-label" htmlFor={name}>
+      <Icon style={{maxWidth: '1em'}}>{icon}</Icon>
+    </label>
+    <Select.Async
+      name={name} 
       value={input.value}
       onChange={input.onChange}
       {...otherProps}
@@ -48,4 +70,4 @@ const renderSelect = ({
   </div>
 )
 
-export default {renderCheckbox, renderInput, renderSelect}
+export default {renderCheckbox, renderInput, renderSelect, renderAsyncSelect}

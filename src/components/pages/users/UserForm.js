@@ -2,20 +2,20 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 
 import Button from 'react-toolbox/lib/button/Button'
+import FormFields from 'components/shared/FormFields'
 
 import { connect } from 'react-redux'
 import {
   fetchSingleUser, editUser, getUserById
 } from 'reducers/users.reducer'
-
 import validators from 'services/formValidators'
-import FormFields from 'components/shared/FormFields'
+import axios from 'services/axiosWrapper'
 
 const ROLES = ['ADMIN', 'DEVELOPER', 'CUSTOMER']
 .map(role => ({label: role, value: role}))
 
 const {required, minLength, matchKey, email} = validators
-const {renderCheckbox, renderInput, renderSelect} = FormFields
+const {renderCheckbox, renderInput, renderSelect, renderAsyncSelect} = FormFields
 
 class UserForm extends React.Component {
   componentDidMount() {
@@ -29,6 +29,17 @@ class UserForm extends React.Component {
   }
   saveUser(data) {
     return this.props.editUser(data, this.isEditMode())
+  }
+  searchCompanies(query) {
+    const companyMapper = ({_id, name}) => ({
+      value: _id,
+      label: name
+    })
+    return axios.get(`/company?q=${query}`)
+    .then(res => res.data.docs)
+    .then(companies => ({
+      options: companies.map(companyMapper)
+    }))
   }
   render() {
     const {handleSubmit, submitting, loading} = this.props    
@@ -91,6 +102,14 @@ class UserForm extends React.Component {
           placeholder="Roles"
           normalize={roles => roles.map(r => r.value)}
           component={renderSelect}
+        />
+        <Field
+          icon="business"
+          name="company"
+          className="select"
+          placeholder="Escribe para buscar"
+          loadOptions={this.searchCompanies}
+          component={renderAsyncSelect}
         />
         <div style={{marginTop: '2em'}}>
           <Button
