@@ -9,7 +9,7 @@ import {
   fetchSingleUser, editUser, getUserById
 } from 'reducers/users.reducer'
 import validators from 'services/formValidators'
-import axios from 'services/axiosWrapper'
+import {searchCompanies} from 'services/selectHelpers'
 
 const ROLES = ['ADMIN', 'DEVELOPER', 'CUSTOMER']
 .map(role => ({label: role, value: role}))
@@ -44,17 +44,6 @@ class UserForm extends React.Component {
     data.company = data.company.value
     const editMode = this.isEditMode()
     return this.props.editUser(data, editMode)
-  }
-  searchCompanies(query) {
-    const companyMapper = ({_id, name}) => ({
-      value: _id,
-      label: name
-    })
-    return axios.get(`/company?q=${query}`)
-    .then(res => res.data.docs)
-    .then(companies => ({
-      options: companies.map(companyMapper)
-    }))
   }
   render() {
     const {handleSubmit, submitting, loading} = this.props    
@@ -128,7 +117,7 @@ class UserForm extends React.Component {
           name="company"
           className="select select-outer-top"
           placeholder="Escribe para buscar"
-          loadOptions={this.searchCompanies}
+          loadOptions={searchCompanies}
           component={renderAsyncSelect}
         />
         <div style={{marginTop: '2em'}}>
