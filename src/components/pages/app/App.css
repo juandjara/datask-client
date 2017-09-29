@@ -67,6 +67,11 @@
   max-width: 768px;
   margin: 0 2em;
 }
+.select-outer-top .Select-menu-outer {
+  top: unset;
+  bottom: 60px !important;
+  border-radius: 0px !important;
+}
 .edit-dialog-active {
   margin: 1em;
 }

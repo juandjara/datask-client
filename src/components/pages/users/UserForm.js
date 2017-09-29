@@ -106,7 +106,7 @@ class UserForm extends React.Component {
         <Field
           icon="business"
           name="company"
-          className="select"
+          className="select select-outer-top"
           placeholder="Escribe para buscar"
           loadOptions={this.searchCompanies}
           component={renderAsyncSelect}
