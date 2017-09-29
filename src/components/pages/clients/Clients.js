@@ -55,7 +55,7 @@ class Clients extends Component {
               <ListItem
                 selectable
                 caption={client.name}
-                leftIcon="work"
+                leftIcon="business"
                 className="list-item"
                 rightActions={this.renderListActions(client)}
               />
