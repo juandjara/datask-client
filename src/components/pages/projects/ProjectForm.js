@@ -63,7 +63,7 @@ class ProjectForm extends React.Component {
         <Field
           icon="business"
           name="company"
-          className="select select-outer-top"
+          className="select"
           placeholder="Escribe para buscar"
           loadOptions={searchCompanies}
           component={renderAsyncSelect}
