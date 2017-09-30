@@ -72,14 +72,14 @@ class ProjectForm extends React.Component {
           icon="lightbulb_outline"
           name="completedEstimated"
           type="number"
-          min="0" max="100"
+          min="0" max="100" step="0.01"
           label="% completado estimado"
           component={renderInput}
         />
         <h2>Presupuesto</h2>
         <Field
           type="number"
-          min="0"
+          min="0" step="0.01"
           icon="timer"
           label="Importe propio"
           name="budget.ownAmount"
@@ -87,7 +87,7 @@ class ProjectForm extends React.Component {
         />
         <Field
           type="number"
-          min="0"
+          min="0" step="0.01"
           icon="euro_symbol"
           label="Horas"
           name="budget.hours"
