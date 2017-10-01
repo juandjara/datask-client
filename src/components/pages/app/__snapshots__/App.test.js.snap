@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App matches snapshot 1`] = `
+<div
+  className=""
+>
+  <div
+    className="undefined"
+    data-react-toolbox="panel"
+    style={
+      Object {
+        "minHeight": "100vh",
+      }
+    }
+  >
+    <div />
+    <header
+      className="Header"
+    >
+      <h2
+        className="Header-title"
+      >
+        Datask
+      </h2>
+    </header>
+    <main
+      className="main"
+    />
+  </div>
+</div>
+`;

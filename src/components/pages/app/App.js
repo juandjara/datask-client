@@ -13,7 +13,7 @@ import {TaskQuickAccess} from 'components/shared/taskQuickAccess'
 import {fetchProfile} from 'reducers/profile.reducer'
 import './App.css';
 
-class App extends Component {
+export class App extends Component {
   componentDidMount() {
     this.props.actions.fetchProfile()
   }
