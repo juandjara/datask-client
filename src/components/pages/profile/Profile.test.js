@@ -1,7 +1,9 @@
 import React from 'react'
-import {Profile} from './Profile'
+import ProfileConnected, {Profile} from './Profile'
 import renderer from 'react-test-renderer'
 import { shallow, mount } from 'enzyme'
+import shallowWithStore from 'services/shallowWithStore'
+import {createMockStore} from 'redux-test-utils'
 
 const profile = {
   name: 'Juan D.',
@@ -10,6 +12,11 @@ const profile = {
 }
 
 describe('Profile', () => {
+  it('renders with store without crashing', () => {
+    const state = {profile: {}}
+    const store = createMockStore(state)
+    shallowWithStore(<ProfileConnected />, store)
+  })
   it('matches snapshot with profile', () => {
     const component = renderer.create(
       <Profile 

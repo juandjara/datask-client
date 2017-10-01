@@ -1,9 +1,16 @@
 import React from 'react'
-import {Login} from './Login'
+import LoginConnected, {Login} from './Login'
 import renderer from 'react-test-renderer'
 import {shallow, mount} from 'enzyme'
+import shallowWithStore from 'services/shallowWithStore'
+import {createMockStore} from 'redux-test-utils'
 
 describe('Login', () => {
+  it('renders with store without crashing', () => {
+    const state = {auth: {}}
+    const store = createMockStore(state)
+    shallowWithStore(<LoginConnected />, store)
+  })
   it('matches snapshot', () => {
     const component = renderer.create(
       <Login
