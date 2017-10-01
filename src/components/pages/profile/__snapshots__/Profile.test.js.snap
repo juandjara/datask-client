@@ -1,0 +1,310 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Profile matches snapshot with loading 1`] = `
+<div
+  style={
+    Object {
+      "padding": "1em",
+    }
+  }
+>
+  <h2
+    className="type-headline"
+  >
+    Mi cuenta
+  </h2>
+  <div
+    style={
+      Object {
+        "alignItems": "center",
+        "display": "flex",
+        "flexFlow": "row",
+        "justifyContent": undefined,
+      }
+    }
+  >
+    <div
+      aria-valuemax={100}
+      aria-valuemin={0}
+      aria-valuenow={0}
+      className=""
+      data-react-toolbox="progress-bar"
+      disabled={undefined}
+    >
+      <svg
+        className={undefined}
+        viewBox="0 0 60 60"
+      >
+        <circle
+          className={undefined}
+          cx="30"
+          cy="30"
+          r="25"
+          style={undefined}
+        />
+      </svg>
+    </div>
+    <span
+      style={
+        Object {
+          "marginLeft": "1em",
+        }
+      }
+    >
+      Cargando ...
+    </span>
+  </div>
+  <div
+    className="color-error"
+  >
+    <pre />
+  </div>
+  <form
+    onSubmit={[Function]}
+  >
+    <div
+      className="undefined"
+      data-react-toolbox="input"
+    >
+      <input
+        className=""
+        defaultValue={undefined}
+        disabled={false}
+        maxLength={undefined}
+        name="email"
+        onChange={[Function]}
+        onKeyPress={undefined}
+        required={false}
+        role="input"
+        type="email"
+        value=""
+      />
+      <span
+        aria-label=""
+        className="material-icons"
+        data-react-toolbox="font-icon"
+      >
+        email
+      </span>
+      <span
+        className={undefined}
+      />
+      <label
+        className=""
+      >
+        Email
+      </label>
+    </div>
+    <div
+      className="sc-bdVaJa eRcGeI"
+    >
+      <div
+        className="undefined"
+        data-react-toolbox="input"
+      >
+        <input
+          className=""
+          defaultValue={undefined}
+          disabled={false}
+          maxLength={undefined}
+          name="name"
+          onChange={[Function]}
+          onKeyPress={undefined}
+          required={false}
+          role="input"
+          type="text"
+          value=""
+        />
+        <span
+          aria-label=""
+          className="material-icons"
+          data-react-toolbox="font-icon"
+        >
+          person_outline
+        </span>
+        <span
+          className={undefined}
+        />
+        <label
+          className=""
+        >
+          Nombre
+        </label>
+      </div>
+      <div
+        className=""
+        data-react-toolbox="input"
+      >
+        <input
+          className=""
+          defaultValue={undefined}
+          disabled={false}
+          maxLength={undefined}
+          name="surname"
+          onChange={[Function]}
+          onKeyPress={undefined}
+          required={false}
+          role="input"
+          type="text"
+          value=""
+        />
+        <span
+          className={undefined}
+        />
+        <label
+          className=""
+        >
+          Apellidos
+        </label>
+      </div>
+    </div>
+    <button
+      className=""
+      data-react-toolbox="button"
+      disabled={false}
+      href={undefined}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseUp={[Function]}
+      onTouchStart={[Function]}
+      type="submit"
+    >
+      Guardar
+    </button>
+  </form>
+</div>
+`;
+
+exports[`Profile matches snapshot with profile 1`] = `
+<div
+  style={
+    Object {
+      "padding": "1em",
+    }
+  }
+>
+  <h2
+    className="type-headline"
+  >
+    Mi cuenta
+  </h2>
+  <div
+    className="color-error"
+  >
+    <pre />
+  </div>
+  <form
+    onSubmit={[Function]}
+  >
+    <div
+      className="undefined"
+      data-react-toolbox="input"
+    >
+      <input
+        className="undefined"
+        defaultValue={undefined}
+        disabled={false}
+        maxLength={undefined}
+        name="email"
+        onChange={[Function]}
+        onKeyPress={undefined}
+        required={false}
+        role="input"
+        type="email"
+        value="juanorigami@gmail.com"
+      />
+      <span
+        aria-label=""
+        className="material-icons"
+        data-react-toolbox="font-icon"
+      >
+        email
+      </span>
+      <span
+        className={undefined}
+      />
+      <label
+        className=""
+      >
+        Email
+      </label>
+    </div>
+    <div
+      className="sc-bdVaJa eRcGeI"
+    >
+      <div
+        className="undefined"
+        data-react-toolbox="input"
+      >
+        <input
+          className="undefined"
+          defaultValue={undefined}
+          disabled={false}
+          maxLength={undefined}
+          name="name"
+          onChange={[Function]}
+          onKeyPress={undefined}
+          required={false}
+          role="input"
+          type="text"
+          value="Juan D."
+        />
+        <span
+          aria-label=""
+          className="material-icons"
+          data-react-toolbox="font-icon"
+        >
+          person_outline
+        </span>
+        <span
+          className={undefined}
+        />
+        <label
+          className=""
+        >
+          Nombre
+        </label>
+      </div>
+      <div
+        className=""
+        data-react-toolbox="input"
+      >
+        <input
+          className="undefined"
+          defaultValue={undefined}
+          disabled={false}
+          maxLength={undefined}
+          name="surname"
+          onChange={[Function]}
+          onKeyPress={undefined}
+          required={false}
+          role="input"
+          type="text"
+          value="Jara"
+        />
+        <span
+          className={undefined}
+        />
+        <label
+          className=""
+        >
+          Apellidos
+        </label>
+      </div>
+    </div>
+    <button
+      className=""
+      data-react-toolbox="button"
+      disabled={false}
+      href={undefined}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseUp={[Function]}
+      onTouchStart={[Function]}
+      type="submit"
+    >
+      Guardar
+    </button>
+  </form>
+</div>
+`;
