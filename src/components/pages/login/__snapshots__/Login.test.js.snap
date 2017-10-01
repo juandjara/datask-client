@@ -1,0 +1,533 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login matches snapshot 1`] = `
+<div
+  className="login-wrapper"
+>
+  <div
+    style={
+      Object {
+        "minHeight": "400px",
+      }
+    }
+  >
+    <h1
+      className="login-header"
+    >
+      Open Crono
+    </h1>
+    <p
+      className="color-primary"
+      style={
+        Object {
+          "textAlign": "center",
+        }
+      }
+    />
+    <p
+      style={
+        Object {
+          "color": "tomato",
+          "textAlign": "center",
+        }
+      }
+    />
+    <form
+      className="login-form shadow-z1"
+      onSubmit={[Function]}
+    >
+      <div
+        className="undefined"
+        data-react-toolbox="input"
+      >
+        <input
+          className=""
+          defaultValue={undefined}
+          disabled={false}
+          maxLength={undefined}
+          name="email"
+          onChange={[Function]}
+          onKeyPress={undefined}
+          required={true}
+          role="input"
+          type="text"
+          value=""
+        />
+        <span
+          aria-label=""
+          className="material-icons"
+          data-react-toolbox="font-icon"
+        >
+          email
+        </span>
+        <span
+          className={undefined}
+        />
+        <label
+          className=""
+        >
+          Correo electronico
+          <span
+            className={undefined}
+          >
+             * 
+          </span>
+        </label>
+      </div>
+      <div
+        className="undefined"
+        data-react-toolbox="input"
+      >
+        <input
+          className=""
+          defaultValue={undefined}
+          disabled={false}
+          maxLength={undefined}
+          minLength={4}
+          name="password"
+          onChange={[Function]}
+          onKeyPress={undefined}
+          required={true}
+          role="input"
+          type="password"
+          value=""
+        />
+        <span
+          aria-label=""
+          className="material-icons"
+          data-react-toolbox="font-icon"
+        >
+          lock
+        </span>
+        <span
+          className={undefined}
+        />
+        <label
+          className=""
+        >
+          Contraseña
+          <span
+            className={undefined}
+          >
+             * 
+          </span>
+        </label>
+      </div>
+      <div
+        style={
+          Object {
+            "marginTop": "1em",
+          }
+        }
+      >
+        <label
+          className=""
+          data-react-toolbox="checkbox"
+          onMouseEnter={undefined}
+          onMouseLeave={undefined}
+        >
+          <input
+            checked={true}
+            className={undefined}
+            disabled={false}
+            name="rememberMe"
+            onChange={[Function]}
+            onClick={[Function]}
+            type="checkbox"
+          />
+          <div
+            className="undefined"
+            data-react-toolbox="check"
+            onMouseDown={[Function]}
+            style={
+              Object {
+                "opacity": 0.5,
+              }
+            }
+          />
+          <span
+            className={undefined}
+            data-react-toolbox="label"
+          >
+            Recordarme durante 24h
+          </span>
+        </label>
+        <button
+          className=""
+          data-react-toolbox="button"
+          disabled={false}
+          href={undefined}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchStart={[Function]}
+          style={
+            Object {
+              "width": "100%",
+            }
+          }
+          type="submit"
+        >
+          Entrar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;
+
+exports[`Login matches snapshot for error 1`] = `
+<div
+  className="login-wrapper"
+>
+  <div
+    style={
+      Object {
+        "minHeight": "400px",
+      }
+    }
+  >
+    <h1
+      className="login-header"
+    >
+      Open Crono
+    </h1>
+    <p
+      className="color-primary"
+      style={
+        Object {
+          "textAlign": "center",
+        }
+      }
+    />
+    <p
+      style={
+        Object {
+          "color": "tomato",
+          "textAlign": "center",
+        }
+      }
+    >
+      Wrong credentials
+    </p>
+    <form
+      className="login-form shadow-z1"
+      onSubmit={[Function]}
+    >
+      <div
+        className="undefined"
+        data-react-toolbox="input"
+      >
+        <input
+          className=""
+          defaultValue={undefined}
+          disabled={false}
+          maxLength={undefined}
+          name="email"
+          onChange={[Function]}
+          onKeyPress={undefined}
+          required={true}
+          role="input"
+          type="text"
+          value=""
+        />
+        <span
+          aria-label=""
+          className="material-icons"
+          data-react-toolbox="font-icon"
+        >
+          email
+        </span>
+        <span
+          className={undefined}
+        />
+        <label
+          className=""
+        >
+          Correo electronico
+          <span
+            className={undefined}
+          >
+             * 
+          </span>
+        </label>
+      </div>
+      <div
+        className="undefined"
+        data-react-toolbox="input"
+      >
+        <input
+          className=""
+          defaultValue={undefined}
+          disabled={false}
+          maxLength={undefined}
+          minLength={4}
+          name="password"
+          onChange={[Function]}
+          onKeyPress={undefined}
+          required={true}
+          role="input"
+          type="password"
+          value=""
+        />
+        <span
+          aria-label=""
+          className="material-icons"
+          data-react-toolbox="font-icon"
+        >
+          lock
+        </span>
+        <span
+          className={undefined}
+        />
+        <label
+          className=""
+        >
+          Contraseña
+          <span
+            className={undefined}
+          >
+             * 
+          </span>
+        </label>
+      </div>
+      <div
+        style={
+          Object {
+            "marginTop": "1em",
+          }
+        }
+      >
+        <label
+          className=""
+          data-react-toolbox="checkbox"
+          onMouseEnter={undefined}
+          onMouseLeave={undefined}
+        >
+          <input
+            checked={true}
+            className={undefined}
+            disabled={false}
+            name="rememberMe"
+            onChange={[Function]}
+            onClick={[Function]}
+            type="checkbox"
+          />
+          <div
+            className="undefined"
+            data-react-toolbox="check"
+            onMouseDown={[Function]}
+            style={
+              Object {
+                "opacity": 0.5,
+              }
+            }
+          />
+          <span
+            className={undefined}
+            data-react-toolbox="label"
+          >
+            Recordarme durante 24h
+          </span>
+        </label>
+        <button
+          className=""
+          data-react-toolbox="button"
+          disabled={false}
+          href={undefined}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchStart={[Function]}
+          style={
+            Object {
+              "width": "100%",
+            }
+          }
+          type="submit"
+        >
+          Entrar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;
+
+exports[`Login matches snapshot for loading 1`] = `
+<div
+  className="login-wrapper"
+>
+  <div
+    style={
+      Object {
+        "minHeight": "400px",
+      }
+    }
+  >
+    <h1
+      className="login-header"
+    >
+      Open Crono
+    </h1>
+    <p
+      className="color-primary"
+      style={
+        Object {
+          "textAlign": "center",
+        }
+      }
+    >
+      Cargando ...
+    </p>
+    <p
+      style={
+        Object {
+          "color": "tomato",
+          "textAlign": "center",
+        }
+      }
+    />
+    <form
+      className="login-form shadow-z1"
+      onSubmit={[Function]}
+    >
+      <div
+        className="undefined"
+        data-react-toolbox="input"
+      >
+        <input
+          className=""
+          defaultValue={undefined}
+          disabled={false}
+          maxLength={undefined}
+          name="email"
+          onChange={[Function]}
+          onKeyPress={undefined}
+          required={true}
+          role="input"
+          type="text"
+          value=""
+        />
+        <span
+          aria-label=""
+          className="material-icons"
+          data-react-toolbox="font-icon"
+        >
+          email
+        </span>
+        <span
+          className={undefined}
+        />
+        <label
+          className=""
+        >
+          Correo electronico
+          <span
+            className={undefined}
+          >
+             * 
+          </span>
+        </label>
+      </div>
+      <div
+        className="undefined"
+        data-react-toolbox="input"
+      >
+        <input
+          className=""
+          defaultValue={undefined}
+          disabled={false}
+          maxLength={undefined}
+          minLength={4}
+          name="password"
+          onChange={[Function]}
+          onKeyPress={undefined}
+          required={true}
+          role="input"
+          type="password"
+          value=""
+        />
+        <span
+          aria-label=""
+          className="material-icons"
+          data-react-toolbox="font-icon"
+        >
+          lock
+        </span>
+        <span
+          className={undefined}
+        />
+        <label
+          className=""
+        >
+          Contraseña
+          <span
+            className={undefined}
+          >
+             * 
+          </span>
+        </label>
+      </div>
+      <div
+        style={
+          Object {
+            "marginTop": "1em",
+          }
+        }
+      >
+        <label
+          className=""
+          data-react-toolbox="checkbox"
+          onMouseEnter={undefined}
+          onMouseLeave={undefined}
+        >
+          <input
+            checked={true}
+            className={undefined}
+            disabled={false}
+            name="rememberMe"
+            onChange={[Function]}
+            onClick={[Function]}
+            type="checkbox"
+          />
+          <div
+            className="undefined"
+            data-react-toolbox="check"
+            onMouseDown={[Function]}
+            style={
+              Object {
+                "opacity": 0.5,
+              }
+            }
+          />
+          <span
+            className={undefined}
+            data-react-toolbox="label"
+          >
+            Recordarme durante 24h
+          </span>
+        </label>
+        <button
+          className=""
+          data-react-toolbox="button"
+          disabled={true}
+          href={undefined}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchStart={[Function]}
+          style={
+            Object {
+              "width": "100%",
+            }
+          }
+          type="submit"
+        >
+          Cargando ...
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;

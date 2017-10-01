@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { authenticate } from 'reducers/auth.reducer'
 import './Login.css'
 
-class Login extends Component {
+export class Login extends Component {
   state = {
     rememberMe: true,
     form: {
@@ -18,12 +18,15 @@ class Login extends Component {
     ev.preventDefault();
     const { form, rememberMe } = this.state;
     const { location } = this.props;
-    this.props.dispatch(authenticate(form, rememberMe, location.query.next))
+    this.props.authenticate(form, rememberMe, location.query.next)
   }
   onChange = (text, ev) => {
     const name = ev.target.name;
     this.setState(prevState => ({
-      form: Object.assign(prevState.form, { [name]: text })
+      form: {
+        ...prevState.form, 
+        [name]: text
+      }
     }))
   }
   onCheckboxChange = (checked) => {
@@ -52,6 +55,7 @@ class Login extends Component {
               value={form.password} onChange={this.onChange} />
             <div style={{marginTop: '1em'}}>
               <Checkbox
+                name="rememberMe"
                 style={{opacity: 0.5}}
                 onChange={this.onCheckboxChange} checked={rememberMe}
                 label="Recordarme durante 24h" />
@@ -69,4 +73,6 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => state.auth;
-export default connect(mapStateToProps)(Login);
+const actions = {authenticate}
+
+export default connect(mapStateToProps, actions)(Login);
