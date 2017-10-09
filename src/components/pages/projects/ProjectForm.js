@@ -58,12 +58,12 @@ class ProjectForm extends React.Component {
           options={statusOptions}
           component={renderSelect}
           className="select"
-          placeholder="Estado"
         />
         <Field
           icon="business"
           name="company"
           className="select"
+          label="Cliente"
           placeholder="Escribe para buscar"
           loadOptions={searchCompanies}
           component={renderAsyncSelect}
@@ -80,7 +80,7 @@ class ProjectForm extends React.Component {
         <Field
           type="number"
           min="0" step="0.01"
-          icon="timer"
+          icon="euro_symbol"
           label="Importe propio"
           name="budget.ownAmount"
           component={renderInput}
@@ -88,7 +88,7 @@ class ProjectForm extends React.Component {
         <Field
           type="number"
           min="0" step="0.01"
-          icon="euro_symbol"
+          icon="timer"
           label="Horas"
           name="budget.hours"
           component={renderInput}
