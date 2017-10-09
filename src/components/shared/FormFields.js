@@ -38,16 +38,19 @@ const renderSelect = ({
   name,
   ...otherProps
 }) => (
-  <div style={{display: 'flex'}}>
-    <label className="select-label" htmlFor={name}>
-      <Icon>{icon}</Icon>
-    </label>
-    <Select
-      name={name} 
-      value={input.value}
-      onChange={input.onChange}
-      {...otherProps}
-    />
+  <div>
+    <label className="select-label">{label}</label>
+    <div style={{display: 'flex'}}>
+      <label className="select-icon" htmlFor={name}>
+        <Icon>{icon}</Icon>
+      </label>
+      <Select
+        name={name} 
+        value={input.value}
+        onChange={input.onChange}
+        {...otherProps}
+      />
+    </div>
   </div>
 )
 const renderAsyncSelect = ({
@@ -58,16 +61,19 @@ const renderAsyncSelect = ({
   name,
   ...otherProps
 }) => (
-  <div style={{display: 'flex'}}>
-    <label className="select-label" htmlFor={name}>
-      <Icon style={{maxWidth: '1em'}}>{icon}</Icon>
-    </label>
-    <Select.Async
-      name={name} 
-      value={input.value}
-      onChange={input.onChange}
-      {...otherProps}
-    />
+  <div>
+    <label className="select-label">{label}</label>
+    <div style={{display: 'flex'}}>
+      <label className="select-icon" htmlFor={name}>
+        <Icon style={{maxWidth: '1em'}}>{icon}</Icon>
+      </label>
+      <Select.Async
+        name={name} 
+        value={input.value}
+        onChange={input.onChange}
+        {...otherProps}
+      />
+    </div>
   </div>
 )
 const renderDatepicker = ({
@@ -79,7 +85,7 @@ const renderDatepicker = ({
   ...otherProps
 }) => (
   <div style={{display: 'flex'}}>
-    <label className="select-label">
+    <label className="select-icon">
       <Icon>{icon}</Icon>
     </label>
     <DatePicker
