@@ -85,22 +85,25 @@
   border-radius: 0;
 }
 .select {
-  flex: 1;
   padding-bottom: 20px;
 }
 .select-label {
-  margin-left: 68px;
   font-size: 12px;
   color: rgba(0,0,0, .3);
 }
 .select-icon {
-  padding: 10px;
   display: block;
+  padding-top: 20px;
+  padding-left: 12px;
   padding-right: 32px;
 }
 .select .Select-value {
   padding-left: 0 !important;
 }
+.select .Select-input {
+  padding-left: 0 !important;
+}
+
 .select.is-focused .Select-control {
   border-color: var(--palette-teal-500);
 }
@@ -111,4 +114,11 @@
   top: unset !important;
   bottom: 60px !important;
   border-radius: 0px !important;
+}
+
+.date-picker-container {
+  display: flex;
+}
+.date-picker-container [data-react-toolbox="date-picker"] {
+  flex: 1;
 }
