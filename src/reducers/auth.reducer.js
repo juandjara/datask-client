@@ -30,13 +30,13 @@ export function authenticate(credentials, rememberMe, nextLocation) {
       });
       browserHistory.push(nextLocation || '/');
     }).catch(res => {
-      const {status, statusText} = res.response
+      const {status, statusText} = res.response || {}
       const errorMap = {
         401: 'Usuario o contraseña inválidos',
         400: 'Error de validación'
       }
       let msg = errorMap[status] || `${status} ${statusText}`;
-      if(status >= 500) {
+      if(!status || status >= 500) {
         msg = "Fallo del servidor";
       }
       dispatch({
