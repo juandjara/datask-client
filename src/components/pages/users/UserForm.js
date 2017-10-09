@@ -108,13 +108,14 @@ class UserForm extends React.Component {
           name="roles"
           className="select"
           options={ROLES}
-          placeholder="Roles"
+          label="Roles"
           normalize={roles => roles.map(r => r.value)}
           component={renderSelect}
         />
         <Field
           icon="business"
           name="company"
+          label="Cliente"
           className="select select-outer-top"
           placeholder="Escribe para buscar"
           loadOptions={searchCompanies}
