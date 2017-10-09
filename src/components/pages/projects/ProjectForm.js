@@ -1,15 +1,20 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 
+import List from 'react-toolbox/lib/list/List'
+import ListItem from 'react-toolbox/lib/list/ListItem'
 import Button from 'react-toolbox/lib/button/Button'
+import IconButton from 'react-toolbox/lib/button/IconButton'
 import FormFields from 'components/shared/FormFields'
 
 import { connect } from 'react-redux'
 import validators from 'services/formValidators'
 import {
-  fetchSingleProject, editProject, getProjectById
+  fetchSingleProject,
+  editProject, 
+  getProjectById
 } from 'reducers/projects.reducer'
-import {searchCompanies} from 'services/selectHelpers'
+import {searchCompanies, searchUsers} from 'services/selectHelpers'
 
 const statusOptions = [
   {value: "ACTIVE", label: "Activo"},
@@ -37,11 +42,17 @@ class ProjectForm extends React.Component {
   }
   saveProject(data) {
     data.company = data.company && data.company.value
+    data.manager = data.manager && data.manager.value
     const editMode = this.isEditMode()
     return this.props.editProject(data, editMode)
   }
+  getUsers() {
+    const {manager = {}, users = []} = this.props.project
+    return users.filter(user => user._id !== manager)
+  }
   render() {
-    const {handleSubmit, submitting, loading} = this.props    
+    const {handleSubmit, submitting, loading} = this.props
+    const users = this.getUsers()
     return (
       <form onSubmit={handleSubmit(this.saveProject.bind(this))}>
         <Field
@@ -50,6 +61,25 @@ class ProjectForm extends React.Component {
           component={renderInput}
           validate={required}
         />
+        <h2>Usuarios</h2>
+        <List>
+          <Field 
+            name="manager"
+            icon="person_outline"
+            label="Responsable"
+            className="select"
+            placeholder="Escribe para buscar"
+            loadOptions={searchUsers}
+            component={renderAsyncSelect}
+          />
+          {users.map((user, index) => (
+            <ListItem 
+              key={index}
+              leftIcon="person" 
+              caption={user.full_name}
+              rightActions={[<IconButton key="icon" icon="close" />]} />
+          ))}
+        </List>
         <h2>Estado</h2>
         <Field
           name="status"
@@ -157,6 +187,7 @@ ProjectForm = connect(
     }
     return {
       loading: project.loading,
+      project: project,
       initialValues: project
     }
   },
