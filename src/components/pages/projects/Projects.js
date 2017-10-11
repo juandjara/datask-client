@@ -34,6 +34,7 @@ class Projects extends Component {
         key={`action${i}_project${project._id}`}
         style={{color: '#757575'}} >
         <TooltipIcon
+          tooltipPosition="left"
           tooltip={data.tooltip}
           value={data.icon} />
       </Link>
@@ -41,6 +42,7 @@ class Projects extends Component {
     actions.push((
       <ConfirmDeleteButton
         tooltip="Borrar proyecto"
+        tooltipPosition="left"
         title={`Borrar proyecto ${project.name}`}
         key={`delete_project_${project._id}`}
         onDelete={() => this.props.deleteProject(project)}

@@ -24,11 +24,12 @@ class ConfirmDeleteButton extends Component {
     this.setState({ confirmationPopup: false })
   }
   render() {
-    const {tooltip, title} = this.props;
+    const {tooltip, tooltipPosition, title} = this.props;
     return (
       <div className="delete-button">
         <TooltipIcon
           tooltip={tooltip || "Borrar"}
+          tooltipPosition={tooltipPosition}
           value="clear"
           style={{color: '#757575'}}
           onClick={(ev) => this.open(ev)}

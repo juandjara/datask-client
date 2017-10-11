@@ -3,6 +3,7 @@ import List from 'react-toolbox/lib/list/List'
 import ListItem from 'react-toolbox/lib/list/ListItem'
 import Tooltip from 'react-toolbox/lib/tooltip'
 import Button from 'react-toolbox/lib/button/Button'
+import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { 
@@ -12,6 +13,7 @@ import ConfirmDeleteButton from 'components/shared/ConfirmDeleteButton'
 import PaginationFooter from 'components/shared/PaginationFooter'
 
 const TooltipButton = Tooltip(Button);
+const TooltipIcon = Tooltip(Icon);
 
 class Clients extends Component {
   pageSize = 5;
@@ -23,10 +25,18 @@ class Clients extends Component {
   }
   renderListActions(client) {
     return [
+      <Link
+        key={`link_edit_${client._id}`}
+        to={`/clients/${client._id}`}
+        style={{color: '#757575'}}
+      >
+        <TooltipIcon tooltipPosition="left" tooltip="Editar" value="edit" /> 
+      </Link>,
       <ConfirmDeleteButton
-        tooltip="Borrar cliente"
+        tooltip="Borrar"
+        tooltipPosition="left"
         title={`Borrar cliente ${client.name}`}
-        key={`delete_client${client._id}`}
+        key={`button_delete_${client._id}`}
         onDelete={() => this.props.deleteClient(client)}
       />
     ]
@@ -48,18 +58,15 @@ class Clients extends Component {
             className="list-corner-fab"
           />
         </Link>
-        <List selectable className="list">
+        <List className="list">
           {clients.map((client, i) => (
-            <Link key={i} className="link-reset"
-                  title="Editar cliente" to={`/clients/${client._id}`}>
-              <ListItem
-                selectable
-                caption={client.name}
-                leftIcon="business"
-                className="list-item"
-                rightActions={this.renderListActions(client)}
-              />
-            </Link>
+            <ListItem
+              key={i}
+              caption={client.name}
+              leftIcon="business"
+              className="list-item"
+              rightActions={this.renderListActions(client)}
+            />
           ))}
         </List>
         <PaginationFooter
