@@ -38,7 +38,8 @@ const store = createStore(
 )
 
 store.dispatch(mediaQueryTracker({
-  small: mediaQueries.small
+  small: mediaQueries.small,
+  mobile: mediaQueries.mobile
 }))
 
 if(module.hot) {

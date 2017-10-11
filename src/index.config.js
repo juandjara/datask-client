@@ -4,6 +4,7 @@ export default {
   api: 'http://localhost:8080',
   //api: 'http://carriles.indeviasistemas.es:9090/api/v0'
   mediaQueries: {
-    small: 'screen and (max-width: 900px)'
+    small: 'screen and (max-width: 900px)',
+    mobile: 'screen and (max-width: 600px)',
   }
 }

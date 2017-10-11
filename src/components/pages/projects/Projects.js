@@ -26,7 +26,7 @@ class Projects extends Component {
   renderListActions(project) {
     const actionsData = [
       {link: `/tasks/${project._id}`, icon: 'timer', tooltip: 'Tareas'},
-      {link: `/requests/${project._id}`, icon: 'record_voice_over', tooltip: 'Solicitudes'}
+      {link: `/projects/${project._id}`, icon: 'edit', tooltip: 'Editar'}
     ]
     const actions = actionsData.map((data, i) => (
       <Link
@@ -49,7 +49,7 @@ class Projects extends Component {
     return actions;
   }
   render() {
-    const {loading, projects, children, pageParams} = this.props;
+    const {loading, projects, children, pageParams, responsive} = this.props;
     return (
       <div className="projects list-container">
         <div className="list-title-container">
@@ -65,18 +65,15 @@ class Projects extends Component {
             className="list-corner-fab"
           />
         </Link>
-        <List selectable className="list">
+        <List className="list">
           {projects.map((project, i) => (
-            <Link key={i} className="link-reset"
-                  title="Editar proyecto" to={`/projects/${project._id}`}>
-              <ListItem
-                selectable
-                caption={project.name}
-                leftIcon="work"
-                className="list-item"
-                rightActions={this.renderListActions(project)}
-              />
-            </Link>
+            <ListItem
+              key={i}
+              leftIcon={!responsive.mobile && 'work'}
+              caption={project.name}
+              className="list-item"
+              rightActions={this.renderListActions(project)}
+            />
           ))}
         </List>
         <PaginationFooter
@@ -92,6 +89,7 @@ class Projects extends Component {
 const mapStateToProps = state => {
   const {items, loading, params} = getProjectsPage(state)
   return {
+    responsive: state.responsive,
     pageParams: params,
     projects: items,
     loading

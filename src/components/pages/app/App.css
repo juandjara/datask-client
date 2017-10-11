@@ -55,9 +55,13 @@
   right: 1em;
 }
 .list {
-  padding: 0;
-  background-color: white;
-  box-shadow: var(--shadow-2p);
+}
+.list-item {
+  border-bottom: 1px solid #ccc;
+  padding: 5px 0;
+}
+.list-item:last-child {
+  border-bottom: none;
 }
 
 
