@@ -46,41 +46,26 @@ class ProjectForm extends React.Component {
     const editMode = this.isEditMode()
     return this.props.editProject(data, editMode)
   }
-  getUsers() {
-    const {manager = {}, users = []} = this.props.project
-    return users.filter(user => user._id !== manager)
-  }
   render() {
     const {handleSubmit, submitting, loading} = this.props
-    const users = this.getUsers()
     return (
       <form onSubmit={handleSubmit(this.saveProject.bind(this))}>
+        <h2>Proyecto</h2>
         <Field
           name="name"
           label="Nombre"
           component={renderInput}
           validate={required}
         />
-        <h2>Usuarios</h2>
-        <List>
-          <Field 
-            name="manager"
-            icon="person_outline"
-            label="Responsable"
-            className="select"
-            placeholder="Escribe para buscar"
-            loadOptions={searchUsers}
-            component={renderAsyncSelect}
-          />
-          {users.map((user, index) => (
-            <ListItem 
-              key={index}
-              leftIcon="person" 
-              caption={user.full_name}
-              rightActions={[<IconButton key="icon" icon="close" />]} />
-          ))}
-        </List>
-        <h2>Estado</h2>
+        <Field 
+          name="manager"
+          icon="person_outline"
+          label="Responsable"
+          className="select"
+          placeholder="Escribe para buscar"
+          loadOptions={searchUsers}
+          component={renderAsyncSelect}
+        />
         <Field
           name="status"
           label="Estado"
