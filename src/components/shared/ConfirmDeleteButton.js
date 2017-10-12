@@ -24,7 +24,7 @@ class ConfirmDeleteButton extends Component {
     this.setState({ confirmationPopup: false })
   }
   render() {
-    const {tooltip, tooltipPosition, title} = this.props;
+    const {tooltip, tooltipPosition, dialogTitle} = this.props;
     return (
       <div className="delete-button">
         <TooltipIcon
@@ -38,15 +38,16 @@ class ConfirmDeleteButton extends Component {
           active={this.state.confirmationPopup}
           onEscKeyDown={() => this.close()}
           onOverlayClick={() => this.close()}
-          title={title || "Confirmar borrado"}
+          title={dialogTitle || "Confirmar borrado"}
           actions={[
             {label: 'Si', primary: true, onClick: () => {
               this.close();
               this.props.onDelete();
             }},
             {label: 'No', onClick: () => this.close()}
-          ]}
-        ><p>¿Est&aacute; seguro?</p></Dialog>
+          ]}>
+          <p>¿Est&aacute; seguro?</p>
+        </Dialog>
       </div>
     );
   }

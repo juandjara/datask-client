@@ -5,6 +5,7 @@
   border-bottom: 1px solid #ccc;
 }
 .Header-title {
+  text-align: center;
   flex: 1;
   margin: .5rem;
 }

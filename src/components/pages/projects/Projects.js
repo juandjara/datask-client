@@ -24,31 +24,27 @@ class Projects extends Component {
     this.props.fetchProjectsPage(page, this.pageSize)
   }
   renderListActions(project) {
-    const actionsData = [
-      {link: `/tasks/${project._id}`, icon: 'timer', tooltip: 'Tareas'},
-      {link: `/projects/${project._id}`, icon: 'edit', tooltip: 'Editar'}
-    ]
-    const actions = actionsData.map((data, i) => (
+    return [
       <Link
-        to={data.link}
-        key={`action${i}_project${project._id}`}
+        to={`/tasks/${project._id}`}
+        key={`task_link_${project._id}`}
         style={{color: '#757575'}} >
-        <TooltipIcon
-          tooltipPosition="left"
-          tooltip={data.tooltip}
-          value={data.icon} />
-      </Link>
-    ))
-    actions.push((
+        <TooltipIcon tooltipPosition="left" tooltip="Tareas" value="timer" />
+      </Link>,
+      <Link
+        to={`/projects/${project._id}`}
+        key={`edit_link_${project._id}`}
+        style={{color: '#757575'}} >
+        <TooltipIcon tooltipPosition="left" tooltip="Editar" value="edit" />
+      </Link>,
       <ConfirmDeleteButton
-        tooltip="Borrar proyecto"
+        tooltip="Borrar"
         tooltipPosition="left"
-        title={`Borrar proyecto ${project.name}`}
+        dialogTitle={`Borrar proyecto ${project.name}`}
         key={`delete_project_${project._id}`}
         onDelete={() => this.props.deleteProject(project)}
       />
-    ))
-    return actions;
+    ]
   }
   render() {
     const {loading, projects, children, pageParams, responsive} = this.props;
