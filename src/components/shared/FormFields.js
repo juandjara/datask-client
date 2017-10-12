@@ -6,6 +6,7 @@ import Select from 'react-select';
 import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import DatePicker from 'react-toolbox/lib/date_picker/DatePicker';
 import 'react-select/dist/react-select.css';
+import './FormFields.css'
 
 export const renderInput = ({
   input,
