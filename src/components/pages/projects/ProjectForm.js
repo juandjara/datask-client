@@ -1,10 +1,7 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 
-import List from 'react-toolbox/lib/list/List'
-import ListItem from 'react-toolbox/lib/list/ListItem'
 import Button from 'react-toolbox/lib/button/Button'
-import IconButton from 'react-toolbox/lib/button/IconButton'
 import FormFields from 'components/shared/FormFields'
 
 import { connect } from 'react-redux'
@@ -15,6 +12,7 @@ import {
   getProjectById
 } from 'reducers/projects.reducer'
 import {searchCompanies, searchUsers} from 'services/selectHelpers'
+import {Link} from 'react-router'
 
 const statusOptions = [
   {value: "ACTIVE", label: "Activo"},
@@ -48,6 +46,8 @@ class ProjectForm extends React.Component {
   }
   render() {
     const {handleSubmit, submitting, loading} = this.props
+    const id = this.props.routeParams._id
+    const editMode = this.isEditMode()
     return (
       <form onSubmit={handleSubmit(this.saveProject.bind(this))}>
         <h2>Proyecto</h2>
@@ -91,6 +91,15 @@ class ProjectForm extends React.Component {
           label="% completado estimado"
           component={renderInput}
         />
+        {editMode && (
+          <Link to={`/projects/${id}/users`}>
+            <Button 
+              icon="person" 
+              label="Editar miembros del proyecto" 
+              style={{margin: '1em 4px', textTransform: 'none'}} 
+            />
+          </Link>
+        )}
         <h2>Presupuesto</h2>
         <Field
           type="number"
