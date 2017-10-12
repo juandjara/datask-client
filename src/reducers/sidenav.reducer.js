@@ -26,7 +26,7 @@ export default (state = initialState, {type, data}) => {
     case MEDIA_CHANGED:
       return {
         open: state.open,
-        pinned: !data.small
+        pinned: data.small === false
       }
     default:
       return state

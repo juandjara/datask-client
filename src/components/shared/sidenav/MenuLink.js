@@ -5,10 +5,18 @@ import { connect } from 'react-redux'
 import {toggleSidenavOpen} from 'reducers/sidenav.reducer'
 
 const MenuLink = ({
-  to, icon, text, toggleSidenavOpen, onClick = () => {}, ...rest
+  to, 
+  icon, 
+  text, 
+  responsive,
+  toggleSidenavOpen,
+  onClick = () => {}, 
+  ...rest
 }) => {
   const clickHandler = (ev) => {
-    toggleSidenavOpen()
+    if(responsive.small) {
+      toggleSidenavOpen()    
+    }
     onClick(ev)
   }
   return (
@@ -22,5 +30,8 @@ const MenuLink = ({
   );
 };
 
+const mapStateToProps = state => ({
+  responsive: state.responsive
+})
 const actions = {toggleSidenavOpen}
-export default connect(() => ({}), actions)(MenuLink);
+export default connect(mapStateToProps, actions)(MenuLink);
