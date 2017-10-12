@@ -97,7 +97,7 @@ export default class ProjectUsers extends Component {
             />
           ))}
         </List>
-        <div style={{display: 'flex', alignItems: 'center'}}>
+        <div className="project-add-user-form">
           <AsyncSelect 
             name="newUser"
             icon="person_outline"

@@ -67,7 +67,7 @@ class Projects extends Component {
           {projects.map((project, i) => (
             <ListItem
               key={i}
-              leftIcon={!responsive.mobile && 'work'}
+              leftIcon={responsive.mobile ? '':'work'}
               caption={project.name}
               className="list-item"
               rightActions={this.renderListActions(project)}

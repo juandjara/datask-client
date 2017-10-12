@@ -1,0 +1,9 @@
+.project-add-user-form {
+  display: flex;
+  align-items: center;
+}
+@media screen and (max-width: 600px) {
+  .project-add-user-form {
+    display: block;
+  }
+}
