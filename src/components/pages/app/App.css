@@ -114,7 +114,7 @@
 .select .Select-menu-outer {
   top: 40px !important;
 }
-.select.select-outer-top .Select-menu-outer {
+.select-outer-top .Select-menu-outer {
   top: unset !important;
   bottom: 60px !important;
   border-radius: 0px !important;

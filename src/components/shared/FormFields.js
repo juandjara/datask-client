@@ -7,7 +7,7 @@ import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import DatePicker from 'react-toolbox/lib/date_picker/DatePicker';
 import 'react-select/dist/react-select.css';
 
-const renderInput = ({
+export const renderInput = ({
   input,
   label,
   type,
@@ -22,7 +22,7 @@ const renderInput = ({
     {...otherProps}
   />
 )
-const renderCheckbox = ({input, label, meta, ...otherProps}) => (
+export const renderCheckbox = ({input, label, meta, ...otherProps}) => (
   <Checkbox 
     label={label}
     checked={!!input.value}
@@ -30,7 +30,7 @@ const renderCheckbox = ({input, label, meta, ...otherProps}) => (
     {...otherProps}
   />
 )
-const renderSelect = ({
+export const renderSelect = ({
   input,
   label,
   meta: {touched, error},
@@ -53,15 +53,16 @@ const renderSelect = ({
     </div>      
   </div>
 )
-const renderAsyncSelect = ({
+export const renderAsyncSelect = ({
   input,
   label,
   meta: { touched, error, warning },
   icon,
   name,
+  style,
   ...otherProps
 }) => (
-  <div style={{display: 'flex'}}>
+  <div style={{display: 'flex', ...style}}>
     <label className="select-icon" htmlFor={name}>
       <Icon style={{maxWidth: '1em'}}>{icon}</Icon>
     </label>
@@ -76,7 +77,7 @@ const renderAsyncSelect = ({
     </div>      
   </div>
 )
-const renderDatepicker = ({
+export const renderDatepicker = ({
   input,
   label,
   meta,
