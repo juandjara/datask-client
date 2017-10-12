@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import List from 'react-toolbox/lib/list/List'
 import ListItem from 'react-toolbox/lib/list/ListItem'
+import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import Tooltip from 'react-toolbox/lib/tooltip'
 import Button from 'react-toolbox/lib/button/Button'
 import ConfirmDeleteButton from 'components/shared/ConfirmDeleteButton'
@@ -10,9 +11,9 @@ import {
   fetchUsersPage, deleteUser, getUsersPage 
 } from 'reducers/users.reducer'
 import PaginationFooter from 'components/shared/PaginationFooter'
-import Avatar from 'react-avatar'
 
 const TooltipButton = Tooltip(Button);
+const TooltipIcon = Tooltip(Icon);
 
 class Users extends Component {
   pageSize = 5;
@@ -24,32 +25,20 @@ class Users extends Component {
   }
   renderListActions(user) {
     return [
+      <Link
+        to={`/users/${user._id}`}
+        key={`edit_link_${user._id}`}
+        style={{color: '#757575'}} >
+        <TooltipIcon tooltipPosition="left" tooltip="Editar" value="edit" />
+      </Link>,
       <ConfirmDeleteButton
         tooltip="Borrar"
+        tooltipPosition="left"
         title={`Borrar usuario ${user.name}`}
-        key={`delete_user${user._id}`}
+        key={`delete_user_${user._id}`}
         onDelete={() => this.props.deleteUser(user)}
       />
     ]
-  }
-  renderUserNameLink(user) {
-    return (
-      <Link style={{marginLeft: '.5em', flex: 1}} 
-            key={user._id}
-            className="link-reset" 
-            to={`/users/${user._id}`}>
-        <p>{user.name}</p>
-      </Link>      
-    )
-  }
-  renderUserAvatar(user) {
-    return (
-      <Avatar 
-        name={`${user.name} ${user.surname}`} 
-        round={true} 
-        size={50}
-      />
-    )
   }
   render() {
     const {loading, children, pageParams} = this.props;
@@ -69,12 +58,13 @@ class Users extends Component {
             className="list-corner-fab"
           />
         </Link>
-        <List>
+        <List className="list">
           {users.map((user, i) => (
             <ListItem
               key={user._id || i}
-              itemContent={this.renderUserNameLink(user)}
-              leftIcon={this.renderUserAvatar(user)}
+              caption={user.name}
+              className="list-item"
+              leftIcon="person"
               rightActions={this.renderListActions(user)}
             />
           ))}
