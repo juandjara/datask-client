@@ -13,6 +13,7 @@ import {
 } from 'reducers/projects.reducer'
 import {searchCompanies, searchUsers} from 'services/selectHelpers'
 import {Link} from 'react-router'
+import { browserHistory } from 'react-router'
 
 const statusOptions = [
   {value: "ACTIVE", label: "Activo"},
@@ -38,6 +39,9 @@ class ProjectForm extends React.Component {
   isEditMode() {
     return this.props.routeParams._id !== "new"
   }
+  onCancel() {
+    browserHistory.push('/projects')
+  }
   saveProject(data) {
     data.company = data.company && data.company.value
     data.manager = data.manager && data.manager.value
@@ -49,8 +53,9 @@ class ProjectForm extends React.Component {
     const id = this.props.routeParams._id
     const editMode = this.isEditMode()
     return (
-      <form onSubmit={handleSubmit(this.saveProject.bind(this))}>
-        <h2>Proyecto</h2>
+      <form className="project-form" 
+            onSubmit={handleSubmit(this.saveProject.bind(this))}>
+        <h2>{this.props.project.name}</h2>
         <Field
           name="name"
           label="Nombre"
@@ -152,9 +157,10 @@ class ProjectForm extends React.Component {
           <Button
             className="edit-dialog-button"
             label="Cancelar"
-            onClick={this.props.onCancel}
+            onClick={this.onCancel}
           />
         </div>
+        {this.props.children}
       </form>
     )
   }
@@ -177,6 +183,12 @@ ProjectForm = connect(
       project.company = {
         value: project.company._id,
         label: project.company.name
+      }
+    }
+    if(project.manager && project.manager._id) {
+      project.manager = {
+        value: project.manager._id,
+        label: project.manager.full_name
       }
     }
     return {
