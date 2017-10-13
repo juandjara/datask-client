@@ -11,6 +11,10 @@
   font-size: 12px;
   color: rgba(0,0,0, .3);
 }
+.select-container {
+  display: flex;
+}
+
 .select-icon {
   display: block;
   padding-top: 20px;
@@ -26,8 +30,12 @@
 .Select-control {
   background: transparent;
 }
+.is-open > .Select-control {
+  background: transparent;  
+}
 
 .select.is-focused .Select-control {
+  border-width: 2px;
   border-color: var(--palette-teal-500);
 }
 .select .Select-menu-outer {

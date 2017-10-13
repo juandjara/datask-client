@@ -39,7 +39,7 @@ export const renderSelect = ({
   name,
   ...otherProps
 }) => (
-  <div style={{display: 'flex'}}>
+  <div className="select-container" style={{display: 'flex'}}>
     <label className="select-icon" htmlFor={name}>
       <Icon>{icon}</Icon>
     </label>
@@ -63,7 +63,7 @@ export const renderAsyncSelect = ({
   style,
   ...otherProps
 }) => (
-  <div style={{display: 'flex', ...style}}>
+  <div className="select-container" style={{style}}>
     <label className="select-icon" htmlFor={name}>
       <Icon style={{maxWidth: '1em'}}>{icon}</Icon>
     </label>

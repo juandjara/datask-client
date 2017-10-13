@@ -104,7 +104,11 @@ const projectsReducer = (state = {}, action = {}) => {
     case `${PROJECT_DELETE}_ERROR`:
       return {
         ...state,
-        [payload._id]: {loading: false, error: payload}
+        [payload._id]: {
+          ...state[payload._id],
+          loading: false, 
+          error: payload,
+        }
       }
     default:
       return paginator.reducers.items(state, action);

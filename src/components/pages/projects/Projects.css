@@ -13,3 +13,6 @@
 .project-form {
   margin: 1em;
 }
+.project-form .material-icons {
+  color: #666;
+}
