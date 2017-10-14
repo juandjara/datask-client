@@ -6,6 +6,7 @@ import Button from 'react-toolbox/lib/button/Button'
 import {renderAsyncSelect as AsyncSelect} from 'components/shared/FormFields'
 import {searchUsers} from 'services/selectHelpers'
 import ConfirmDeleteButton from 'components/shared/ConfirmDeleteButton'
+import BackButton from 'components/shared/BackButton'
 
 export default class ProjectUsers extends Component {
   state = {
@@ -84,6 +85,7 @@ export default class ProjectUsers extends Component {
     }
     return (
       <div className="project-users">
+        <BackButton router={this.props.router} />
         <h2>Editar miembros de {name}</h2>
         {loading && <p className="color-primary">Cargando ... </p>}
         {error && <p className="color-error">{error}</p>}
@@ -102,7 +104,7 @@ export default class ProjectUsers extends Component {
             name="newUser"
             icon="person_outline"
             label="Nuevo miembro"
-            className="select select-outer-top"
+            className="select"
             placeholder="Escribe para buscar"
             loadOptions={searchUsers}
             meta={{}}

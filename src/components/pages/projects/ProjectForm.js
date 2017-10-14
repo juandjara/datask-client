@@ -14,6 +14,7 @@ import {
 import {searchCompanies, searchUsers} from 'services/selectHelpers'
 import {Link} from 'react-router'
 import { browserHistory } from 'react-router'
+import BackButton from 'components/shared/BackButton'
 
 const statusOptions = [
   {value: "ACTIVE", label: "Activo"},
@@ -55,7 +56,8 @@ class ProjectForm extends React.Component {
     return (
       <form className="project-form" 
             onSubmit={handleSubmit(this.saveProject.bind(this))}>
-        <h2>{this.props.project.name}</h2>
+        <BackButton router={this.props.router} />
+        <h2>{editMode ? 'Editar proyecto':'Nuevo proyecto'}</h2>
         <Field
           name="name"
           label="Nombre"
