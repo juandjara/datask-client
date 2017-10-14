@@ -9,7 +9,8 @@ import {
   fetchSingleUser, editUser, getUserById
 } from 'reducers/users.reducer'
 import validators from 'services/formValidators'
-import {searchCompanies} from 'services/selectHelpers'
+import { searchCompanies } from 'services/selectHelpers'
+import { browserHistory } from 'react-router'
 
 const ROLES = ['ADMIN', 'DEVELOPER', 'CUSTOMER']
 .map(role => ({label: role, value: role}))
@@ -17,18 +18,9 @@ const ROLES = ['ADMIN', 'DEVELOPER', 'CUSTOMER']
 const {required, minLength, matchKey, email} = validators
 const {renderCheckbox, renderInput, renderSelect, renderAsyncSelect} = FormFields
 
-const passwordRules = [
-  matchKey('repeat_password'),
-  minLength(8)
-]
-const passRepeatRules = [
-  matchKey('password'),
-  minLength(8)
-]
-const emailValidators = [
-  email, 
-  required
-]
+const passwordRules   = [matchKey('repeat_password'), minLength(8)]
+const passRepeatRules = [matchKey('password'), minLength(8)]
+const emailValidators = [email, required]
 
 class UserForm extends React.Component {
   componentDidMount() {
@@ -44,6 +36,9 @@ class UserForm extends React.Component {
     data.company = data.company.value
     const editMode = this.isEditMode()
     return this.props.editUser(data, editMode)
+  }
+  onCancel() {
+    browserHistory.push('/users')
   }
   render() {
     const {handleSubmit, submitting, loading} = this.props    
@@ -132,7 +127,7 @@ class UserForm extends React.Component {
           <Button
             className="edit-dialog-button"
             label="Cancelar"
-            onClick={this.props.onCancel}
+            onClick={this.onCancel}
           />
         </div>
       </form>

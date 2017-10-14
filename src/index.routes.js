@@ -6,7 +6,7 @@ import {Login} from 'components/pages/login'
 import NotFound from 'components/shared/NotFound'
 
 import {Profile} from 'components/pages/profile'
-import {UserList, UserFormDialog} from 'components/pages/users'
+import {UserList, UserForm} from 'components/pages/users'
 import {ClientList, ClientDialogContainer} from 'components/pages/clients'
 import {ProjectList, ProjectForm, ProjectUser} from 'components/pages/projects'
 
@@ -20,9 +20,8 @@ export default (store) => {
       </Route>
       <Route path="projects/:_id" component={ProjectForm} />
       <Route path="projects/:_id/users" component={ProjectUser} />
-      <Route path="users" component={UserList}>
-        <Route path=":_id" component={UserFormDialog} />
-      </Route>
+      <Route path="users" component={UserList} />
+      <Route path="users/:_id" component={UserForm} />
       <Route path="clients" component={ClientList}>
         <Route path=":_id" component={ClientDialogContainer} />
       </Route>
