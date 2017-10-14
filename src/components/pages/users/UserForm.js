@@ -33,7 +33,7 @@ class UserForm extends React.Component {
     return this.props.routeParams._id !== "new"
   }
   saveUser(data) {
-    data.company = data.company.value
+    data.company = data.company && data.company.value
     const editMode = this.isEditMode()
     return this.props.editUser(data, editMode)
   }
@@ -50,11 +50,14 @@ class UserForm extends React.Component {
       passRepeatValidators = passRepeatRules.concat(required)
     }
     return (
-      <form onSubmit={handleSubmit(this.saveUser.bind(this))}>
+      <form className="edit-form" 
+            onSubmit={handleSubmit(this.saveUser.bind(this))}>
+        <h2>{editMode ? 'Editar usuario':'Nuevo usuario'}</h2>
         <Field
           className="edit-dialog-active"
           name="activated"
           label="Activado"
+          style={{marginLeft: '1em'}}
           component={renderCheckbox}
         />
         <Field 
@@ -116,16 +119,16 @@ class UserForm extends React.Component {
           loadOptions={searchCompanies}
           component={renderAsyncSelect}
         />
-        <div style={{marginTop: '2em'}}>
+        <div style={{marginTop: '1em'}}>
           <Button
             primary raised
             disabled={submitting || loading}
-            className="edit-dialog-button"
+            className="edit-form-button"
             label="Guardar"
             type="submit"
           />
           <Button
-            className="edit-dialog-button"
+            className="edit-form-button"
             label="Cancelar"
             onClick={this.onCancel}
           />

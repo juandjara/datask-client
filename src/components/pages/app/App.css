@@ -64,20 +64,12 @@
   border-bottom: none;
 }
 
-
-.edit-dialog {
-  overflow: auto;
-  width: 100%;
-  max-width: 768px;
-  margin: 0 2em;
-}
-
-.edit-dialog-active {
+.edit-form {
   margin: 1em;
 }
-.edit-dialog-active [data-react-toolbox="label"] {
-  padding-left: 2.5em;
+.edit-form .material-icons {
+  color: #666;
 }
-.edit-dialog-button {
+.edit-form-button {
   margin: .5em;
 }

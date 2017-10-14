@@ -54,7 +54,7 @@ class ProjectForm extends React.Component {
     const id = this.props.routeParams._id
     const editMode = this.isEditMode()
     return (
-      <form className="project-form" 
+      <form className="edit-form" 
             onSubmit={handleSubmit(this.saveProject.bind(this))}>
         <BackButton router={this.props.router} />
         <h2>{editMode ? 'Editar proyecto':'Nuevo proyecto'}</h2>
@@ -148,16 +148,16 @@ class ProjectForm extends React.Component {
           autoOk
           component={renderDatepicker}
         />
-        <div style={{marginTop: '2em'}}>
+        <div style={{marginTop: '1em'}}>
           <Button
             primary raised
             disabled={submitting || loading}
-            className="edit-dialog-button"
+            className="edit-form-button"
             label="Guardar"
             type="submit"
           />
           <Button
-            className="edit-dialog-button"
+            className="edit-form-button"
             label="Cancelar"
             onClick={this.onCancel}
           />
