@@ -33,6 +33,9 @@
 .is-open > .Select-control {
   background: transparent;  
 }
+.select .Select-placeholder {
+  padding-left: 0;
+}
 
 .select.is-focused .Select-control {
   border-width: 2px;
