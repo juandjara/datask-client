@@ -34,7 +34,7 @@ export default (state = {loading: false}, action) => {
       return { ...state, loading: true }
     case `${PROFILE_FETCH}_SUCCESS`:
     case `${PROFILE_UPDATE}_SUCCESS`:
-      return { ...state, ...action.payload, loading: false }
+      return { ...action.payload, loading: false }
     case `${PROFILE_FETCH}_ERROR`:
     case `${PROFILE_UPDATE}_ERROR`:
       return { ...state, error: errMapper(action.payload), loading: false }
