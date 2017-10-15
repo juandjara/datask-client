@@ -3,9 +3,7 @@ import toast from 'services/toastWrapper'
 
 // action types
 export const PROFILE_FETCH = "PROFILE_FETCH"
-
 export const PROFILE_UPDATE = "PROFILE_UPDATE"
-export const PROFILE_UPDATE_FIELD = "PROFILE_UPDATE_FIELD"
 
 const errMapper = res => res.data && res.data.error.message
 
@@ -16,12 +14,9 @@ export function fetchProfile() {
   return { type: PROFILE_FETCH, payload }
 }
 
-export function updateProfileField(name, value) {
-  return { name, value, type: PROFILE_UPDATE_FIELD }
-}
-
 export function saveProfile(profile) {
-  const promise = axios.put('/user/me', profile);
+  const promise = axios.put('/user/me', profile)
+  .then(res => res.data)
   promise.then(() => toast('success', 'Perfil guardado'))
   return { type: PROFILE_UPDATE, payload: promise }
 }
@@ -38,8 +33,6 @@ export default (state = {loading: false}, action) => {
     case `${PROFILE_FETCH}_ERROR`:
     case `${PROFILE_UPDATE}_ERROR`:
       return { ...state, error: errMapper(action.payload), loading: false }
-    case PROFILE_UPDATE_FIELD:
-      return { ...state, [action.name]: action.value }
     default:
       return state;
   }
