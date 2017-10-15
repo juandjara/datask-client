@@ -33,7 +33,8 @@ class ClientForm extends Component {
     browserHistory.push('/clients')
   }
   saveClient = (data) => {
-
+    const editMode = this.isEditMode()
+    return this.props.editClient(data, editMode)
   }
   render() {
     const {handleSubmit, submitting, loading} = this.props
