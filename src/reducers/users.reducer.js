@@ -56,6 +56,7 @@ export function editUser(user, isEditMode) {
     browserHistory.push('/users')
   })
   return {
+    meta: {_id: user._id},
     type: isEditMode ? USER_UPDATE : USER_CREATE,
     payload: {data: user, promise}
   }
@@ -79,7 +80,7 @@ export const deleteUser = (user) => (dispatch, getState) => {
 
 // REDUCER
 const usersReducer = (state = {}, action = {}) => {
-  const {type, payload = {}} = action
+  const {type, payload = {}, meta = {}} = action
   switch (type) {
     case `${USER_FETCH}_LOADING`:
     case `${USER_UPDATE}_LOADING`:
@@ -106,7 +107,10 @@ const usersReducer = (state = {}, action = {}) => {
     case `${USER_DELETE}_ERROR`:
       return {
         ...state,
-        [payload._id]: {loading: false, error: payload}
+        [meta._id]: {
+          ...state[meta._id],
+          loading: false
+        }
       }
     default:
       return paginator.reducers.items(state, action);

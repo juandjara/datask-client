@@ -61,6 +61,7 @@ export function editClient(client, isEditMode) {
   }).then(res => res.data)
   promise.then(() => browserHistory.push('/clients'))
   return {
+    meta: {_id: client._id},
     type: isEditMode ? CLIENT_UPDATE : CLIENT_CREATE,
     payload: {data: client, promise}
   }
@@ -84,7 +85,7 @@ export const deleteClient = (client) => (dispatch, getState) => {
 
 // REDUCER
 const clientsReducer = (state = {}, action = {}) => {
-  const {type, payload = {}} = action
+  const {type, payload = {}, meta = {}} = action
   switch (type) {
     case `${CLIENT_FETCH}_LOADING`:
     case `${CLIENT_UPDATE}_LOADING`:
@@ -114,7 +115,10 @@ const clientsReducer = (state = {}, action = {}) => {
     case `${CLIENT_DELETE}_ERROR`:
       return {
         ...state,
-        [payload._id]: {loading: false, error: payload}
+        [meta._id]: {
+          ...state[meta._id],
+          loading: false
+        }
       }
     default:
       return paginator.reducers.items(state, action)

@@ -56,6 +56,7 @@ export function editProject(project, isEditMode) {
     browserHistory.push('/projects')
   })
   return {
+    meta: {_id: project._id},
     type: isEditMode ? PROJECT_UPDATE : PROJECT_CREATE,
     payload: {data: project, promise}
   }
@@ -77,7 +78,7 @@ export const deleteProject = project => (dispatch, getState) => {
 
 // REDUCER
 const projectsReducer = (state = {}, action = {}) => {
-  const {type, payload = {}} = action
+  const {type, payload = {}, meta = {}} = action
   switch (type) {
     case `${PROJECT_FETCH}_LOADING`:
     case `${PROJECT_UPDATE}_LOADING`:
@@ -107,10 +108,9 @@ const projectsReducer = (state = {}, action = {}) => {
     case `${PROJECT_DELETE}_ERROR`:
       return {
         ...state,
-        [payload._id]: {
-          ...state[payload._id],
-          loading: false, 
-          error: payload,
+        [meta._id]: {
+          ...state[meta._id],
+          loading: false
         }
       }
     default:
