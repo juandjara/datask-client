@@ -62,6 +62,7 @@ class UserForm extends React.Component {
       <form className="edit-form" 
             onSubmit={handleSubmit(this.saveUser.bind(this))}>
         <h2>{editMode ? 'Editar usuario':'Nuevo usuario'}</h2>
+        {loading && <p className="color-primary">Cargando...</p>}
         <Field
           className="edit-dialog-active"
           name="activated"
@@ -131,7 +132,7 @@ class UserForm extends React.Component {
         <div style={{marginTop: '1em'}}>
           <Button
             primary raised
-            disabled={submitting || loading}
+            disabled={submitting}
             className="edit-form-button"
             label="Guardar"
             type="submit"

@@ -92,7 +92,10 @@ const clientsReducer = (state = {}, action = {}) => {
     case `${CLIENT_DELETE}_LOADING`:
       return {
         ...state,
-        [payload._id]: {loading: true}
+        [payload._id]: {
+          ...state[payload._id],
+          loading: true
+        }
       }
     case `${CLIENT_FETCH}_SUCCESS`:
     case `${CLIENT_UPDATE}_SUCCESS`:

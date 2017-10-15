@@ -87,7 +87,7 @@ const usersReducer = (state = {}, action = {}) => {
     case `${USER_DELETE}_LOADING`:
       return {
         ...state,
-        [payload._id]: {loading: true}
+        [payload._id]: {...state[payload._id], loading: true}
       }
     case `${USER_FETCH}_SUCCESS`:
     case `${USER_UPDATE}_SUCCESS`:

@@ -85,7 +85,10 @@ const projectsReducer = (state = {}, action = {}) => {
     case `${PROJECT_DELETE}_LOADING`:
       return {
         ...state,
-        [payload._id] :{loading: true}
+        [payload._id]: {
+          ...state[payload._id], 
+          loading: true
+        }
       }
     case `${PROJECT_FETCH}_SUCCESS`:
     case `${PROJECT_CREATE}_SUCCESS`:

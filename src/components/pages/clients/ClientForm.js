@@ -42,6 +42,7 @@ class ClientForm extends Component {
       <form className="edit-form" onSubmit={handleSubmit(this.saveClient)}>
         <BackButton router={this.props.router} />
         <h2>{editMode ? 'Editar cliente':'Nuevo cliente'}</h2>
+        {loading && <p className="color-primary">Cargando...</p>}
         <Field 
           name="name"
           label="Nombre"
@@ -65,7 +66,7 @@ class ClientForm extends Component {
         <div style={{marginTop: '1em'}}>
           <Button
             primary raised
-            disabled={submitting || loading}
+            disabled={submitting}
             className="edit-form-button"
             label="Guardar"
             type="submit"

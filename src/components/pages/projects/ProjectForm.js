@@ -58,6 +58,7 @@ class ProjectForm extends React.Component {
             onSubmit={handleSubmit(this.saveProject.bind(this))}>
         <BackButton router={this.props.router} />
         <h2>{editMode ? 'Editar proyecto':'Nuevo proyecto'}</h2>
+        {loading && <p className="color-primary">Cargando...</p>}
         <Field
           name="name"
           label="Nombre"
@@ -151,7 +152,7 @@ class ProjectForm extends React.Component {
         <div style={{marginTop: '1em'}}>
           <Button
             primary raised
-            disabled={submitting || loading}
+            disabled={submitting}
             className="edit-form-button"
             label="Guardar"
             type="submit"
