@@ -53,8 +53,8 @@ class Sidenav extends Component {
         <TaskQuickAccess style={{maxHeight: '140px'}} />
         <div className="sidenav-links">
           <MenuLink to="/projects" icon="work" text="Proyectos" />
-          <MenuLink to="/clients" icon="business" text="Clientes" />
           <MenuLink to="/users" icon="person" text="Usuarios" />
+          <MenuLink to="/clients" icon="business" text="Clientes" />
         </div>
       </NavDrawer>
     )

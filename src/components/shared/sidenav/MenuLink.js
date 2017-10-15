@@ -11,7 +11,7 @@ const MenuLink = ({
   responsive,
   toggleSidenavOpen,
   onClick = () => {}, 
-  ...rest
+  ...otherProps
 }) => {
   const clickHandler = (ev) => {
     if(responsive.small) {
@@ -21,7 +21,7 @@ const MenuLink = ({
   }
   return (
     <Link to={to} onClick={clickHandler} 
-          activeClassName="sidenav-link-active" {...rest}>
+          activeClassName="sidenav-link-active" {...otherProps}>
       <MenuItem
         icon={icon}
         caption={text}

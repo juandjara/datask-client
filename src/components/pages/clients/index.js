@@ -1,5 +1,4 @@
-import ClientDialogContainer from './ClientDialogContainer'
-import ClientDialog from './ClientDialog'
 import ClientList from './Clients'
+import ClientForm from './ClientForm'
 
-export {ClientDialog, ClientDialogContainer, ClientList}
+export {ClientList, ClientForm}
