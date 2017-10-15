@@ -46,7 +46,7 @@ class Sidenav extends Component {
           display: profileMenuActive? 'block':'none'
         }}>
           <MenuLink to="/profile" icon="account_circle" text="Mi cuenta" />
-          <MenuLink to="/prefs" icon="settings" text="Preferencias" />
+          {/* <MenuLink to="/prefs" icon="settings" text="Preferencias" /> */}
           <MenuLink onClick={this.logout} icon="clear" text="Cerrar sesión" />
         </div>
         <TimeCounters style={{height: 'auto'}} />
