@@ -1,2 +1,2 @@
-import Profile from './Profile'
-export {Profile}
+import ProfileForm from './ProfileForm'
+export {ProfileForm}

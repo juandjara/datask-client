@@ -5,7 +5,7 @@ import {App} from 'components/pages/app'
 import {Login} from 'components/pages/login'
 import NotFound from 'components/shared/NotFound'
 
-import {Profile} from 'components/pages/profile'
+import {ProfileForm} from 'components/pages/profile'
 import {UserList, UserForm} from 'components/pages/users'
 import {ClientList, ClientForm} from 'components/pages/clients'
 import {ProjectList, ProjectForm, ProjectUser} from 'components/pages/projects'
@@ -26,7 +26,7 @@ export default (store) => {
       <Route path="clients" component={ClientList} />
       <Route path="clients/:_id" component={ClientForm} />      
       
-      <Route path="profile" component={Profile} />
+      <Route path="profile" component={ProfileForm} />
     </Route>,
     <Route path="/login" component={Login} />,
     <Route path="*" component={NotFound} />
