@@ -11,6 +11,7 @@ import {
 import validators from 'services/formValidators'
 import { searchCompanies } from 'services/selectHelpers'
 import { browserHistory } from 'react-router'
+import styled from 'styled-components'
 
 const ROLES = ['ADMIN', 'DEVELOPER', 'CUSTOMER']
 .map(role => ({label: role, value: role}))
@@ -21,6 +22,14 @@ const {renderCheckbox, renderInput, renderSelect, renderAsyncSelect} = FormField
 const passwordRules   = [matchKey('repeat_password'), minLength(8)]
 const passRepeatRules = [matchKey('password'), minLength(8)]
 const emailValidators = [email, required]
+
+const InputGroup = styled.div`
+  display: flex;
+  [data-react-toolbox="input"] {
+    flex: 1;
+  } 
+`
+
 
 class UserForm extends React.Component {
   componentDidMount() {
@@ -68,7 +77,7 @@ class UserForm extends React.Component {
           component={renderInput}
           validate={emailValidators} 
         />
-        <div style={{display: 'flex'}}>
+        <InputGroup>
           <Field 
             name="name" 
             type="text"
@@ -82,8 +91,8 @@ class UserForm extends React.Component {
             type="text" 
             component={renderInput} 
           />
-        </div>
-        <div style={{display: 'flex'}}>
+        </InputGroup>
+        <InputGroup>
           <Field 
             icon="lock" 
             name="password" 
@@ -99,7 +108,7 @@ class UserForm extends React.Component {
             component={renderInput} 
             validate={passRepeatValidators}
           />
-        </div>
+        </InputGroup>
         <Field
           multi
           icon="lock_outline"
