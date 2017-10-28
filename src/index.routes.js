@@ -21,7 +21,7 @@ export default (store) => {
       <Route path="projects/:_id" component={ProjectForm} />
       <Route path="projects/:_id/users" component={ProjectUser} />
 
-      <Route path="projects/:proyectId/tasks" component={TaskList} />
+      <Route path="projects/:projectId/tasks" component={TaskList} />
       
       <Route path="users" component={UserList} />
       <Route path="users/:_id" component={UserForm} />
