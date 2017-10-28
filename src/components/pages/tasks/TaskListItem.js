@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import IconButton from 'react-toolbox/lib/button/IconButton'
 import styled from 'styled-components'
+import axios from 'services/axiosWrapper'
 
 const SpaceBetween = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `
 const Task = styled.li`
   width: 100%;
@@ -22,16 +24,46 @@ const Initials = styled.span`
   color: #333;
   border: 1px solid #ccc;
 `
+const TitleInput = styled.input`
+  flex: 1;
+  margin: 12px 0;
+  padding: 4px 0;
+  font-family: inherit;
+  font-size: 1rem;
+  background: white;
+  border: 1px solid #ccc;
+`
 
 export default class TaskListItem extends Component {
+  state = {
+    editMode: false
+  }
+  onTitleInputBlur = () => {
+    const {value} = this.titleInputNode
+    this.setState({editMode: false})
+    console.log("new title", value)
+  }
   render () {
+    const {editMode} = this.state
     const {task} = this.props
     const initials = task.asignee.name[0] + task.asignee.surname[0]
     return (
       <Task>
         <SpaceBetween>
-          <p>{task.name}</p>
-          <IconButton title="Editar titulo" icon="edit" />
+          {editMode ? (
+            <TitleInput
+              innerRef={node => {this.titleInputNode = node}} 
+              autoFocus
+              type="text" 
+              defaultValue={task.name} 
+              onBlur={this.onTitleInputBlur} />
+          ) : (
+            <p>{task.name}</p>
+          )}
+          <IconButton 
+            title="Editar nombre de la tarea" 
+            icon={editMode ? 'close':'edit'}
+            onClick={() => this.setState(state => ({editMode: !state.editMode}))} />
         </SpaceBetween>
         <SpaceBetween>
           <div style={{color: '#666'}} >
