@@ -26,7 +26,7 @@ class Projects extends Component {
   renderListActions(project) {
     return [
       <Link
-        to={`/tasks/${project._id}`}
+        to={`/projects/${project._id}/tasks`}
         key={`task_link_${project._id}`}
         style={{color: '#757575'}} >
         <TooltipIcon tooltipPosition="left" tooltip="Tareas" value="timer" />
