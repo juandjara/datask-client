@@ -24,7 +24,7 @@ class TaskList extends Component {
   fetchTasks(page) {
     this.setState({ loading: true })
     const id = this.props.routeParams.projectId    
-    axios.get(`/task/${id}?page=${page}`)
+    axios.get(`/task/by_project/${id}?page=${page}`)
     .then(res => res.data)
     .then(json => {
       const {last, page, docs} = json
