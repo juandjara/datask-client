@@ -84,9 +84,12 @@ export default class TaskListItem extends Component {
             <Icon title="Esta tarea tiene una descripcion" 
                   style={{verticalAlign: 'middle', marginRight: 8}} 
                   value="sort" />
-            <Icon title={`${task.comments.length} comentarios`} 
-                  style={{verticalAlign: 'middle', marginRight: 8}} 
-                  value="chat_bubble_outline" />
+            <span style={{marginRight: 8, display: 'inline-block'}}>
+              <Icon title={`${task.comments.length} comentarios`} 
+                    style={{verticalAlign: 'middle', marginRight: 2}} 
+                    value="chat_bubble_outline" />
+              <span>{task.comments.length}</span>
+            </span>
             <Initials title={`Asignada a ${task.asignee.full_name}`} >
               {initials}
             </Initials>
