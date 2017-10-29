@@ -33,6 +33,13 @@ const TitleInput = styled.input`
   background: white;
   border: 1px solid #ccc;
 `
+const TaskLink = styled(Link)`
+  flex: 1;
+  text-decoration: none;
+  color: inherit;
+  margin: .5rem 0;
+  padding: .5rem 2px;
+`
 
 export default class TaskListItem extends Component {
   handleTitleBlur = () => {
@@ -67,11 +74,7 @@ export default class TaskListItem extends Component {
               defaultValue={task.name} 
               onBlur={this.handleTitleBlur} />
           ) : (
-            /* <p onClick={() => onEdit(task, true)}
-               style={{flex: 1}}>{task.name}</p> */
-            <Link to={`/tasks/${task._id}`}>
-              <p>{task.name}</p>
-            </Link>
+            <TaskLink to={`/tasks/${task._id}`}>{task.name}</TaskLink>
           )}
           <IconButton 
             title={editMode ? 'Completar edicion':'Editar nombre de la tarea'} 
