@@ -29,19 +29,9 @@ class TaskList extends Component {
   fetchTasks(page) {
     const id = this.props.routeParams.projectId    
     this.props.taskActions.fetchByProject(id, {page})
-    
-    // this.setState({ loading: true })
-    // const id = this.props.routeParams.projectId    
-    // axios.get(`/task/by_project/${id}?page=${page}`)
-    // .then(res => res.data)
-    // .then(json => {
-    //   const {last, page, docs} = json
-    //   this.setState(prevState => ({
-    //     loading: false,
-    //     pageParams: {page, last},
-    //     tasks: prevState.tasks.concat(docs)
-    //   }))
-    // })
+  }
+  handleNameEdit = (data) => {
+    return this.props.taskActions.save(data, true)
   }
   render () {
     const {loading, tasks, pageParams, project, children} = this.props
@@ -64,7 +54,10 @@ class TaskList extends Component {
         </Link>
         <List style={{padding: 0}} >
           {tasks.map(task => (
-            <TaskListItem task={task} key={task._id} />
+            <TaskListItem 
+              onChange={this.handleNameEdit} 
+              task={task} 
+              key={task._id} />
           ))}
         </List>
         {pageParams.last === false && (

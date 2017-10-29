@@ -1,5 +1,4 @@
 import axios from 'services/axiosWrapper'
-import { browserHistory } from 'react-router'
 import { combineReducers } from 'redux'
 
 const endpoint = '/task'
@@ -55,9 +54,6 @@ export const actions = {
       url,
       data: task
     }).then(res => res.data)
-    promise.then(() => {
-      browserHistory.push(`/projects/${task.project}`)
-    })
     return {
       type,
       payload: promise,
