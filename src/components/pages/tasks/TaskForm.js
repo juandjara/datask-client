@@ -7,6 +7,7 @@ import {bindActionCreators} from 'redux'
 
 import ProgressBar from 'react-toolbox/lib/progress_bar/ProgressBar'
 import IconButton from 'react-toolbox/lib/button/IconButton'
+import Input from 'react-toolbox/lib/input/Input'
 import styled from 'styled-components'
 
 const SpaceBetween = styled.div`
@@ -29,6 +30,7 @@ const DescriptionInput = styled.textarea`
 
 class TaskForm extends Component {
   state = {
+    estimatedTime: '00:00',
     description: '',
     name: '',
     editModes: {
@@ -41,18 +43,17 @@ class TaskForm extends Component {
     if(!task) {
       actions.fetchOne(routeParams._id)
       .then(res => res.value)
-      .then(task => {
-        this.setState({
-          name: task.name,
-          description: task.description
-        })
-      })
+      .then(task => this.resetTask(task))
     } else {
-      this.setState({
-        name: task.name,
-        description: task.description
-      })
+      this.resetTask(task)
     }
+  }
+  resetTask(task) {
+    this.setState({
+      name: task.name || '',
+      description: task.description || '',
+      estimatedTime: task.estimatedTime || ''
+    })
   }
   handleChange = name => (ev) => {
     const {value} = ev.target
@@ -89,7 +90,7 @@ class TaskForm extends Component {
     })
   }
   render () {
-    const {description, name, editModes} = this.state
+    const {estimatedTime, description, name, editModes} = this.state
     const {loading, task = {}} = this.props
     return (
       <div style={{margin: '1rem'}}>
@@ -145,6 +146,13 @@ class TaskForm extends Component {
         ) : (
           <p style={{marginTop: 0, marginBottom: '.5rem'}}>{description}</p>
         )}
+        <Input 
+          icon="timer"
+          type="text"
+          placeholder="00:00"
+          pattern="[0-9]{2}:[0-9]{2}"
+          value={estimatedTime}
+          onChange={estimatedTime => this.setState({estimatedTime})} />
       </div>
     );
   }

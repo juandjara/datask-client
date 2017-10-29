@@ -16,7 +16,7 @@ export function searchUsers(query) {
     value: _id,
     label: full_name
   })
-  return axios.get(`/user?q=${query}`)
+  return axios.get(`/user?size=20&q=${query}`)
   .then(res => res.data.docs)
   .then(companies => ({
     options: companies.map(mapper)
