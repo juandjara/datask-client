@@ -131,10 +131,11 @@ const entitiesReducer = (state = {}, action = {}) => {
         ...normalizeArrayByKey(payload.docs)
       }
     case ok(types.FETCH_ONE):
+    case ok(types.CREATE):
     case ok(types.EDIT):
       return {
         ...state,
-        [meta._id]: payload
+        [payload._id]: payload
       }
     case ok(types.DELETE): 
       const copy = {...state}
