@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import List from 'react-toolbox/lib/list/List'
 import Tooltip from 'react-toolbox/lib/tooltip'
 import Button from 'react-toolbox/lib/button/Button'
-import { Link } from 'react-router'
 import { fetchSingleProject, getProjectById } from 'reducers/projects.reducer'
 import { 
   actions as taskActions, 
@@ -32,6 +31,13 @@ class TaskList extends Component {
   handleNameEdit = (data) => {
     return this.props.taskActions.save(data, true)
   }
+  createTask = () => {
+    const newTask = {
+      name: 'Nueva tarea',
+      project: this.props.project._id
+    }
+    this.props.taskActions.save(newTask, false)
+  }
   render () {
     const {loading, tasks, pageParams, project, children} = this.props
     return (
@@ -42,15 +48,14 @@ class TaskList extends Component {
           </h2>
           {loading && <p className="color-primary">Cargando ... </p>}
         </div>
-        <Link to="/projects/new">
-          <TooltipButton
-            icon="add"
-            floating accent
-            tooltip="Nuevo proyecto"
-            tooltipPosition="left"
-            className="list-corner-fab"
-          />
-        </Link>
+        <TooltipButton
+          icon="add"
+          floating accent
+          tooltip="Nuevo proyecto"
+          tooltipPosition="left"
+          className="list-corner-fab"
+          onClick={this.createTask}
+        />
         <List style={{padding: 0}} >
           {tasks.map(task => (
             <TaskListItem 

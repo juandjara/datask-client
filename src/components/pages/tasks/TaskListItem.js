@@ -15,6 +15,7 @@ const Task = styled.li`
   border: 1px solid #ccc;
   white-space: normal;
   box-shadow: 1px 1px 2px rgba(0,0,0, .5);
+  margin-bottom: 10px;
 `
 const Initials = styled.span`
   display: inline-block; 
@@ -58,7 +59,8 @@ export default class TaskListItem extends Component {
   render () {
     const {editMode} = this.state
     const {task} = this.props
-    const initials = task.asignee.name[0] + task.asignee.surname[0]
+    const user = task.asignee || {name: '', surname: '', full_name: ''}
+    const initials = user.name[0] + user.surname[0]
     return (
       <Task>
         <SpaceBetween>
@@ -90,9 +92,9 @@ export default class TaskListItem extends Component {
                     value="chat_bubble_outline" />
               <span>{task.comments.length}</span>
             </span>
-            <Initials title={`Asignada a ${task.asignee.full_name}`} >
-              {initials}
-            </Initials>
+            {task.asignee ? (
+              <Initials title={`Asignada a ${user.full_name}`}>{initials}</Initials>
+            ) : null}
           </div>
           <div>
             <IconButton 
