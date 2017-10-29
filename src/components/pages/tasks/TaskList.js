@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import TaskListItem from './TaskListItem'
 import ProgressBar from 'react-toolbox/lib/progress_bar/ProgressBar'
+import BackButton from 'components/shared/BackButton'
 import styled from 'styled-components'
 
 const TooltipButton = Tooltip(Button);
@@ -25,8 +26,13 @@ class TaskList extends Component {
   }
   componentDidMount() {
     const id = this.props.routeParams.projectId
-    this.props.fetchSingleProject(id)
-    this.fetchTasks(0)
+    const {tasks, project, fetchSingleProject} = this.props
+    if(project.missing) {
+      fetchSingleProject(id)
+    }
+    if(tasks.length < 1) {
+      this.fetchTasks(0)
+    }
   }
   fetchTasks(page) {
     const id = this.props.routeParams.projectId    
@@ -75,6 +81,7 @@ class TaskList extends Component {
     const {loading, tasks, pageParams, project, children} = this.props
     return (
       <div className="list-container">
+        <BackButton router={this.props.router} />
         <div className="list-title-container">
           <h2 className="list-title">
             {project.name}
