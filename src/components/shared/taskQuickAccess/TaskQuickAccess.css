@@ -9,7 +9,7 @@
 .task-card {
   display: inline-flex;
   align-items: center;
-  min-width: 220px;
+  min-width: 235px;
   border: 1px solid #ccc;
   margin: 4px 8px;
   margin-left: 0;
@@ -19,7 +19,7 @@
 }
 
 .task-card-text {
-  max-width: 170px;
+  max-width: 190px;
   padding-left: 8px;
   padding-right: 4px;
 }

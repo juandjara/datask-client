@@ -9,9 +9,6 @@ const TaskCard = ({task}) => {
       <button title="Comenzar tiempo" className="task-card-button">
         <FontIcon className="task-card-icon play">timer</FontIcon>
       </button>
-      <button title="Borrar de tareas destacadas" className="task-card-button">
-        <FontIcon className="task-card-icon clear">clear</FontIcon>
-      </button>
     </div>
   )
 }
