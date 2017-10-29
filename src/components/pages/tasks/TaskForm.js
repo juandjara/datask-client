@@ -6,7 +6,6 @@ import {searchUsers} from 'services/selectHelpers'
 import {bindActionCreators} from 'redux'
 
 import ProgressBar from 'react-toolbox/lib/progress_bar/ProgressBar'
-import Button from 'react-toolbox/lib/button/Button'
 import IconButton from 'react-toolbox/lib/button/IconButton'
 import styled from 'styled-components'
 
