@@ -63,6 +63,16 @@ export const actions = {
       payload: promise,
       meta: task
     }
+  },
+  delete: (task) => {
+    const url = `${endpoint}/${task._id}`
+    const promise = axios.delete(url)
+    .then(() => task)
+    return {
+      type: types.DELETE,
+      payload: promise,
+      meta: task
+    }
   }
 }
 
@@ -73,7 +83,7 @@ export const selectors = {
       ids: [],
       params: {}
     }
-    const tasks = slice.ids.map(id => state.tasks.entities[id])
+    const tasks = slice.ids.map(id => state.tasks.entities[id]).filter(Boolean)
     return {tasks, pageParams: slice.params}
   },
   getOne: (state, taskId) => {
@@ -130,6 +140,10 @@ const entitiesReducer = (state = {}, action = {}) => {
         ...state,
         [meta._id]: payload
       }
+    case ok(types.DELETE): 
+      const copy = {...state}
+      delete copy[meta._id]
+      return copy
     default:
       return state
   }
@@ -145,6 +159,16 @@ const byProjectReducer = (state = {}, action = {}) => {
       [meta.projectId]: {
         ids: oldSlice.ids.concat(newIds),
         params: {page, last}
+      }
+    }
+  }
+  if(type === ok(types.CREATE)) {
+    const oldSlice = state[payload.project] || {ids: [], params: {}}
+    return {
+      ...state,
+      [payload.project]: {
+        ...oldSlice,
+        ids: oldSlice.ids.concat(payload._id)
       }
     }
   }
