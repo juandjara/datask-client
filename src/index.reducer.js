@@ -9,6 +9,7 @@ import users from 'reducers/users.reducer'
 import profile from 'reducers/profile.reducer'
 import clients from 'reducers/clients.reducer'
 import projects from 'reducers/projects.reducer'
+import tasks from 'reducers/tasks.reducer'
 
 export default combineReducers({
   responsive,
@@ -19,5 +20,6 @@ export default combineReducers({
   clients,
   users,
   ui: combineReducers({form: formCustom}),
-  form
+  form,
+  tasks
 })

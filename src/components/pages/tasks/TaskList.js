@@ -4,7 +4,12 @@ import Tooltip from 'react-toolbox/lib/tooltip'
 import Button from 'react-toolbox/lib/button/Button'
 import { Link } from 'react-router'
 import { fetchSingleProject, getProjectById } from 'reducers/projects.reducer'
+import { 
+  actions as taskActions, 
+  selectors as taskSelectors 
+} from 'reducers/tasks.reducer'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import axios from 'services/axiosWrapper'
 import TaskListItem from './TaskListItem'
 
@@ -22,22 +27,24 @@ class TaskList extends Component {
     this.fetchTasks(0)
   }
   fetchTasks(page) {
-    this.setState({ loading: true })
     const id = this.props.routeParams.projectId    
-    axios.get(`/task/by_project/${id}?page=${page}`)
-    .then(res => res.data)
-    .then(json => {
-      const {last, page, docs} = json
-      this.setState(prevState => ({
-        loading: false,
-        pageParams: {page, last},
-        tasks: prevState.tasks.concat(docs)
-      }))
-    })
+    this.props.taskActions.fetchByProject(id, {page})
+    
+    // this.setState({ loading: true })
+    // const id = this.props.routeParams.projectId    
+    // axios.get(`/task/by_project/${id}?page=${page}`)
+    // .then(res => res.data)
+    // .then(json => {
+    //   const {last, page, docs} = json
+    //   this.setState(prevState => ({
+    //     loading: false,
+    //     pageParams: {page, last},
+    //     tasks: prevState.tasks.concat(docs)
+    //   }))
+    // })
   }
   render () {
-    const {loading, tasks, pageParams} = this.state
-    const {project, children} = this.props
+    const {loading, tasks, pageParams, project, children} = this.props
     return (
       <div className="list-container">
         <div className="list-title-container">
@@ -73,8 +80,19 @@ class TaskList extends Component {
 
 export default connect(
   (state, props) => {
-    const project = getProjectById(state, props.routeParams.projectId)
-    return {project}
+    const projectId = props.routeParams.projectId
+    const project = getProjectById(state, projectId)
+    const {tasks, pageParams} = taskSelectors.getByProjectId(state, projectId)
+    const loading = taskSelectors.getLoading(state)
+    return {
+      project, 
+      tasks, 
+      pageParams, 
+      loading
+    }
   },
-  {fetchSingleProject}
+  (dispatch) => ({
+    ...bindActionCreators({fetchSingleProject}, dispatch),
+    taskActions: bindActionCreators(taskActions, dispatch)
+  })
 )(TaskList)

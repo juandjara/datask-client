@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import IconButton from 'react-toolbox/lib/button/IconButton'
 import styled from 'styled-components'
-import axios from 'services/axiosWrapper'
 
 const SpaceBetween = styled.div`
   display: flex;
