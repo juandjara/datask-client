@@ -83,9 +83,11 @@ export default class TaskListItem extends Component {
         </SpaceBetween>
         <SpaceBetween>
           <div style={{color: '#666'}} >
-            <Icon title="Esta tarea tiene una descripcion" 
+            {task.description && (
+              <Icon title="Esta tarea tiene una descripcion" 
                   style={{verticalAlign: 'middle', marginRight: 8}} 
                   value="sort" />
+            )}
             <span style={{marginRight: 8, display: 'inline-block'}}>
               <Icon title={`${task.comments.length} comentarios`} 
                     style={{verticalAlign: 'middle', marginRight: 2}} 
