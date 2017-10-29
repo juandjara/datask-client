@@ -64,7 +64,7 @@ class TaskList extends Component {
           className="list-corner-fab"
           onClick={this.createTask}
         />
-        <List style={{padding: 0}} >
+        <List style={{padding: '1em 0'}} >
           {tasks.map(task => (
             <TaskListItem 
               onChange={this.handleNameEdit} 
@@ -73,7 +73,12 @@ class TaskList extends Component {
           ))}
         </List>
         {pageParams.last === false && (
-          <Button icon="refresh" raised disabled={loading}>
+          <Button 
+            icon="refresh" 
+            raised primary
+            disabled={loading}
+            style={{margin: '2em 0'}}
+            onClick={() => this.fetchTasks(pageParams.page + 1)}>
             Cargar más
           </Button>
         )}
