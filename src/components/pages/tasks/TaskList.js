@@ -93,7 +93,7 @@ class TaskList extends Component {
         <TooltipButton
           icon="add"
           floating accent
-          tooltip="Nuevo proyecto"
+          tooltip="Nueva tarea"
           tooltipPosition="left"
           className="list-corner-fab"
           onClick={this.createTask}
