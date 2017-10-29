@@ -10,7 +10,6 @@ import {
 } from 'reducers/tasks.reducer'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import axios from 'services/axiosWrapper'
 import TaskListItem from './TaskListItem'
 
 const TooltipButton = Tooltip(Button);
