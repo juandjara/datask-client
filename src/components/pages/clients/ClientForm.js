@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import Button from 'react-toolbox/lib/button/Button'
+import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import FormFields from 'components/shared/FormFields'
 import { connect } from 'react-redux'
 import validators from 'services/formValidators'
@@ -42,7 +43,11 @@ class ClientForm extends Component {
     return (
       <form className="edit-form" onSubmit={handleSubmit(this.saveClient)}>
         <BackButton router={this.props.router} />
-        <h2>{editMode ? 'Editar cliente':'Nuevo cliente'}</h2>
+        <h2>
+          <Icon style={{verticalAlign: 'middle', marginRight: 8, marginBottom: 4}} 
+                value="business" />  
+          {editMode ? 'Editar cliente':'Nuevo cliente'}
+        </h2>
         {loading && <p className="color-primary">Cargando...</p>}
         <Field 
           name="name"

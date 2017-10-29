@@ -2,7 +2,9 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 
 import Button from 'react-toolbox/lib/button/Button'
+import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import FormFields from 'components/shared/FormFields'
+import BackButton from 'components/shared/BackButton'
 
 import { connect } from 'react-redux'
 import {
@@ -61,10 +63,14 @@ class UserForm extends React.Component {
     return (
       <form className="edit-form" 
             onSubmit={handleSubmit(this.saveUser.bind(this))}>
-        <h2>{editMode ? 'Editar usuario':'Nuevo usuario'}</h2>
+        <BackButton router={this.props.router} />
+        <h2 style={{marginBottom: '2rem'}}>
+          <Icon style={{verticalAlign: 'middle', marginRight: 8, marginBottom: 4}} 
+                value="person" />
+          {editMode ? 'Editar usuario':'Nuevo usuario'}
+        </h2>
         {loading && <p className="color-primary">Cargando...</p>}
         <Field
-          className="edit-dialog-active"
           name="activated"
           label="Activado"
           style={{marginLeft: '1em'}}

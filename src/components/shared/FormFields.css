@@ -56,3 +56,7 @@
 .date-picker-container [data-react-toolbox="date-picker"] {
   flex: 1;
 }
+
+.form-field-checkbox [data-react-toolbox="check"] {
+  margin-right: 24px;
+}

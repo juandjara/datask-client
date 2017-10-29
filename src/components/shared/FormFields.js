@@ -28,6 +28,7 @@ export const renderCheckbox = ({input, label, meta, ...otherProps}) => (
     label={label}
     checked={!!input.value}
     onChange={input.onChange}
+    className="form-field-checkbox"
     {...otherProps}
   />
 )

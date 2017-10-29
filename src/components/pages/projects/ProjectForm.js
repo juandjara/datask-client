@@ -2,6 +2,7 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 
 import Button from 'react-toolbox/lib/button/Button'
+import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import FormFields from 'components/shared/FormFields'
 
 import { connect } from 'react-redux'
@@ -57,7 +58,11 @@ class ProjectForm extends React.Component {
       <form className="edit-form" 
             onSubmit={handleSubmit(this.saveProject.bind(this))}>
         <BackButton router={this.props.router} />
-        <h2>{editMode ? 'Editar proyecto':'Nuevo proyecto'}</h2>
+        <h2>
+          <Icon style={{verticalAlign: 'middle', marginRight: 8, marginBottom: 4}} 
+                value="work" />
+          {editMode ? 'Editar proyecto':'Nuevo proyecto'}
+        </h2>
         {loading && <p className="color-primary">Cargando...</p>}
         <Field
           name="name"
