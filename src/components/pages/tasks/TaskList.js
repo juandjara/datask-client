@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import List from 'react-toolbox/lib/list/List'
 import Tooltip from 'react-toolbox/lib/tooltip'
 import Button from 'react-toolbox/lib/button/Button'
 import { fetchSingleProject, getProjectById } from 'reducers/projects.reducer'
@@ -11,8 +10,14 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import TaskListItem from './TaskListItem'
 import ProgressBar from 'react-toolbox/lib/progress_bar/ProgressBar'
+import styled from 'styled-components'
 
 const TooltipButton = Tooltip(Button);
+const List = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`
 
 class TaskList extends Component {
   state = {
@@ -98,7 +103,7 @@ class TaskList extends Component {
           className="list-corner-fab"
           onClick={this.createTask}
         />
-        <List style={{padding: '1em 0'}} >
+        <List>
           {tasks.map(task => (
             <TaskListItem 
               onChange={this.handleNameEdit} 
