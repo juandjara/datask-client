@@ -20,13 +20,20 @@ const NameInput = styled.input`
   font-size: 1.5em;
   margin: 1rem 0;
 `
+const DescriptionInput = styled.textarea`
+  resize: vertical;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 4px;
+`
 
 class TaskForm extends Component {
   state = {
     description: '',
     name: '',
     editModes: {
-      description: true,
+      description: false,
       name: false
     }
   }
@@ -40,6 +47,11 @@ class TaskForm extends Component {
           name: task.name,
           description: task.description
         })
+      })
+    } else {
+      this.setState({
+        name: task.name,
+        description: task.description
       })
     }
   }
@@ -64,6 +76,17 @@ class TaskForm extends Component {
     actions.save(data, true)
     .then(() => {
       this.setState({editModes: {name: false}})
+    })
+  }
+  editDescription = () => {
+    const {task, actions} = this.props
+    const data = {
+      ...task,
+      description: this.state.description
+    }
+    actions.save(data, true)
+    .then(() => {
+      this.setState({editModes: {description: false}})
     })
   }
   render () {
@@ -101,19 +124,28 @@ class TaskForm extends Component {
             title={editModes.name ? 'Completar edicion':'Editar nombre de la tarea'} 
             icon={editModes.name ? 'done':'edit'} />
         </SpaceBetween>
-        <p style={{marginBottom: '.5rem', color: '#666'}}>Descripci&oacute;n</p>
-        <form style={{marginRight: '3em'}} onSubmit={ev => ev.preventDefault()}>
-          <textarea
+        <SpaceBetween>
+          <p style={{margin: '.5rem 0', color: '#666'}}>
+            Descripci&oacute;n
+          </p>
+          <IconButton
+            onClick={() => this.setState({
+              editModes: {description: !editModes.description}
+            })}
+            icon={editModes.description ? 'done':'edit'}
+            title={editModes.description ? 'Completar edición':'Editar descripcion'} />
+        </SpaceBetween>
+        {editModes.description ? (
+          <DescriptionInput
             id="description" 
             value={description}
+            onBlur={this.editDescription}
             onChange={this.handleChange("description")}
             style={{resize: 'vertical', width: '100%'}} 
             rows="6" />
-          <Button raised primary type="submit">
-            Guardar
-          </Button>
-          <IconButton title="Descartar cambios" icon="close" />
-        </form>
+        ) : (
+          <p style={{marginTop: 0, marginBottom: '.5rem'}}>{description}</p>
+        )}
       </div>
     );
   }
