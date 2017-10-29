@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import IconButton from 'react-toolbox/lib/button/IconButton'
 import styled from 'styled-components'
+import {Link} from 'react-router'
 
 const SpaceBetween = styled.div`
   display: flex;
@@ -66,8 +67,11 @@ export default class TaskListItem extends Component {
               defaultValue={task.name} 
               onBlur={this.handleTitleBlur} />
           ) : (
-            <p onClick={() => onEdit(task, true)}
-               style={{flex: 1}}>{task.name}</p>
+            /* <p onClick={() => onEdit(task, true)}
+               style={{flex: 1}}>{task.name}</p> */
+            <Link to={`/tasks/${task._id}`}>
+              <p>{task.name}</p>
+            </Link>
           )}
           <IconButton 
             title={editMode ? 'Completar edicion':'Editar nombre de la tarea'} 
