@@ -10,6 +10,7 @@ import {
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import TaskListItem from './TaskListItem'
+import ProgressBar from 'react-toolbox/lib/progress_bar/ProgressBar'
 
 const TooltipButton = Tooltip(Button);
 
@@ -46,7 +47,14 @@ class TaskList extends Component {
           <h2 className="list-title">
             {project.name}
           </h2>
-          {loading && <p className="color-primary">Cargando ... </p>}
+          {loading && (
+            <div style={{display: 'flex', alignItems: 'center'}}>
+              <ProgressBar type='circular' mode='indeterminate' />
+              <p className="color-primary" style={{marginLeft: '1rem'}}>
+                Cargando ...
+              </p>
+            </div>
+          )}
         </div>
         <TooltipButton
           icon="add"
