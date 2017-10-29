@@ -16,9 +16,7 @@ const TooltipButton = Tooltip(Button);
 
 class TaskList extends Component {
   state = {
-    loading: false,
-    tasks: [],
-    pageParams: {}
+    editModes: {}
   }
   componentDidMount() {
     const id = this.props.routeParams.projectId
@@ -30,7 +28,25 @@ class TaskList extends Component {
     this.props.taskActions.fetchByProject(id, {page})
   }
   handleNameEdit = (data) => {
-    return this.props.taskActions.save(data, true)
+    this.props.taskActions.save(data, true)
+    .then(() => {
+      this.setState(state => ({
+        ...state,
+        editModes: {
+          ...state.editModes,
+          [data._id]: false
+        }
+      }))
+    })
+  }
+  handleEditMode = (task, editMode) => {
+    this.setState(state => ({
+      ...state,
+      editModes: {
+        ...state.editModes,
+        [task._id]: editMode
+      }
+    }))
   }
   createTask = () => {
     const newTask = {
@@ -38,8 +54,19 @@ class TaskList extends Component {
       project: this.props.project._id
     }
     this.props.taskActions.save(newTask, false)
+    .then(res => res.value)
+    .then(task => {
+      this.setState(state => ({
+        ...state,
+        editModes: {
+          ...state.editModes,
+          [task._id]: true
+        }
+      }))
+    })
   }
   render () {
+    const {editModes} = this.state
     const {loading, tasks, pageParams, project, children} = this.props
     return (
       <div className="list-container">
@@ -55,6 +82,13 @@ class TaskList extends Component {
               </p>
             </div>
           )}
+          {!loading && tasks.length < 1 ? (
+            <p style={{textAlign: 'center'}}>
+              No hay ninguna tarea para este proyecto todavía.
+              <br/>
+              Puedes crear una con el boton redondo naranja de arriba 
+            </p>
+          ) : null}
         </div>
         <TooltipButton
           icon="add"
@@ -69,6 +103,8 @@ class TaskList extends Component {
             <TaskListItem 
               onChange={this.handleNameEdit} 
               task={task} 
+              editMode={editModes[task._id]}
+              onEdit={this.handleEditMode}
               key={task._id} />
           ))}
         </List>

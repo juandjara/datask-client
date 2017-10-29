@@ -35,30 +35,24 @@ const TitleInput = styled.input`
 `
 
 export default class TaskListItem extends Component {
-  state = {
-    editMode: false
-  }
   handleTitleBlur = () => {
     const {value} = this.titleInputNode
     const {onChange, task} = this.props
     onChange({
-      name: value,
-      _id: task._id
-    }).then(() => {
-      this.setState({editMode: false})    
+      ...task,
+      name: value
     })
   }
-  handleTitleKeypress = (ev) => {
+  handleTitleKeyDown = (ev) => {
     const enterKeycode = 13
     const escapeKeycode = 27
-    const keycode = ev.which
+    const keycode = ev.keyCode
     if(keycode === enterKeycode || keycode === escapeKeycode) {
       this.titleInputNode.blur()
     }
   }
   render () {
-    const {editMode} = this.state
-    const {task} = this.props
+    const {task, editMode, onEdit} = this.props
     const user = task.asignee || {name: '', surname: '', full_name: ''}
     const initials = user.name[0] + user.surname[0]
     return (
@@ -66,20 +60,20 @@ export default class TaskListItem extends Component {
         <SpaceBetween>
           {editMode ? (
             <TitleInput
-              onKeyPress={this.handleTitleKeypress}
+              onKeyDown={this.handleTitleKeyDown}
               innerRef={node => {this.titleInputNode = node}} 
               autoFocus
               type="text" 
               defaultValue={task.name} 
               onBlur={this.handleTitleBlur} />
           ) : (
-            <p onClick={() => this.setState({editMode: true})}
+            <p onClick={() => onEdit(task, true)}
                style={{flex: 1}}>{task.name}</p>
           )}
           <IconButton 
             title={editMode ? 'Completar edicion':'Editar nombre de la tarea'} 
             icon={editMode ? 'done':'edit'}
-            onClick={() => this.setState(state => ({editMode: !state.editMode}))} />
+            onClick={() => onEdit(task, !editMode)} />
         </SpaceBetween>
         <SpaceBetween>
           <div style={{color: '#666'}} >
