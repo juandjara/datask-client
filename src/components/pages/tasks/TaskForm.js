@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { selectors, actions } from 'reducers/tasks.reducer'
 import { connect } from 'react-redux'
+import {bindActionCreators} from 'redux'
+
 import {renderAsyncSelect as AsyncSelect} from 'components/shared/FormFields'
 import {searchUsers} from 'services/selectHelpers'
-import {bindActionCreators} from 'redux'
+import {Link} from 'react-router'
 
 import ProgressBar from 'react-toolbox/lib/progress_bar/ProgressBar'
 import IconButton from 'react-toolbox/lib/button/IconButton'
 import Input from 'react-toolbox/lib/input/Input'
+import Button from 'react-toolbox/lib/button/Button'
 import styled from 'styled-components'
 
 const SpaceBetween = styled.div`
@@ -30,6 +33,7 @@ const DescriptionInput = styled.textarea`
 
 class TaskForm extends Component {
   state = {
+    asignee: null,
     estimatedTime: '00:00',
     description: '',
     name: '',
@@ -52,7 +56,11 @@ class TaskForm extends Component {
     this.setState({
       name: task.name || '',
       description: task.description || '',
-      estimatedTime: task.estimatedTime || ''
+      estimatedTime: task.estimatedTime || '',
+      asignee: task.asignee && {
+        value: task.asignee._id,
+        label: task.asignee.full_name
+      }
     })
   }
   handleChange = name => (ev) => {
@@ -89,8 +97,18 @@ class TaskForm extends Component {
       this.setState({editModes: {description: false}})
     })
   }
+  editTimeAndAsignee() {
+    const {task, actions} = this.props
+    const {estimatedTime, asignee} = this.state
+    const data = {
+      ...task,
+      estimatedTime,
+      asignee: asignee.value
+    }
+    actions.save(data, true)
+  }
   render () {
-    const {estimatedTime, description, name, editModes} = this.state
+    const {asignee, estimatedTime, description, name, editModes} = this.state
     const {loading, task = {}} = this.props
     return (
       <div style={{margin: '1rem'}}>
@@ -145,7 +163,7 @@ class TaskForm extends Component {
             style={{resize: 'vertical', width: '100%'}} 
             rows="6" />
         ) : (
-          <p style={{marginTop: 0, marginBottom: '.5rem'}}>{description}</p>
+          <p style={{marginTop: 0, marginBottom: '2rem'}}>{description}</p>
         )}
         <Input 
           icon="timer"
@@ -155,7 +173,28 @@ class TaskForm extends Component {
           pattern="[0-9]{2}:[0-9]{2}"
           value={estimatedTime}
           onChange={estimatedTime => this.setState({estimatedTime})} />
-        
+        <AsyncSelect 
+          name="asignee"
+          icon="person_outline"
+          label="Asignado a"
+          className="select"
+          placeholder="Escribe para buscar"
+          loadOptions={searchUsers}
+          meta={{}}
+          input={{
+            value: asignee,
+            onChange: asignee => this.setState({asignee})
+          }}
+          style={{flex: 1}}
+        />
+        <div style={{margin: '1rem 0'}}>
+          <Button primary raised onClick={() => this.editTimeAndAsignee()}>
+            Guardar
+          </Button>
+          <Link to={`projects/${task.project}/tasks`}>
+            <Button>Cancelar</Button>
+          </Link>
+        </div>
       </div>
     );
   }
