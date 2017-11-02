@@ -8,9 +8,11 @@ import {searchUsers} from 'services/selectHelpers'
 import {Link} from 'react-router'
 
 import ProgressBar from 'react-toolbox/lib/progress_bar/ProgressBar'
+import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import IconButton from 'react-toolbox/lib/button/IconButton'
 import Input from 'react-toolbox/lib/input/Input'
 import Button from 'react-toolbox/lib/button/Button'
+import Initials from './Initials'
 import styled from 'styled-components'
 
 const SpaceBetween = styled.div`
@@ -23,12 +25,17 @@ const NameInput = styled.input`
   font-size: 1.5em;
   margin: 1rem 0;
 `
-const DescriptionInput = styled.textarea`
+const TextArea = styled.textarea`
   resize: vertical;
   width: 100%;
+  box-sizing: border-box;
   font-family: inherit;
   font-size: inherit;
-  padding: 4px;
+  display: block;
+  height: 6em;
+  padding: .5rem;
+  padding-bottom: 0;
+  margin-bottom: 1em;
 `
 
 class TaskForm extends Component {
@@ -107,11 +114,11 @@ class TaskForm extends Component {
     }
     actions.save(data, true)
   }
-  render () {
+  renderTaskForm () {
     const {asignee, estimatedTime, description, name, editModes} = this.state
     const {loading, task = {}} = this.props
     return (
-      <div style={{margin: '1rem'}}>
+      <section style={{margin: '1rem'}}>
         {loading && (
           <div style={{display: 'flex', alignItems: 'center'}}>
             <ProgressBar type='circular' mode='indeterminate' />
@@ -130,7 +137,7 @@ class TaskForm extends Component {
               onBlur={this.editName}
               onChange={this.handleChange("name")} />
           ) : (
-            <h2 style={{flex: 1}} 
+            <h2 style={{flex: 1, color: '#333'}} 
                 onClick={() => this.setState({editModes: {name: true}})}>
               {task.name}
             </h2>
@@ -154,14 +161,13 @@ class TaskForm extends Component {
             title={editModes.description ? 'Completar edición':'Editar descripcion'} />
         </SpaceBetween>
         {editModes.description ? (
-          <DescriptionInput
+          <TextArea
             id="description" 
             value={description}
             autoFocus
             onBlur={this.editDescription}
             onChange={this.handleChange("description")}
-            style={{resize: 'vertical', width: '100%'}} 
-            rows="6" />
+          />
         ) : (
           <p style={{marginTop: 0, marginBottom: '2rem'}}>{description}</p>
         )}
@@ -191,12 +197,47 @@ class TaskForm extends Component {
           <Button primary raised onClick={() => this.editTimeAndAsignee()}>
             Guardar
           </Button>
-          <Link to={`projects/${task.project}/tasks`}>
+          <Link to={`/projects/${task.project}/tasks`}>
             <Button>Cancelar</Button>
           </Link>
         </div>
-      </div>
+      </section>
     );
+  }
+  renderCommentsForm() {
+    const {task, username=""} = this.props
+    if(!task) {
+      return null
+    }
+    const initials = username.split(' ').map(str => str[0])
+    return (
+      <section style={{margin: '1rem', marginTop: '2rem'}} className="comments-form">
+        <header>
+          <h2 style={{margin: '2rem 0', color: '#333', borderBottom: '1px solid #ccc'}}>Comentarios</h2>
+          <p style={{fontSize: '18px', marginBottom: '.5em'}}>
+            <Icon style={{margin: '0 4px', color: '#666', verticalAlign: 'middle'}} value="chat_bubble_outline" />
+            <span style={{marginLeft: '.5rem'}}>Añadir comentario</span>
+          </p>
+        </header>
+        <form>
+          <div style={{display: 'flex'}}>
+            <p style={{margin: 0, marginRight: 8}} ><Initials>{initials}</Initials></p>
+            <TextArea />
+          </div>
+          <Button primary raised>
+            Añadir
+          </Button>
+        </form>
+      </section>
+    )
+  }
+  render() {
+    return (
+      <div>
+        {this.renderTaskForm()}
+        {this.renderCommentsForm()}
+      </div>
+    )
   }
 }
 
@@ -205,7 +246,8 @@ export default connect(
     const id = props.routeParams._id
     const task = selectors.getOne(state, id)
     const loading = selectors.getLoading(state)
-    return {task, loading}
+    const username = state.auth.full_name
+    return {task, loading, username}
   },
   dispatch => ({
     actions: bindActionCreators(actions, dispatch)

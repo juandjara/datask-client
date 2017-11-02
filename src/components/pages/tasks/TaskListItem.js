@@ -3,6 +3,7 @@ import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import IconButton from 'react-toolbox/lib/button/IconButton'
 import styled from 'styled-components'
 import {Link} from 'react-router'
+import Initials from './Initials'
 
 const SpaceBetween = styled.div`
   display: flex;
@@ -17,13 +18,7 @@ const Task = styled.li`
   white-space: normal;
   box-shadow: 1px 1px 2px rgba(0,0,0, .5);
 `
-const Initials = styled.span`
-  display: inline-block; 
-  padding: 3px 6px; 
-  background: #eee;
-  color: #333;
-  border: 1px solid #ccc;
-`
+
 const TitleInput = styled.input`
   flex: 1;
   margin: 12px 0;
