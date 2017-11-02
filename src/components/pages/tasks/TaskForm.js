@@ -139,6 +139,7 @@ class TaskForm extends Component {
           <DescriptionInput
             id="description" 
             value={description}
+            autoFocus
             onBlur={this.editDescription}
             onChange={this.handleChange("description")}
             style={{resize: 'vertical', width: '100%'}} 
@@ -149,10 +150,12 @@ class TaskForm extends Component {
         <Input 
           icon="timer"
           type="text"
-          placeholder="00:00"
+          label="Tiempo estimado"
+          hint="00:00"
           pattern="[0-9]{2}:[0-9]{2}"
           value={estimatedTime}
           onChange={estimatedTime => this.setState({estimatedTime})} />
+        
       </div>
     );
   }
