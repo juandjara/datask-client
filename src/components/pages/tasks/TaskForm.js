@@ -13,6 +13,7 @@ import IconButton from 'react-toolbox/lib/button/IconButton'
 import Input from 'react-toolbox/lib/input/Input'
 import Button from 'react-toolbox/lib/button/Button'
 import Initials from './Initials'
+import BackButton from 'components/shared/BackButton'
 import styled from 'styled-components'
 
 const SpaceBetween = styled.div`
@@ -32,7 +33,7 @@ const TextArea = styled.textarea`
   display: block;
   height: 120px;
   margin: 0;
-  margin-bottom: 1em;
+  margin-bottom: .5rem;
   flex: 1;
   overflow-x: hidden;
   width: 100%;
@@ -118,7 +119,7 @@ class TaskForm extends Component {
     const {asignee, estimatedTime, description, name, editModes} = this.state
     const {loading, task = {}} = this.props
     return (
-      <section style={{margin: '1rem'}}>
+      <section style={{margin: '1rem', marginTop: 0}}>
         {loading && (
           <div style={{display: 'flex', alignItems: 'center'}}>
             <ProgressBar type='circular' mode='indeterminate' />
@@ -222,9 +223,9 @@ class TaskForm extends Component {
         <form>
           <div style={{display: 'flex'}}>
             <p style={{margin: 0, marginRight: 8}} ><Initials>{initials}</Initials></p>
-            <TextArea />
+            <TextArea placeholder="Escribe un comentario" />
           </div>
-          <Button primary raised>
+          <Button style={{marginLeft: '36px'}} primary raised>
             Añadir
           </Button>
         </form>
@@ -234,6 +235,7 @@ class TaskForm extends Component {
   render() {
     return (
       <div>
+        <BackButton style={{margin: '.5em'}} router={this.props.router} />
         {this.renderTaskForm()}
         {this.renderCommentsForm()}
       </div>
