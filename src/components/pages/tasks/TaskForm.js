@@ -26,16 +26,16 @@ const NameInput = styled.input`
   margin: 1rem 0;
 `
 const TextArea = styled.textarea`
-  resize: vertical;
-  width: 100%;
-  box-sizing: border-box;
   font-family: inherit;
   font-size: inherit;
+  resize: vertical;
   display: block;
-  height: 6em;
-  padding: .5rem;
-  padding-bottom: 0;
+  height: 120px;
+  margin: 0;
   margin-bottom: 1em;
+  flex: 1;
+  overflow-x: hidden;
+  width: 100%;
 `
 
 class TaskForm extends Component {
