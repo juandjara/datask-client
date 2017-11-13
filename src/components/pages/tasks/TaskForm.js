@@ -8,7 +8,6 @@ import {searchUsers} from 'services/selectHelpers'
 import {Link} from 'react-router'
 
 import ProgressBar from 'react-toolbox/lib/progress_bar/ProgressBar'
-import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import IconButton from 'react-toolbox/lib/button/IconButton'
 import Input from 'react-toolbox/lib/input/Input'
 import Button from 'react-toolbox/lib/button/Button'
@@ -32,11 +31,35 @@ const TextArea = styled.textarea`
   resize: vertical;
   display: block;
   height: 120px;
-  margin: 0;
-  margin-bottom: .5rem;
-  flex: 1;
   overflow-x: hidden;
+  padding: 8px;
   width: 100%;
+`
+const List = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`
+const CommentBody = styled.p`
+  background: white;
+  border: 1px solid #ccc;
+  padding: 1em;
+  margin-top: 8px;
+  margin-bottom: 4px;
+`
+const CommentActions = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  .material-icons {
+    color: #666;
+  }
+  .icon-delete {
+    cursor: pointer;
+  }
+  .icon-delete:hover {
+    color: var(--palette-red-500);
+  }
 `
 
 class TaskForm extends Component {
@@ -45,6 +68,7 @@ class TaskForm extends Component {
     estimatedTime: '00:00',
     description: '',
     name: '',
+    newComment: '',
     editModes: {
       description: false,
       name: false
@@ -84,23 +108,21 @@ class TaskForm extends Component {
     }
   }
   editName = () => {
-    const {task, actions} = this.props
     const data = {
-      ...task,
+      ...this.props.task,
       name: this.state.name
     }
-    actions.save(data, true)
+    this.props.actions.save(data, true)
     .then(() => {
       this.setState({editModes: {name: false}})
     })
   }
   editDescription = () => {
-    const {task, actions} = this.props
     const data = {
-      ...task,
+      ...this.props.task,
       description: this.state.description
     }
-    actions.save(data, true)
+    this.props.actions.save(data, true)
     .then(() => {
       this.setState({editModes: {description: false}})
     })
@@ -115,19 +137,52 @@ class TaskForm extends Component {
     }
     actions.save(data, true)
   }
+  addComment(ev) {
+    ev.preventDefault()
+    const newComment = {
+      authorName: this.props.username,
+      authorId: this.props.userid,
+      body: this.state.newComment
+    }
+    const data = {
+      ...this.props.task,
+      comments: [
+        ...this.props.task.comments,
+        newComment
+      ]
+    }
+    this.props.actions.save(data, true)
+    .then(() => {
+      this.setState({newComment: ''})
+    })
+  }
+  deleteComment(index) {
+    const {comments} = this.props.task
+    const data = {
+      ...this.props.task,
+      comments: [
+        ...comments.slice(0, index),
+        ...comments.slice(index+1, comments.length)
+      ]
+    }
+    this.props.actions.save(data, true)
+  }
+  getInitials(name) {
+    return name.split(' ').map(str => str[0])
+  }
+  formatDate(dateString) {
+    const time = new Date(dateString).toLocaleTimeString()
+    const date = new Date(dateString).toLocaleDateString()
+    return `el ${date} a las ${time}`
+  }
+  userOwnsComment(comment) {
+    return this.props.userid === comment.authorId
+  }
   renderTaskForm () {
     const {asignee, estimatedTime, description, name, editModes} = this.state
-    const {loading, task = {}} = this.props
+    const {task = {}} = this.props
     return (
       <section style={{margin: '1rem', marginTop: 0}}>
-        {loading && (
-          <div style={{display: 'flex', alignItems: 'center'}}>
-            <ProgressBar type='circular' mode='indeterminate' />
-            <p className="color-primary" style={{marginLeft: '1rem'}}>
-              Cargando ...
-            </p>
-          </div>
-        )}
         <SpaceBetween>          
           {editModes.name ? (
             <NameInput 
@@ -206,38 +261,79 @@ class TaskForm extends Component {
     );
   }
   renderCommentsForm() {
-    const {task, username=""} = this.props
-    if(!task) {
-      return null
-    }
-    const initials = username.split(' ').map(str => str[0])
+    const {username=""} = this.props
     return (
-      <section style={{margin: '1rem', marginTop: '2rem'}} className="comments-form">
+      <section style={{margin: '1rem'}} className="comments-form">
         <header>
-          <h2 style={{margin: '2rem 0', color: '#333', borderBottom: '1px solid #ccc'}}>Comentarios</h2>
-          <p style={{fontSize: '18px', marginBottom: '.5em'}}>
-            <Icon style={{margin: '0 4px', color: '#666', verticalAlign: 'middle'}} value="chat_bubble_outline" />
-            <span style={{marginLeft: '.5rem'}}>Añadir comentario</span>
-          </p>
+          <h2 style={{marginTop: '2rem', marginBottom: '1rem', color: '#333', borderBottom: '1px solid #ccc'}}>Comentarios</h2>
         </header>
-        <form>
-          <div style={{display: 'flex'}}>
-            <p style={{margin: 0, marginRight: 8}} ><Initials>{initials}</Initials></p>
-            <TextArea placeholder="Escribe un comentario" />
-          </div>
-          <Button style={{marginLeft: '36px'}} primary raised>
-            Añadir
-          </Button>
+        <form style={{display: 'flex'}} onSubmit={ev => this.addComment(ev)}>
+          <p style={{margin: 0, marginRight: '1em'}}>
+            <Initials>{this.getInitials(username)}</Initials>
+          </p>
+          <div style={{flex: 1}}>
+            <TextArea 
+              placeholder="Escribe tu comentario aqui"
+              value={this.state.newComment}
+              onChange={this.handleChange("newComment")} />
+            <Button style={{marginTop: '8px'}}
+                    type="submit" primary raised>
+              Añadir
+            </Button>
+          </div>          
         </form>
       </section>
     )
   }
+  renderCommentList() {
+    const {comments = []} = this.props.task
+    return (
+      <List style={{margin: '1rem', marginTop: '2rem'}}>
+        {comments.map((comment, index) => (
+          <li key={index} 
+              style={{marginBottom: '2rem'}}>
+            <SpaceBetween>
+              <div>
+                <Initials>
+                  {this.getInitials(comment.authorName)}
+                </Initials>
+                <span style={{marginLeft: 8}}>
+                  {comment.authorName}
+                </span>
+              </div>
+              <div>
+                {this.formatDate(comment.publishedAt)}
+              </div>
+            </SpaceBetween>
+            <CommentBody>{comment.body}</CommentBody>
+            <CommentActions>
+              {this.userOwnsComment(comment) ? (
+                <i className="material-icons icon-delete"
+                   onClick={() => this.deleteComment(index)}
+                   title="Borrar comentario">close</i>
+              ) : null}            
+            </CommentActions>
+          </li>
+        ))}
+      </List>
+    );
+  }
   render() {
+    const {loading, task} = this.props
     return (
       <div>
         <BackButton style={{margin: '.5em'}} router={this.props.router} />
-        {this.renderTaskForm()}
-        {this.renderCommentsForm()}
+        {loading && (
+          <div style={{margin: '1rem', display: 'flex', alignItems: 'center'}}>
+            <ProgressBar type='circular' mode='indeterminate' />
+            <p className="color-primary" style={{marginLeft: '1rem'}}>
+              Cargando ...
+            </p>
+          </div>
+        )}
+        {task && this.renderTaskForm()}
+        {task && this.renderCommentsForm()}
+        {task && this.renderCommentList()}
       </div>
     )
   }
@@ -249,7 +345,8 @@ export default connect(
     const task = selectors.getOne(state, id)
     const loading = selectors.getLoading(state)
     const username = state.auth.full_name
-    return {task, loading, username}
+    const userid = state.auth._id
+    return {task, loading, username, userid}
   },
   dispatch => ({
     actions: bindActionCreators(actions, dispatch)
