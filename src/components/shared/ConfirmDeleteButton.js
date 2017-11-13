@@ -15,7 +15,7 @@ class ConfirmDeleteButton extends Component {
   state = {
     confirmationPopup: false
   }
-  open(ev) {
+  open = (ev) => {
     ev.preventDefault();
     ev.stopPropagation();
     this.setState({ confirmationPopup: true })
@@ -25,15 +25,21 @@ class ConfirmDeleteButton extends Component {
   }
   render() {
     const {tooltip, tooltipPosition, dialogTitle} = this.props;
+    const defaultButton = (
+      <TooltipIcon
+        tooltip={tooltip || "Borrar"}
+        tooltipPosition={tooltipPosition}
+        value="clear"
+        style={{cursor: 'pointer', color: '#757575'}}
+        onClick={this.open}
+      />
+    )
+    const button = this.props.button ? 
+      React.cloneElement(this.props.button, {onClick: this.open}) :
+      defaultButton
     return (
       <div className="delete-button">
-        <TooltipIcon
-          tooltip={tooltip || "Borrar"}
-          tooltipPosition={tooltipPosition}
-          value="clear"
-          style={{color: '#757575'}}
-          onClick={(ev) => this.open(ev)}
-        />
+        {button}
         <Dialog
           active={this.state.confirmationPopup}
           onEscKeyDown={() => this.close()}

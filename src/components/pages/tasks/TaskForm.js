@@ -13,6 +13,7 @@ import Input from 'react-toolbox/lib/input/Input'
 import Button from 'react-toolbox/lib/button/Button'
 import Initials from './Initials'
 import BackButton from 'components/shared/BackButton'
+import ConfirmDeleteButton from 'components/shared/ConfirmDeleteButton'
 import styled from 'styled-components'
 
 const SpaceBetween = styled.div`
@@ -139,6 +140,13 @@ class TaskForm extends Component {
     }
     actions.save(data, true)
   }
+  deleteTask = () => {
+    const {task, actions, router} = this.props
+    actions.delete(task)
+    .then(() => {
+      router.push(`/projects/${task.project}/tasks`)
+    })
+  }
   addComment(ev) {
     ev.preventDefault()
     const newComment = {
@@ -251,13 +259,20 @@ class TaskForm extends Component {
           }}
           style={{flex: 1}}
         />
-        <div style={{margin: '1rem 0'}}>
+        <div style={{margin: '1rem 0', display: 'flex'}}>
           <Button primary raised onClick={() => this.editTimeAndAsignee()}>
             Guardar
           </Button>
           <Link to={`/projects/${task.project}/tasks`}>
             <Button>Cancelar</Button>
           </Link>
+          <div style={{flex: 1}}></div>
+          <ConfirmDeleteButton button={(
+            <Button style={{color: 'var(--palette-red-500)'}}
+                    title="Borrar tarea">
+              Borrar
+            </Button>
+          )} onDelete={this.deleteTask}></ConfirmDeleteButton>
         </div>
       </section>
     );
