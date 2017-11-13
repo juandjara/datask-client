@@ -38,7 +38,9 @@ const TextArea = styled.textarea`
 const List = styled.ul`
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 1rem;
+  margin-top: 2rem;
+  opacity: ${props => props.loading ? 0.5 : 1};
 `
 const CommentBody = styled.p`
   background: white;
@@ -261,7 +263,7 @@ class TaskForm extends Component {
     );
   }
   renderCommentsForm() {
-    const {username=""} = this.props
+    const {username="", loading} = this.props
     return (
       <section style={{margin: '1rem'}} className="comments-form">
         <header>
@@ -277,8 +279,9 @@ class TaskForm extends Component {
               value={this.state.newComment}
               onChange={this.handleChange("newComment")} />
             <Button style={{marginTop: '8px'}}
+                    disabled={loading}
                     type="submit" primary raised>
-              Añadir
+              {loading ? 'Cargando...':'Añadir'}
             </Button>
           </div>          
         </form>
@@ -288,7 +291,7 @@ class TaskForm extends Component {
   renderCommentList() {
     const {comments = []} = this.props.task
     return (
-      <List style={{margin: '1rem', marginTop: '2rem'}}>
+      <List loading={this.props.loading}>
         {comments.map((comment, index) => (
           <li key={index} 
               style={{marginBottom: '2rem'}}>
