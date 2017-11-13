@@ -279,7 +279,7 @@ class TaskForm extends Component {
               value={this.state.newComment}
               onChange={this.handleChange("newComment")} />
             <Button style={{marginTop: '8px'}}
-                    disabled={loading}
+                    disabled={loading || !this.state.newComment}
                     type="submit" primary raised>
               {loading ? 'Cargando...':'Añadir'}
             </Button>
