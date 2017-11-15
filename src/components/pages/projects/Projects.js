@@ -21,7 +21,7 @@ class Projects extends Component {
     this.fetchPage(0)
   }
   fetchPage(page) {
-    this.props.fetchProjectsPage(page, this.pageSize)
+    this.props.fetchProjectsPage(page, this.pageSize, this.props.userIsAdmin)
   }
   renderListActions(project) {
     return [
@@ -42,7 +42,12 @@ class Projects extends Component {
         tooltipPosition="left"
         dialogTitle={`Borrar proyecto ${project.name}`}
         key={`delete_project_${project._id}`}
-        onDelete={() => this.props.deleteProject(project)}
+        onDelete={() => {
+          this.props.deleteProject(project)
+          .then(() => {
+            this.fetchPage(this.props.pageParams.page)
+          })
+        }}
       />
     ]
   }
@@ -86,11 +91,14 @@ class Projects extends Component {
 
 const mapStateToProps = state => {
   const {items, loading, params} = getProjectsPage(state)
+  const userRoles = state.auth.roles || []
+  const userIsAdmin = userRoles.indexOf("ADMIN") !== -1
   return {
     responsive: state.responsive,
     pageParams: params,
     projects: items,
-    loading
+    loading,
+    userIsAdmin
   }
 }
 const actions = {fetchProjectsPage, deleteProject}

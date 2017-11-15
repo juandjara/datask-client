@@ -47,6 +47,7 @@ class ProjectForm extends React.Component {
   saveProject(data) {
     data.company = data.company && data.company.value
     data.manager = data.manager && data.manager.value
+    data.status = data.status && data.status.value
     const editMode = this.isEditMode()
     return this.props.editProject(data, editMode)
   }

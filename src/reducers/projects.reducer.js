@@ -25,7 +25,10 @@ export const PROJECT_DELETE = "PROJECT_DELETE"
 
 // receives page and page size
 // and dispatches actions to fetch a page from the list of users
-export const fetchProjectsPage = paginator.actions.fetchPage
+export const fetchProjectsPage = (page, size, isAdmin) => {
+  const suffix = isAdmin ? '' : 'by_principal'
+  return paginator.actions.fetchPage(page, size, suffix)
+}
 
 // receives project id
 // and dispatches actions to fetch the project
@@ -64,16 +67,13 @@ export function editProject(project, isEditMode) {
 
 // receives project, deletes data in backend,
 // and dispatch the related actions
-export const deleteProject = project => (dispatch, getState) => {
-  const {projects} = getState()
-  const promise = axios.delete(`${endpoint}/${project._id}`).then(() => project)
-  dispatch({
+export const deleteProject = project => {
+  const promise = axios.delete(`${endpoint}/${project._id}`)
+  .then(() => project)
+  return {
     type: PROJECT_DELETE,
     payload: {data: project, promise}
-  })
-  promise.then(() => {
-    dispatch(fetchProjectsPage(projects.pagination.page))
-  })
+  }
 }
 
 // REDUCER
