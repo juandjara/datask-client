@@ -17,6 +17,9 @@ const Task = styled.li`
   border: 1px solid #ccc;
   white-space: normal;
   box-shadow: 1px 1px 2px rgba(0,0,0, .5);
+  .material-icons {
+    vertical-align: middle;
+  }
 `
 
 const TitleInput = styled.input`
@@ -54,7 +57,10 @@ export default class TaskListItem extends Component {
     }
   }
   render () {
-    const {task, editMode, onEdit} = this.props
+    const {
+      task, editMode, onEdit, 
+      hasActiveTime, onStartTime, onFinishTime
+    } = this.props
     const user = task.asignee || {name: '', surname: '', full_name: ''}
     const initials = user.name[0] + user.surname[0]
     return (
@@ -71,10 +77,15 @@ export default class TaskListItem extends Component {
           ) : (
             <TaskLink to={`/tasks/${task._id}`}>{task.name}</TaskLink>
           )}
-          <IconButton 
-            title={editMode ? 'Completar edicion':'Editar nombre de la tarea'} 
-            icon={editMode ? 'done':'edit'}
-            onClick={() => onEdit(task, !editMode)} />
+          <div>
+            <IconButton 
+              title={editMode ? 'Completar edicion':'Editar nombre de la tarea'} 
+              icon={editMode ? 'done':'edit'}
+              onClick={() => onEdit(task, !editMode)} />
+            <Link to="/" style={{color: 'inherit'}}>
+              <IconButton icon="timer" title="Tiempos de la tarea" />
+            </Link>
+          </div>
         </SpaceBetween>
         <SpaceBetween>
           <div style={{color: '#666'}} >
@@ -94,19 +105,23 @@ export default class TaskListItem extends Component {
             ) : null}
           </div>
           <div>
-            <IconButton 
-              title="Iniciar tiempo"
-              icon="timer"
-              style={{
-                color: 'var(--palette-green-500)'
-              }} />
-            <IconButton 
-              title="Parar tiempo"
-              icon="stop"
-              style={{
-                color: 'var(--palette-red-500)'
-              }} />
-              
+            {hasActiveTime ? (
+              <IconButton
+                onClick={onFinishTime}
+                title="Parar tiempo"
+                icon="stop"
+                style={{
+                  color: 'var(--palette-red-500)'
+                }} />
+            ) : (
+              <IconButton 
+                onClick={onStartTime}
+                title="Iniciar tiempo"
+                icon="play_arrow"
+                style={{
+                  color: 'var(--palette-green-500)'
+                }} />
+            )}
           </div>
         </SpaceBetween>
       </Task>

@@ -76,6 +76,15 @@ class TaskList extends Component {
       }))
     })
   }
+  handleStartTime = (task) => {
+
+  }
+  handleFinishTime = (task) => {
+
+  }
+  hasActiveTime(task) {
+    return task._id === this.props.activeTask
+  }
   render () {
     const {editModes} = this.state
     const {loading, tasks, pageParams, project, children} = this.props
@@ -117,6 +126,9 @@ class TaskList extends Component {
               task={task} 
               editMode={editModes[task._id]}
               onEdit={this.handleEditMode}
+              hasActiveTime={this.hasActiveTime(task)}
+              onStartTime={this.handleStartTime}
+              onFinishTime={this.handleFinishTime}
               key={task._id} />
           ))}
         </List>
@@ -138,6 +150,7 @@ class TaskList extends Component {
 
 export default connect(
   (state, props) => {
+    const activeTask = state.profile.activeTask
     const projectId = props.routeParams.projectId
     const project = getProjectById(state, projectId)
     const {tasks, pageParams} = taskSelectors.getByProjectId(state, projectId)
@@ -146,7 +159,8 @@ export default connect(
       project, 
       tasks, 
       pageParams, 
-      loading
+      loading,
+      activeTask
     }
   },
   (dispatch) => ({
