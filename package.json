@@ -16,6 +16,7 @@
   "dependencies": {
     "animate.css": "^3.5.2",
     "axios": "^0.16.1",
+    "moment": "^2.19.2",
     "prop-types": "^15.5.10",
     "react": "^15.4.2",
     "react-avatar": "^2.3.0",
@@ -46,7 +47,7 @@
     "toolbox": "react-toolbox-themr",
     "start": "cross-env NODE_PATH=src react-scripts start",
     "build": "cross-env NODE_PATH=src react-scripts build",
-    "test":  "cross-env NODE_PATH=src react-scripts test --env=jsdom",
+    "test": "cross-env NODE_PATH=src react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
 }

@@ -42,14 +42,12 @@ export default (state = {loading: false}, action = {}) => {
     case `${timeTypes.CREATE}_SUCCESS`:
       return {
         ...state,
-        activeTask: payload.task,
-        activeTimeStart: payload.startTime
+        activeTime: payload
       }
     case `${timeTypes.FINISH}_SUCCESS`:
       return {
         ...state,
-        activeTask: null,
-        activeTimeStart: null
+        activeTime: null
       }    
     default:
       return state;

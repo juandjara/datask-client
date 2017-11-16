@@ -106,16 +106,19 @@ export default class TaskListItem extends Component {
           </div>
           <div>
             {hasActiveTime ? (
-              <IconButton
-                onClick={onFinishTime}
+              <div>
+                <span>{this.props.time}</span>
+                <IconButton
+                onClick={() => onFinishTime(task)}
                 title="Parar tiempo"
                 icon="stop"
                 style={{
                   color: 'var(--palette-red-500)'
                 }} />
+              </div>
             ) : (
               <IconButton 
-                onClick={onStartTime}
+                onClick={() => onStartTime(task)}
                 title="Iniciar tiempo"
                 icon="play_arrow"
                 style={{

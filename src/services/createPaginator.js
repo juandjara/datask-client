@@ -63,7 +63,7 @@ export default function createPaginator(
         return {
           ...state,
           page: payload.page,
-          ids: [],
+          //ids: [],
           loading: true
         }
       case `${FETCH_PAGE}_SUCCESS`:

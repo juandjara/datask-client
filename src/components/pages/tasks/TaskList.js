@@ -6,12 +6,17 @@ import {
   actions as taskActions, 
   selectors as taskSelectors 
 } from 'reducers/tasks.reducer'
+import {
+  actions as timeActions,
+  selectors as timeSelectors
+} from 'reducers/time.reducer'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import TaskListItem from './TaskListItem'
 import ProgressBar from 'react-toolbox/lib/progress_bar/ProgressBar'
 import BackButton from 'components/shared/BackButton'
 import styled from 'styled-components'
+import moment from 'moment'
 
 const TooltipButton = Tooltip(Button);
 const List = styled.ul`
@@ -32,6 +37,18 @@ class TaskList extends Component {
     }
     if(tasks.length < 1) {
       this.fetchTasks(0)
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.activeTime && !this.timer) {
+      this.timer = setInterval(
+        () => nextProps.timeActions.tick(),
+        1000
+      )
+    }
+    if(!nextProps.activeTime) {
+      clearInterval(this.timer)
+      delete this.timer
     }
   }
   fetchTasks(page) {
@@ -77,17 +94,39 @@ class TaskList extends Component {
     })
   }
   handleStartTime = (task) => {
-
+    const time = {
+      task: task._id,
+      user: this.props.userId,
+      project: this.props.routeParams.projectId
+    }
+    this.props.timeActions.save(time, false)
   }
   handleFinishTime = (task) => {
-
+    const time = {
+      _id: this.props.activeTime._id,
+      task: task._id,
+      user: this.props.userId,
+      project: this.props.routeParams.projectId
+    }
+    this.props.timeActions.finish(time)
   }
   hasActiveTime(task) {
-    return task._id === this.props.activeTask
+    return this.props.activeTime && 
+      task._id === this.props.activeTime.task
+  }
+  getActiveTime() {
+    if(!this.props.activeTime) {
+      return 0
+    }
+    const start = new Date(this.props.activeTime.startTime)
+    const now = new Date(this.props.tick)
+    return moment.utc(new Date(now - start)).format("HH:MM:ss")
   }
   render () {
     const {editModes} = this.state
-    const {loading, tasks, pageParams, project, children} = this.props
+    const {
+      loading, tasks, pageParams, project
+    } = this.props
     return (
       <div className="list-container">
         <BackButton router={this.props.router} />
@@ -127,6 +166,7 @@ class TaskList extends Component {
               editMode={editModes[task._id]}
               onEdit={this.handleEditMode}
               hasActiveTime={this.hasActiveTime(task)}
+              time={this.getActiveTime()}
               onStartTime={this.handleStartTime}
               onFinishTime={this.handleFinishTime}
               key={task._id} />
@@ -142,7 +182,6 @@ class TaskList extends Component {
             Cargar más
           </Button>
         )}
-        {children}
       </div>
     );
   }
@@ -150,21 +189,24 @@ class TaskList extends Component {
 
 export default connect(
   (state, props) => {
-    const activeTask = state.profile.activeTask
     const projectId = props.routeParams.projectId
     const project = getProjectById(state, projectId)
     const {tasks, pageParams} = taskSelectors.getByProjectId(state, projectId)
     const loading = taskSelectors.getLoading(state)
+    const tick = timeSelectors.getTick(state)
     return {
       project, 
       tasks, 
       pageParams, 
       loading,
-      activeTask
+      activeTime: state.profile.activeTime,
+      userId: state.auth._id,
+      tick
     }
   },
   (dispatch) => ({
     ...bindActionCreators({fetchSingleProject}, dispatch),
-    taskActions: bindActionCreators(taskActions, dispatch)
+    taskActions: bindActionCreators(taskActions, dispatch),
+    timeActions: bindActionCreators(timeActions, dispatch)
   })
 )(TaskList)
