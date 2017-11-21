@@ -92,19 +92,19 @@ export const actions = {
 // SELECTORS
 export const selectors = {
   getByTaskId(state, taskId) {
-    const slice = state.tasks.byTask[taskId] || {
+    const slice = state.times.byTask[taskId] || {
       ids: [],
       params: {}
     }
-    const times = slice.ids.map(id => state.time.entities[id]).filter(Boolean)
+    const times = slice.ids.map(id => state.times.entities[id]).filter(Boolean)
     return {times, pageParams: slice.params}
   },
   getByUserId(state, userId) {
-    const slice = state.tasks.byUser[userId] || {
+    const slice = state.times.byUser[userId] || {
       ids: [],
       params: {}
     }
-    const times = slice.ids.map(id => state.time.entities[id]).filter(Boolean)
+    const times = slice.ids.map(id => state.times.entities[id]).filter(Boolean)
     return {times, pageParams: slice.params}
   },
   getOne(state, taskId) {
@@ -183,7 +183,7 @@ const byTaskReducer = (state = {}, action = {}) => {
   if(type === ok(types.FETCH_BY_TASK)) {
     const {page, last, docs} = payload
     const newIds = docs.map(time => time._id)    
-    const oldSlice = state[meta.taskID] || {ids: [], params: {}}
+    const oldSlice = state[meta.taskId] || {ids: [], params: {}}
     return {
       ...state,
       [meta.taskId]: {
@@ -198,7 +198,7 @@ const byTaskReducer = (state = {}, action = {}) => {
       ...state,
       [payload.task]: {
         ...oldSlice,
-        ids: oldSlice.ids.concat(payload._id)
+        ids: [payload._id].concat(oldSlice.ids)
       }
     }
   }

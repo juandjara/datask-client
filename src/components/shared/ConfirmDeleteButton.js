@@ -3,8 +3,15 @@ import Dialog from 'react-toolbox/lib/dialog/Dialog'
 import Tooltip from 'react-toolbox/lib/tooltip'
 import Icon from 'react-toolbox/lib/font_icon/FontIcon'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
-const TooltipIcon = Tooltip(Icon);
+const TooltipIcon = styled(Tooltip(Icon))`
+  cursor: pointer;
+  color: #757575;
+  &:hover {
+    color: tomato;
+  }
+`
 
 class ConfirmDeleteButton extends Component {
   static propTypes = {
@@ -30,7 +37,6 @@ class ConfirmDeleteButton extends Component {
         tooltip={tooltip || "Borrar"}
         tooltipPosition={tooltipPosition}
         value="clear"
-        style={{cursor: 'pointer', color: '#757575'}}
         onClick={this.open}
       />
     )

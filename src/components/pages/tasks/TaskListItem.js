@@ -13,7 +13,7 @@ const SpaceBetween = styled.div`
 const Task = styled.li`
   padding: .5rem;
   margin: .8rem .5rem;
-  background: white; 
+  background: rgb(250,250,250); 
   border: 1px solid #ccc;
   white-space: normal;
   box-shadow: 1px 1px 2px rgba(0,0,0, .5);
@@ -82,7 +82,7 @@ export default class TaskListItem extends Component {
               title={editMode ? 'Completar edicion':'Editar nombre de la tarea'} 
               icon={editMode ? 'done':'edit'}
               onClick={() => onEdit(task, !editMode)} />
-            <Link to="/" style={{color: 'inherit'}}>
+            <Link to={`/tasks/${task._id}/times`} style={{color: 'inherit'}}>
               <IconButton icon="timer" title="Tiempos de la tarea" />
             </Link>
           </div>

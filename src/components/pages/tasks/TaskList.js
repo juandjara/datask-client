@@ -39,18 +39,6 @@ class TaskList extends Component {
       this.fetchTasks(0)
     }
   }
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.activeTime && !this.timer) {
-      this.timer = setInterval(
-        () => nextProps.timeActions.tick(),
-        1000
-      )
-    }
-    if(!nextProps.activeTime) {
-      clearInterval(this.timer)
-      delete this.timer
-    }
-  }
   fetchTasks(page) {
     const id = this.props.routeParams.projectId    
     this.props.taskActions.fetchByProject(id, {page})
@@ -95,6 +83,7 @@ class TaskList extends Component {
   }
   handleStartTime = (task) => {
     const time = {
+      startTime: new Date(),
       task: task._id,
       user: this.props.userId,
       project: this.props.routeParams.projectId
@@ -120,7 +109,7 @@ class TaskList extends Component {
     }
     const start = new Date(this.props.activeTime.startTime)
     const now = new Date(this.props.tick)
-    return moment.utc(new Date(now - start)).format("HH:MM:ss")
+    return moment.utc(new Date(now - start)).format("HH:mm:ss")
   }
   render () {
     const {editModes} = this.state

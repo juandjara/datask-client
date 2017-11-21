@@ -21,6 +21,7 @@ if (process.env.NODE_ENV !== "production") {
   
   const createLogger = require('redux-logger');
   const logger = createLogger({
+    predicate: (getState, action) => action.type !== 'TIME_TICK',
     collapsed: (getState, action, logEntry) => !logEntry.error
   });
   middlewares.push(logger);
