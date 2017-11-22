@@ -98,6 +98,30 @@ export class TaskTimeList extends Component {
     }
     return new Date(dateStr).toLocaleString();
   }
+  renderTimeActions(time) {
+    if(time.user._id !== this.props.userId) {
+      return null
+    }
+    return time.endTime ? (
+      <ConfirmDeleteButton
+        tooltip="Borrar tiempo"
+        tooltipPosition="left"
+        dialogTitle={`Borrar tiempo`}
+        onDelete={() => {
+          this.deleteTime(time)
+        }}
+      />
+    ) : (
+      <IconButton
+        onClick={() => this.finishTime(time)}
+        title="Parar tiempo"
+        icon="stop"
+        style={{
+          color: 'var(--palette-red-500)'
+        }} 
+      />
+    )
+  }
   render() {
     const {task = {}, times, loading, pageParams} = this.props
     return (
@@ -139,25 +163,7 @@ export class TaskTimeList extends Component {
               <p style={{margin: '.5rem 1rem'}}>
                 {time.user.full_name}
               </p>
-              {time.endTime ? (
-                <ConfirmDeleteButton
-                  tooltip="Borrar tiempo"
-                  tooltipPosition="left"
-                  dialogTitle={`Borrar tiempo`}
-                  onDelete={() => {
-                    this.deleteTime(time)
-                  }}
-                />
-              ) : (
-                <IconButton
-                  onClick={() => this.finishTime(time)}
-                  title="Parar tiempo"
-                  icon="stop"
-                  style={{
-                    color: 'var(--palette-red-500)'
-                  }} 
-                />
-              )}
+              {this.renderTimeActions(time)}
             </li>
           ))}
         </List>
