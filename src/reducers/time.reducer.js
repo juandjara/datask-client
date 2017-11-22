@@ -182,8 +182,9 @@ const byTaskReducer = (state = {}, action = {}) => {
   const {type = "", payload = {}, meta = {}} = action
   if(type === ok(types.FETCH_BY_TASK)) {
     const {page, last, docs} = payload
-    const newIds = docs.map(time => time._id)    
     const oldSlice = state[meta.taskId] || {ids: [], params: {}}
+    const newIds = docs.map(time => time._id)
+      .filter(id => oldSlice.ids.indexOf(id) === -1)
     return {
       ...state,
       [meta.taskId]: {
@@ -208,8 +209,9 @@ const byUserReducer = (state = {}, action = {}) => {
   const {type = "", payload = {}, meta = {}} = action
   if(type === ok(types.FETCH_BY_USER)) {
     const {page, last, docs} = payload
-    const newIds = docs.map(time => time._id)    
     const oldSlice = state[meta.userId] || {ids: [], params: {}}
+    const newIds = docs.map(time => time._id)
+      .filter(id => oldSlice.ids.indexOf(id) === -1)
     return {
       ...state,
       [meta.userId]: {

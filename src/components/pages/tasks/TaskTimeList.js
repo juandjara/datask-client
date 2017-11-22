@@ -105,7 +105,7 @@ export class TaskTimeList extends Component {
         <BackButton router={this.props.router} />
         <div className="list-title-container">
           <h2 className="list-title">
-            {task.name}
+            {task.name && `Tiempos para ${task.name}`}
           </h2>
           {loading && (
             <div style={{display: 'flex', alignItems: 'center'}}>
@@ -119,7 +119,7 @@ export class TaskTimeList extends Component {
         <TooltipButton
           icon="add"
           floating accent
-          tooltip="Nueva tarea"
+          tooltip="Nuevo tiempo"
           tooltipPosition="left"
           className="list-corner-fab"
           onClick={this.createTime}
