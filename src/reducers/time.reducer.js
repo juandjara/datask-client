@@ -63,7 +63,10 @@ export const actions = {
   },
   finish(time) {
     const url = `${endpoint}/${time._id}/finish`
-    const promise = axios.post(url, time)
+    const promise = axios.post(url, {
+      ...time,
+      user: time.user._id
+    })
     .then(res => res.data)
     return {
       type: types.FINISH,
@@ -172,11 +175,18 @@ const entitiesReducer = (state = {}, action = {}) => {
       }
     case ok(types.CREATE):
     case ok(types.EDIT):
-    case ok(types.FINISH):
       return {
         ...state,
         [payload._id]: payload
       }
+    case ok(types.FINISH):
+      return {
+        ...state,
+        [payload._id]: {
+          ...state[payload._id],
+          endTime: payload.endTime
+        }
+      }    
     case ok(types.DELETE):
       const copy = {...state}
       delete copy[meta._id]
