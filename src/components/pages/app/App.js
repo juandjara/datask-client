@@ -22,7 +22,7 @@ export class App extends Component {
       1000
     )
   }
-  componentWillUpdate(nextProps, nextState) {
+  componentWillUnmount() {
     clearInterval(this.timer)
   }
 
