@@ -340,7 +340,22 @@ class TaskForm extends Component {
     const {loading, task} = this.props
     return (
       <div>
-        <BackButton style={{margin: '.5em'}} router={this.props.router} />
+        <SpaceBetween>
+          <BackButton 
+            style={{margin: '.5em'}} 
+            router={this.props.router} />
+          {task && (
+            <Link to={`/tasks/${task._id}/times`}>
+              <Button style={{
+                padding: '0 5px',
+                marginRight: '5px', 
+                minWidth: 0, 
+                textAlign: 'left', 
+                textTransform: 'none'
+              }} icon="timer">Tiempos</Button>
+            </Link>
+          )}
+        </SpaceBetween>
         {loading && (
           <div style={{margin: '1rem', display: 'flex', alignItems: 'center'}}>
             <ProgressBar type='circular' mode='indeterminate' />
