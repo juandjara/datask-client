@@ -31,12 +31,14 @@ const TitleInput = styled.input`
   background: white;
   border: 1px solid #ccc;
 `
-const TaskLink = styled(Link)`
+const EditContainer = styled.div`
   flex: 1;
-  text-decoration: none;
-  color: inherit;
-  margin: .5rem 0;
-  padding: .5rem 2px;
+  .edit-button {
+    visibility: ${props => props.editMode ? 'visible':'hidden'}
+  }
+  &:hover .edit-button {
+    visibility: visible;
+  }
 `
 
 export default class TaskListItem extends Component {
@@ -66,22 +68,31 @@ export default class TaskListItem extends Component {
     return (
       <Task>
         <SpaceBetween>
-          {editMode ? (
-            <TitleInput
-              onKeyDown={this.handleTitleKeyDown}
-              innerRef={node => {this.titleInputNode = node}} 
-              autoFocus
-              type="text" 
-              defaultValue={task.name} 
-              onBlur={this.handleTitleBlur} />
-          ) : (
-            <TaskLink to={`/tasks/${task._id}`}>{task.name}</TaskLink>
-          )}
-          <div>
-            <IconButton 
+          <EditContainer editMode={editMode}>
+            {editMode ? (
+              <TitleInput
+                onKeyDown={this.handleTitleKeyDown}
+                innerRef={node => {this.titleInputNode = node}} 
+                autoFocus
+                type="text" 
+                defaultValue={task.name} 
+                onBlur={this.handleTitleBlur} />
+            ) : (
+              <span style={{marginRight: '.5rem'}}>
+                {task.name}
+              </span>
+            )}
+            <IconButton
+              className="edit-button"
+              style={{marginBottom: 8}}
               title={editMode ? 'Completar edicion':'Editar nombre de la tarea'} 
               icon={editMode ? 'done':'edit'}
               onClick={() => onEdit(task, !editMode)} />
+          </EditContainer>
+          <div>
+            <Link to={`/tasks/${task._id}`} style={{color: 'inherit'}}>
+              <IconButton icon="edit" title="Editar tarea" />
+            </Link>
             <Link to={`/tasks/${task._id}/times`} style={{color: 'inherit'}}>
               <IconButton icon="timer" title="Tiempos de la tarea" />
             </Link>
