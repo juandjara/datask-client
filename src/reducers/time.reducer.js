@@ -149,8 +149,15 @@ const ok = type => `${type}_SUCCESS`
 
 const loadingReducer = (state = false, action = {}) => {
   const {type = ""} = action
-  if(type.indexOf("TIME") !== -1) {
-    return type.indexOf("LOADING") !== -1
+  const hasTime = type.indexOf("TIME") !== -1
+  const hasLoading = type.indexOf("LOADING") !== -1
+  const hasSuccess = type.indexOf("SUCCESS") !== -1
+  const hasError = type.indexOf("ERROR") !== -1
+  if(hasTime && hasLoading) {
+    return true
+  }
+  if(hasTime && (hasSuccess || hasError)) {
+    return false
   }
   return state
 }
