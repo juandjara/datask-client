@@ -99,7 +99,7 @@ export class TaskTimeList extends Component {
     return new Date(dateStr).toLocaleString();
   }
   renderTimeActions(time) {
-    if(time.user._id !== this.props.userId) {
+    if(!this.props.isAdmin && time.user._id !== this.props.userId) {
       return null
     }
     return time.endTime ? (
@@ -133,7 +133,7 @@ export class TaskTimeList extends Component {
           </h2>
           {loading && (
             <div style={{display: 'flex', alignItems: 'center'}}>
-              <ProgressBar type='circular' mode='indeterminate' />
+              {/* <ProgressBar type='circular' mode='indeterminate' /> */}
               <p className="color-primary" style={{marginLeft: '1rem'}}>
                 Cargando ...
               </p>
@@ -190,8 +190,9 @@ export default connect(
     const tick = timeSelectors.getTick(state)
     const loading = taskSelectors.getLoading(state) || 
                     timeSelectors.getLoading(state)
+    const isAdmin = state.auth.roles.indexOf("ADMIN") !== -1
     const userId = state.auth._id;
-    return {task, tick, times, pageParams, loading, userId}
+    return {task, tick, times, pageParams, loading, userId, isAdmin}
   },
   dispatch => ({
     taskActions: bindActionCreators(taskActions, dispatch),
