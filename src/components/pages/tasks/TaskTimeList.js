@@ -90,8 +90,10 @@ export class TaskTimeList extends Component {
   editTime(time) {
     time.startTime.setHours(time.startHour)
     time.startTime.setMinutes(time.startMinutes)
-    time.endTime.setHours(time.endHour)
-    time.endTime.setMinutes(time.endMinutes)
+    if(time.endTime) {
+      time.endTime.setHours(time.endHour)
+      time.endTime.setMinutes(time.endMinutes)
+    }
     this.props.timeActions.save(time, true)
     .then(() => {
       this.fetchTimes(this.props.pageParams.page)
@@ -162,16 +164,16 @@ export class TaskTimeList extends Component {
     this.setState({editingTime: null})
   }
   openEditDialog(time) {
-    const start = new Date(time.startTime)
-    const end   = new Date(time.endTime)
+    const start = time.startTime && new Date(time.startTime)
+    const end   = time.endTime && new Date(time.endTime)
     this.setState({editingTime: {
       ...time,
       startTime: start,
       startHour: start.getHours(),
       startMinutes: start.getMinutes(),
       endTime: end,
-      endHour: end.getHours(),
-      endMinutes: end.getMinutes()
+      endHour: end && end.getHours(),
+      endMinutes: end && end.getMinutes()
     }})
   }
   handleEditChange = name => value => {
@@ -213,7 +215,7 @@ export class TaskTimeList extends Component {
             value={time.startMinutes || 0}
             label="Minuto inicio" />
         </TimeGroup>
-        <TimeGroup>
+        {time.endTime && (<TimeGroup>
           <DatePicker
             locale="es"
             autoOk={true}
@@ -230,7 +232,7 @@ export class TaskTimeList extends Component {
             onChange={this.handleEditChange("endMinutes")} 
             value={time.endMinutes || 0}
             label="Minuto fin" />
-        </TimeGroup>
+        </TimeGroup>)}
       </Dialog>
     )
   }
