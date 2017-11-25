@@ -17,8 +17,12 @@ import styled from 'styled-components'
 import moment from 'moment'
 import ConfirmDeleteButton from 'components/shared/ConfirmDeleteButton'
 import IconButton from 'react-toolbox/lib/button/IconButton'
+import Dialog from 'react-toolbox/lib/dialog/Dialog'
+import DatePicker from 'react-toolbox/lib/date_picker/DatePicker';
+import Input from 'react-toolbox/lib/input/Input';
 
 const TooltipButton = Tooltip(Button);
+const TooltipIconButton = Tooltip(IconButton);
 const List = styled.ul`
   list-style: none;
   padding: 0;
@@ -31,6 +35,7 @@ const List = styled.ul`
     border-bottom: 1px solid #ccc;
     .delete-button {
       margin: 6px;
+      height: 24px;
     }
   }
 `
@@ -41,22 +46,29 @@ const Duration = styled.p`
 const Time = styled.div`
   color: #666;
 `
+const TimeGroup = styled.div`
+  display: flex;
+  div {
+    flex: 1;
+    margin-right: 1em;
+  }
+`
 
 export class TaskTimeList extends Component {
   pageSize = 10;
+  state = {
+    editingTime: null
+  }
   componentDidMount() {
     const {
       task, 
-      times, 
       taskActions, 
       routeParams
     } = this.props
     if(!task) {
       taskActions.fetchOne(routeParams._id)
     }
-    if(times.length < 1) {
-      this.fetchTimes(0)
-    }
+    this.fetchTimes(0)
   }
   fetchTimes(page) {
     const id = this.props.routeParams._id
@@ -75,6 +87,17 @@ export class TaskTimeList extends Component {
       this.fetchTimes(this.props.pageParams.page)
     })
   }
+  editTime(time) {
+    time.startTime.setHours(time.startHour)
+    time.startTime.setMinutes(time.startMinutes)
+    time.endTime.setHours(time.endHour)
+    time.endTime.setMinutes(time.endMinutes)
+    this.props.timeActions.save(time, true)
+    .then(() => {
+      this.fetchTimes(this.props.pageParams.page)
+    })
+  }
+
   finishTime = (time) => {
     this.props.timeActions.finish(time)
   }
@@ -102,8 +125,9 @@ export class TaskTimeList extends Component {
     if(!this.props.isAdmin && time.user._id !== this.props.userId) {
       return null
     }
-    return time.endTime ? (
+    const editButton = time.endTime ? (
       <ConfirmDeleteButton
+        key="delete-time"
         tooltip="Borrar tiempo"
         tooltipPosition="left"
         dialogTitle={`Borrar tiempo`}
@@ -113,6 +137,7 @@ export class TaskTimeList extends Component {
       />
     ) : (
       <IconButton
+        key="stop-time"
         onClick={() => this.finishTime(time)}
         title="Parar tiempo"
         icon="stop"
@@ -120,6 +145,93 @@ export class TaskTimeList extends Component {
           color: 'var(--palette-red-500)'
         }} 
       />
+    )
+    return [
+      <TooltipIconButton
+        key="edit-time"
+        tooltip="Editar tiempo"
+        tooltipPosition="left"
+        icon="edit"
+        style={{color: '#666'}}
+        onClick={() => this.openEditDialog(time)}
+      />,
+      editButton
+    ]
+  }
+  closeEditDialog() {
+    this.setState({editingTime: null})
+  }
+  openEditDialog(time) {
+    const start = new Date(time.startTime)
+    const end   = new Date(time.endTime)
+    this.setState({editingTime: {
+      ...time,
+      startTime: start,
+      startHour: start.getHours(),
+      startMinutes: start.getMinutes(),
+      endTime: end,
+      endHour: end.getHours(),
+      endMinutes: end.getMinutes()
+    }})
+  }
+  handleEditChange = name => value => {
+    this.setState({editingTime: {
+      ...this.state.editingTime,
+      [name]: value 
+    }})
+  }
+  renderEditDialog() {
+    const time = this.state.editingTime || {}
+    return (
+      <Dialog 
+        active={!!time.startTime}
+        onEscKeyDown={() => this.closeEditDialog()}
+        onOverlayClick={() => this.closeEditDialog()}
+        title="Editar registro de tiempo"
+        actions={[
+          {label: 'Guardar', raised: true, primary: true, onClick: () => {
+            this.editTime(time)
+            this.closeEditDialog()
+          }},
+          {label: 'Cancelar', onClick: () => this.closeEditDialog()}
+        ]}>
+        <TimeGroup>
+          <DatePicker 
+            locale="es"
+            autoOk={true}
+            onChange={this.handleEditChange("startTime")} 
+            value={time.startTime}
+            label="Fecha inicio"/>
+          <Input
+            type="number" min="0" max="23"
+            onChange={this.handleEditChange("startHour")} 
+            value={time.startHour || 0}
+            label="Hora inicio" />
+          <Input
+            type="number" min="0" max="59"
+            onChange={this.handleEditChange("startMinutes")} 
+            value={time.startMinutes || 0}
+            label="Minuto inicio" />
+        </TimeGroup>
+        <TimeGroup>
+          <DatePicker
+            locale="es"
+            autoOk={true}
+            label="Fecha fin"
+            onChange={this.handleEditChange("endTime")}
+            value={time.endTime} />
+          <Input
+            type="number" min="0" max="23"
+            onChange={this.handleEditChange("endHour")} 
+            value={time.endHour || 0}
+            label="Hora fin" />
+          <Input
+            type="number" min="0" max="59"
+            onChange={this.handleEditChange("endMinutes")} 
+            value={time.endMinutes || 0}
+            label="Minuto fin" />
+        </TimeGroup>
+      </Dialog>
     )
   }
   render() {
@@ -133,12 +245,19 @@ export class TaskTimeList extends Component {
           </h2>
           {loading && (
             <div style={{display: 'flex', alignItems: 'center'}}>
-              {/* <ProgressBar type='circular' mode='indeterminate' /> */}
+              <ProgressBar type='circular' mode='indeterminate' />
               <p className="color-primary" style={{marginLeft: '1rem'}}>
                 Cargando ...
               </p>
             </div>
           )}
+          {!loading && times.length < 1 ? (
+            <p style={{textAlign: 'center', marginTop: '2rem'}}>
+              No hay ningun tiempo registrado para este tarea todavía.
+              <br/>
+              Puedes crear uno con el boton redondo naranja de arriba 
+            </p>
+          ) : null}
         </div>
         <TooltipButton
           icon="add"
@@ -148,7 +267,7 @@ export class TaskTimeList extends Component {
           className="list-corner-fab"
           onClick={this.createTime}
         />
-        <List>
+        <List style={{marginBottom: '2rem'}}>
           {times.map(time => (
             <li key={time._id}>
               <div>
@@ -172,11 +291,12 @@ export class TaskTimeList extends Component {
             icon="refresh" 
             raised primary
             disabled={loading}
-            style={{margin: '2em 0'}}
+            style={{margin: '1rem 0'}}
             onClick={() => this.fetchTimes(pageParams.page + 1)}>
             {loading ? 'Cargando...' : 'Cargar más'}
           </Button>
         )}
+        {this.renderEditDialog()}
       </div>
     );
   }
