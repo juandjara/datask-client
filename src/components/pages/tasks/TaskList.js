@@ -107,9 +107,14 @@ class TaskList extends Component {
     if(!this.props.activeTime) {
       return 0
     }
-    const start = new Date(this.props.activeTime.startTime)
-    const now = new Date(this.props.tick)
-    return moment.utc(new Date(now - start)).format("HH:mm:ss")
+    const start = moment(this.props.activeTime.startTime)
+    const end = moment(this.props.tick)
+    const duration = moment.duration(end.diff(start))
+    const hours = parseInt(duration.asHours(), 10)
+    const formatLess10 = n => n < 10 ? '0'+n : n
+    const mins = formatLess10(duration.minutes())
+    const secs = formatLess10(duration.seconds())
+    return `${hours}:${mins}:${secs}`
   }
   render () {
     const {editModes} = this.state
