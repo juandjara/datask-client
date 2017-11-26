@@ -12,7 +12,10 @@ import ShowOnMedia from 'components/shared/ShowOnMedia'
 import {TaskQuickAccess} from 'components/shared/taskQuickAccess'
 
 import {fetchProfile} from 'reducers/profile.reducer'
-import {actions as timeActions} from 'reducers/time.reducer'
+import {
+  actions as timeActions,
+  selectors as timeSelectors
+} from 'reducers/time.reducer'
 import {toggleSidenavOpen} from 'reducers/sidenav.reducer'
 import {logout} from 'reducers/auth.reducer'
 
@@ -22,9 +25,10 @@ export class App extends Component {
   componentDidMount() {
     this.props.actions.fetchProfile()
     this.timer = setInterval(
-      () => this.props.actions.tick(),
+      () => this.props.timeActions.tick(),
       1000
     )
+    this.props.timeActions.fetchByUser(this.props.userId, {page: 0})
   }
   componentWillUnmount() {
     clearInterval(this.timer)
@@ -58,16 +62,18 @@ export class App extends Component {
   }
 }
 
-const mapStateToProps = ({sidenav, profile}) => ({
-  sidenav,
-  profile
+const mapStateToProps = (state) => ({
+  userId: state.auth._id,
+  sidenav: state.sidenav,
+  profile: state.profile,
+  times: timeSelectors.getByUserId(state, state.auth._id).times
 })
 const mapDispatchToProps = dispatch => ({
+  timeActions: bindActionCreators(timeActions, dispatch),
   actions: bindActionCreators({
     logout, 
     fetchProfile, 
     toggleSidenavOpen, 
-    ...timeActions
   }, dispatch)
 })
 
