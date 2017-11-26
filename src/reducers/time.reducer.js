@@ -238,12 +238,12 @@ const byUserReducer = (state = {}, action = {}) => {
     }    
   }
   if(type === ok(types.CREATE)) {
-    const oldSlice = state[payload.task] || {ids: [], params: {}}
+    const oldSlice = state[payload.user] || {ids: [], params: {}}
     return {
       ...state,
       [payload.task]: {
         ...oldSlice,
-        ids: oldSlice.ids.concat(payload._id)
+        ids: [payload._id].concat(oldSlice.ids)
       }
     }
   }
