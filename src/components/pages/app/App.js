@@ -66,7 +66,7 @@ const mapStateToProps = (state) => ({
   userId: state.auth._id,
   sidenav: state.sidenav,
   profile: state.profile,
-  times: timeSelectors.getByUserId(state, state.auth._id).times
+  times: timeSelectors.getByUserId(state, state.auth._id)
 })
 const mapDispatchToProps = dispatch => ({
   timeActions: bindActionCreators(timeActions, dispatch),

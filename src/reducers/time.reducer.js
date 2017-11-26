@@ -103,12 +103,9 @@ export const selectors = {
     return {times, pageParams: slice.params}
   },
   getByUserId(state, userId) {
-    const slice = state.times.byUser[userId] || {
-      ids: [],
-      params: {}
-    }
-    const times = slice.ids.map(id => state.times.entities[id]).filter(Boolean)
-    return {times, pageParams: slice.params}
+    const slice = state.times.byUser[userId] || []
+    return slice.map(id => state.times.entities[id])
+                .filter(Boolean)
   },
   getOne(state, taskId) {
     return state.times.entities[taskId]
@@ -168,10 +165,14 @@ const entitiesReducer = (state = {}, action = {}) => {
   const {type = "", payload = {}, meta = {}} = action
   switch(type) {
     case ok(types.FETCH_BY_TASK):
-    case ok(types.FETCH_BY_USER):
       return {
         ...state,
         ...normalizeArrayByKey(payload.docs)
+      }
+    case ok(types.FETCH_BY_USER):
+      return {
+        ...state,
+        ...normalizeArrayByKey(payload)
       }
     case ok(types.CREATE):
     case ok(types.EDIT):
@@ -225,26 +226,17 @@ const byTaskReducer = (state = {}, action = {}) => {
 const byUserReducer = (state = {}, action = {}) => {
   const {type = "", payload = {}, meta = {}} = action
   if(type === ok(types.FETCH_BY_USER)) {
-    const {page, last, docs} = payload
-    const oldSlice = state[meta.userId] || {ids: [], params: {}}
-    const newIds = docs.map(time => time._id)
-      .filter(id => oldSlice.ids.indexOf(id) === -1)
+    const newIds = payload.map(time => time._id)
     return {
       ...state,
-      [meta.userId]: {
-        ids: oldSlice.ids.concat(newIds),
-        params: {page, last}
-      }
+      [meta.userId]: newIds
     }    
   }
   if(type === ok(types.CREATE)) {
-    const oldSlice = state[payload.user] || {ids: [], params: {}}
+    const oldSlice = state[payload.user] || []
     return {
       ...state,
-      [payload.task]: {
-        ...oldSlice,
-        ids: [payload._id].concat(oldSlice.ids)
-      }
+      [payload.task]: [payload._id].concat(oldSlice)
     }
   }
   return state
