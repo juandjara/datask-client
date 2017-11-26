@@ -121,7 +121,7 @@ export class TaskTimeList extends Component {
     if(!dateStr) {
       return 'Ahora'
     }
-    return new Date(dateStr).toLocaleString();
+    return moment(dateStr).format('DD/MM/YYYY HH:mm');
   }
   renderTimeActions(time) {
     if(!this.props.isAdmin && time.user._id !== this.props.userId) {
