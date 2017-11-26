@@ -10,8 +10,12 @@ import {Header} from 'components/shared/header'
 import {Sidenav} from 'components/shared/sidenav';
 import ShowOnMedia from 'components/shared/ShowOnMedia'
 import {TaskQuickAccess} from 'components/shared/taskQuickAccess'
+
 import {fetchProfile} from 'reducers/profile.reducer'
 import {actions as timeActions} from 'reducers/time.reducer'
+import {toggleSidenavOpen} from 'reducers/sidenav.reducer'
+import {logout} from 'reducers/auth.reducer'
+
 import './App.css';
 
 export class App extends Component {
@@ -27,7 +31,7 @@ export class App extends Component {
   }
 
   render() {
-    const { sidenav, children } = this.props;
+    const { profile, sidenav, actions, children } = this.props;
     const containerStyle = {
       minHeight: '100vh'
     };
@@ -36,10 +40,14 @@ export class App extends Component {
     }
     return (
       <Layout>
-        <Sidenav />
+        <Sidenav
+          actions={actions}
+          profile={profile}
+          sidenav={sidenav}
+        />
         <Panel style={containerStyle}>
           <ToastContainer autoClose={3000} position="bottom-right" />
-          <Header />
+          <Header toggleSidenav={actions.toggleSidenavOpen} />
           <ShowOnMedia mediaKey="small">
             <TaskQuickAccess />
           </ShowOnMedia>
@@ -50,9 +58,17 @@ export class App extends Component {
   }
 }
 
-const mapStateToProps = ({sidenav}) => ({sidenav})
+const mapStateToProps = ({sidenav, profile}) => ({
+  sidenav,
+  profile
+})
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators({fetchProfile, ...timeActions}, dispatch)
+  actions: bindActionCreators({
+    logout, 
+    fetchProfile, 
+    toggleSidenavOpen, 
+    ...timeActions
+  }, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

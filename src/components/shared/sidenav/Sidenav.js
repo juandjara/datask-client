@@ -1,35 +1,33 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import NavDrawer from 'react-toolbox/lib/layout/NavDrawer'
 import IconButton from 'react-toolbox/lib/button/IconButton'
-
 import {TaskQuickAccess} from '../taskQuickAccess'
 import {TimeCounters} from '../timeCounters'
 import Avatar from '../Avatar'
 import Flex from '../Flex'
 import MenuLink from './MenuLink'
-import {logout} from 'reducers/auth.reducer'
-import {toggleSidenavOpen} from 'reducers/sidenav.reducer'
+
 import './Sidenav.css'
 
 class Sidenav extends Component {
   state = {profileMenuActive: false}
   toggleProfileMenu = () => {
-    this.setState(({profileMenuActive}) => ({profileMenuActive: !profileMenuActive}))
+    this.setState(({profileMenuActive}) => ({
+      profileMenuActive: !profileMenuActive
+    }))
   }
   logout = () => {
     this.props.actions.logout()
   }
   render () {
-    const {open, pinned, profile, actions} = this.props;
+    const {sidenav, profile, actions} = this.props;
     const {profileMenuActive} = this.state;
     return (
       <NavDrawer
         permanentAt="md"
         className="sidenav"
-        active={open}
-        pinned={pinned}
+        active={sidenav.open}
+        pinned={sidenav.pinned}
         onOverlayClick={actions.toggleSidenavOpen}>
         <Flex align="center">
           <Avatar />
@@ -40,13 +38,18 @@ class Sidenav extends Component {
             onClick={this.toggleProfileMenu} 
           />
         </Flex>
-        <div className="sidenav-links" style={{
-          display: profileMenuActive? 'block':'none'
-        }}>
-          <MenuLink to="/profile" icon="account_circle" text="Mi cuenta" />
-          {/* <MenuLink to="/prefs" icon="settings" text="Preferencias" /> */}
-          <MenuLink onClick={this.logout} icon="clear" text="Cerrar sesión" />
-        </div>
+        {profileMenuActive && (
+          <div className="sidenav-links">
+            <MenuLink 
+              to="/profile"
+              icon="account_circle" 
+              text="Mi cuenta" />
+            <MenuLink 
+              onClick={this.logout} 
+              icon="clear" 
+              text="Cerrar sesión" />
+          </div>
+        )}
         <TimeCounters style={{height: 'auto'}} />
         <TaskQuickAccess style={{maxHeight: '140px'}} />
         <div className="sidenav-links">
@@ -60,11 +63,4 @@ class Sidenav extends Component {
   }
 }
 
-const mapStateToProps = ({sidenav, profile, responsive}) => ({
-  ...sidenav, responsive, profile
-})
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators({ logout, toggleSidenavOpen }, dispatch)
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Sidenav)
+export default Sidenav
