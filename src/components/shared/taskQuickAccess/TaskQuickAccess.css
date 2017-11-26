@@ -20,8 +20,7 @@
 
 .task-card-text {
   max-width: 190px;
-  padding-left: 8px;
-  padding-right: 4px;
+  padding: 2px 8px;
 }
 
 .task-cards-star {
@@ -34,8 +33,6 @@
   opacity: .5;
   color: #444;
   padding: 4px;
-  font-size: 1rem;
-  height: 25px;
 }
 /*
 .task-card:hover .task-card-button {
@@ -53,15 +50,8 @@
 .task-card-button:focus .task-card-icon {
   opacity: 1;
 }
-.task-card-button .play {
-  font-size: 20px;
-  padding: 2px;
-}
 .task-card-button:hover .play {
   color: var(--palette-green-500);
-}
-.task-card-button .clear{
-  padding-right: 2px;
 }
 .task-card-button:hover .clear {
   color: tomato;

@@ -1,5 +1,6 @@
 import axios from 'services/axiosWrapper'
 import { combineReducers } from 'redux'
+import { uniqBy } from 'lodash'
 
 const endpoint = '/time'
 
@@ -104,8 +105,9 @@ export const selectors = {
   },
   getByUserId(state, userId) {
     const slice = state.times.byUser[userId] || []
-    return slice.map(id => state.times.entities[id])
+    const times = slice.map(id => state.times.entities[id])
                 .filter(Boolean)
+    return uniqBy(times, time => time.task._id)
   },
   getOne(state, taskId) {
     return state.times.entities[taskId]
@@ -236,7 +238,7 @@ const byUserReducer = (state = {}, action = {}) => {
     const oldSlice = state[payload.user] || []
     return {
       ...state,
-      [payload.task]: [payload._id].concat(oldSlice)
+      [payload.user]: [payload._id].concat(oldSlice)
     }
   }
   return state

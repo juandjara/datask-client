@@ -35,7 +35,7 @@ export class App extends Component {
   }
 
   render() {
-    const { profile, sidenav, actions, children } = this.props;
+    const { times, profile, sidenav, actions, children } = this.props;
     const containerStyle = {
       minHeight: '100vh'
     };
@@ -48,12 +48,13 @@ export class App extends Component {
           actions={actions}
           profile={profile}
           sidenav={sidenav}
+          times={times}
         />
         <Panel style={containerStyle}>
           <ToastContainer autoClose={3000} position="bottom-right" />
           <Header toggleSidenav={actions.toggleSidenavOpen} />
           <ShowOnMedia mediaKey="small">
-            <TaskQuickAccess />
+            <TaskQuickAccess times={times} />
           </ShowOnMedia>
           <main className="main">{children}</main>
         </Panel>
