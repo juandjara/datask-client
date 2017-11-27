@@ -66,7 +66,7 @@ export const actions = {
     const url = `${endpoint}/${time._id}/finish`
     const promise = axios.post(url, {
       ...time,
-      user: time.user._id
+      user: time.user._id || time.user
     })
     .then(res => res.data)
     return {
