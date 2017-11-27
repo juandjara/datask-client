@@ -8,6 +8,7 @@ const endpoint = '/time'
 export const types = {
   FETCH_BY_TASK: 'TIME_FETCH_BY_TASK',
   FETCH_BY_USER: 'TIME_FETCH_BY_USER',
+  FETCH_ONE: 'TIME_FETCH_ONE',
   CREATE: 'TIME_CREATE',
   FINISH: 'TIME_FINISH',
   EDIT: 'TIME_EDIT',
@@ -47,6 +48,12 @@ export const actions = {
       meta: {_id: timeId}
     }
   },
+  saveAndFetch: (time, editMode) => (dispatch) => {
+    dispatch(actions.save(time, editMode))
+    .then(res => {
+      return dispatch(actions.fetchOne(res.value._id))
+    })
+  },
   save: (time, editMode) => {
     const method = editMode ? 'PUT':'POST'
     const url = editMode ? `${endpoint}/${time._id}` : endpoint
@@ -79,8 +86,7 @@ export const actions = {
     const url = `${endpoint}/${time._id}`
     const promise = axios({
       method: 'DELETE',
-      url,
-      data: time
+      url
     }).then(() => time)
     return {
       type: types.DELETE,
@@ -176,11 +182,19 @@ const entitiesReducer = (state = {}, action = {}) => {
         ...state,
         ...normalizeArrayByKey(payload)
       }
-    case ok(types.CREATE):
-    case ok(types.EDIT):
+    case ok(types.FETCH_ONE):
       return {
         ...state,
         [payload._id]: payload
+      }
+    case ok(types.EDIT):
+      return {
+        ...state,
+        [payload._id]: {
+          ...state[payload._id],
+          startTime: payload.startTime,
+          endTime: payload.endTime          
+        }
       }
     case ok(types.FINISH):
       return {
@@ -232,7 +246,7 @@ const byUserReducer = (state = {}, action = {}) => {
     return {
       ...state,
       [meta.userId]: newIds
-    }    
+    }
   }
   if(type === ok(types.CREATE)) {
     const oldSlice = state[payload.user] || []

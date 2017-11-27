@@ -88,7 +88,7 @@ class TaskList extends Component {
       user: this.props.userId,
       project: this.props.routeParams.projectId
     }
-    this.props.timeActions.save(time, false)
+    this.props.timeActions.saveAndFetch(time, false)
   }
   handleFinishTime = (task) => {
     const time = {

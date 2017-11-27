@@ -269,7 +269,10 @@ export class TaskTimeList extends Component {
           className="list-corner-fab"
           onClick={this.createTime}
         />
-        <List style={{marginBottom: '2rem'}}>
+        <List style={{
+          opacity: loading ? 0.5 : 1,
+          marginBottom: '2rem'
+        }}>
           {times.map(time => (
             <li key={time._id}>
               <div>
