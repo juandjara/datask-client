@@ -16,7 +16,9 @@
 .sidenav-link span {
   color: white;
 }
-.sidenav-link:hover {
+
+.sidenav-links a:hover .sidenav-link,
+.sidenav-links a:focus .sidenav-link {
   background-color: rgba(0, 0, 0, 0.25) !important;
 }
 .sidenav-link-active .sidenav-link {

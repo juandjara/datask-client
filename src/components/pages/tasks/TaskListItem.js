@@ -91,10 +91,10 @@ export default class TaskListItem extends Component {
           </EditContainer>
           <div>
             <Link to={`/tasks/${task._id}`} style={{color: 'inherit'}}>
-              <IconButton icon="edit" title="Editar tarea" />
+              <IconButton tabIndex="-1" icon="edit" title="Editar tarea" />
             </Link>
             <Link to={`/tasks/${task._id}/times`} style={{color: 'inherit'}}>
-              <IconButton icon="timer" title="Tiempos de la tarea" />
+              <IconButton tabIndex="-1" icon="timer" title="Tiempos de la tarea" />
             </Link>
           </div>
         </SpaceBetween>
