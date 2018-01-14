@@ -35,7 +35,7 @@ export class App extends Component {
   }
 
   render() {
-    const { times, profile, sidenav, actions, children } = this.props;
+    const { times, profile, sidenav, tick, actions, timeActions, children } = this.props;
     const containerStyle = {
       minHeight: '100vh'
     };
@@ -45,7 +45,8 @@ export class App extends Component {
     return (
       <Layout>
         <Sidenav
-          actions={actions}
+          tick={tick}
+          actions={{...actions, ...timeActions}}
           profile={profile}
           sidenav={sidenav}
           times={times}
@@ -54,7 +55,7 @@ export class App extends Component {
           <ToastContainer autoClose={3000} position="bottom-right" />
           <Header toggleSidenav={actions.toggleSidenavOpen} />
           <ShowOnMedia mediaKey="small">
-            <TaskQuickAccess times={times} />
+            <TaskQuickAccess tick={tick} actions={timeActions} times={times} />
           </ShowOnMedia>
           <main className="main">{children}</main>
         </Panel>
@@ -67,6 +68,7 @@ const mapStateToProps = (state) => ({
   userId: state.auth._id,
   sidenav: state.sidenav,
   profile: state.profile,
+  tick: timeSelectors.getTick(state),
   times: timeSelectors.getByUserId(state, state.auth._id)
 })
 const mapDispatchToProps = dispatch => ({

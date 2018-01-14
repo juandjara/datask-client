@@ -13,7 +13,7 @@ const SpaceBetween = styled.div`
 const Task = styled.li`
   padding: .5rem;
   margin: .8rem .5rem;
-  background: rgb(250,250,250); 
+  background: white; 
   border: 1px solid #ccc;
   white-space: normal;
   box-shadow: 1px 1px 2px rgba(0,0,0, .5);
@@ -28,7 +28,7 @@ const TitleInput = styled.input`
   padding: 4px 0;
   font-family: inherit;
   font-size: 1rem;
-  background: white;
+  background: rgb(250, 250, 250);
   border: 1px solid #ccc;
 `
 const EditContainer = styled.div`
