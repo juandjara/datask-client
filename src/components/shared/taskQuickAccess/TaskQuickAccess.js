@@ -7,8 +7,10 @@ function renderTaskCard(time, tick, actions) {
   return (
     <div key={time._id} className="task-card">
       <div title={time.task.name} className="task-card-text truncate-line">
-        <div style={{fontWeight: 'bold', fontSize: '110%'}}>{time.task.name}</div>
-        <div style={{marginTop: 4, color: '#666'}}>{time.project.name}</div>
+        <div>{time.task.name}</div>
+        <small style={{marginTop: 4, color: '#666'}}>
+          {time.project.name}
+        </small>
       </div>
       <div style={{flex: 1}} ></div>
       {time.endTime ? (
