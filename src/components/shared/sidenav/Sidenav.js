@@ -56,7 +56,7 @@ class Sidenav extends Component {
           <MenuLink to="/projects" icon="work" text="Proyectos" />
           <MenuLink to="/users" icon="person" text="Usuarios" />
           <MenuLink to="/clients" icon="business" text="Clientes" />
-          <MenuLink to="/reports" icon="timeline" text="Reportes" />          
+          <MenuLink to="/dashboard" icon="timeline" text="Reportes" />          
         </div>
       </NavDrawer>
     )

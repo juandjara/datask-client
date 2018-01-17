@@ -12,6 +12,7 @@ import {ProjectList, ProjectForm, ProjectUser} from 'components/pages/projects'
 import TaskList from 'components/pages/tasks/TaskList'
 import TaskForm from 'components/pages/tasks/TaskForm'
 import TaskTimeList from 'components/pages/tasks/TaskTimeList'
+import Dashboard from './components/pages/dashboard/Dashboard'
 
 import { requireAuth } from 'services/authService';
 
@@ -34,6 +35,7 @@ export default (store) => {
       <Route path="clients/:_id" component={ClientForm} />      
       
       <Route path="profile" component={ProfileForm} />
+      <Route path="dashboard" component={Dashboard} />
     </Route>,
     <Route path="/login" component={Login} />,
     <Route path="*" component={NotFound} />
