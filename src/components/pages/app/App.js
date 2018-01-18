@@ -29,13 +29,14 @@ export class App extends Component {
       1000
     )
     this.props.timeActions.fetchByUser(this.props.userId, {page: 0})
+    this.props.timeActions.fetchStats();
   }
   componentWillUnmount() {
     clearInterval(this.timer)
   }
 
   render() {
-    const { times, profile, sidenav, tick, actions, timeActions, children } = this.props;
+    const { times, timeStats, profile, sidenav, tick, actions, timeActions, children } = this.props;
     const containerStyle = {
       minHeight: '100vh'
     };
@@ -50,6 +51,7 @@ export class App extends Component {
           profile={profile}
           sidenav={sidenav}
           times={times}
+          timeStats={timeStats}
         />
         <Panel style={containerStyle}>
           <ToastContainer autoClose={3000} position="bottom-right" />
@@ -69,7 +71,8 @@ const mapStateToProps = (state) => ({
   sidenav: state.sidenav,
   profile: state.profile,
   tick: timeSelectors.getTick(state),
-  times: timeSelectors.getByUserId(state, state.auth._id)
+  times: timeSelectors.getByUserId(state, state.auth._id),
+  timeStats: timeSelectors.getTotals(state)
 })
 const mapDispatchToProps = dispatch => ({
   timeActions: bindActionCreators(timeActions, dispatch),

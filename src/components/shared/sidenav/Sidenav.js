@@ -20,7 +20,7 @@ class Sidenav extends Component {
     this.props.actions.logout()
   }
   render () {
-    const {times, tick, sidenav, profile, actions} = this.props;
+    const {times, timeStats, tick, sidenav, profile, actions} = this.props;
     const {profileMenuActive} = this.state;
     return (
       <NavDrawer
@@ -50,8 +50,16 @@ class Sidenav extends Component {
               text="Cerrar sesión" />
           </div>
         )}
-        <TimeCounters style={{height: 'auto'}} />
-        <TaskQuickAccess tick={tick} actions={actions} times={times} style={{maxHeight: '140px'}} />
+        <TimeCounters 
+          timeStats={timeStats} 
+          tick={tick} 
+          times={times}
+          style={{height: 'auto'}} />
+        <TaskQuickAccess 
+          tick={tick} 
+          times={times} 
+          actions={actions} 
+          style={{maxHeight: '140px'}} />
         <div className="sidenav-links">
           <MenuLink to="/projects" icon="work" text="Proyectos" />
           <MenuLink to="/users" icon="person" text="Usuarios" />

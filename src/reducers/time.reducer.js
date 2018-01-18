@@ -13,7 +13,8 @@ export const types = {
   FINISH: 'TIME_FINISH',
   EDIT: 'TIME_EDIT',
   DELETE: 'TIME_DELETE',
-  TICK: 'TIME_TICK'
+  TICK: 'TIME_TICK',
+  FETCH_STATS: 'FETCH_STATS'
 }
 
 // ACTIONS
@@ -69,7 +70,13 @@ export const actions = {
       meta: time
     }
   },
-  finish(time) {
+  finish: (time) => (dispatch) => {
+    dispatch(actions._finish(time))
+    .then(() => (
+      dispatch(actions.fetchStats())
+    ))
+  },
+  _finish(time) {
     const url = `${endpoint}/${time._id}/finish`
     const promise = axios.post(url, {
       ...time,
@@ -96,6 +103,16 @@ export const actions = {
   },
   tick() {
     return { type: types.TICK }
+  },
+  fetchStats(userId) {
+    const url = `${endpoint}/totals`
+    const promise = axios.get(url, {params: {userId}})
+    .then(res => res.data)
+    return {
+      type: types.FETCH_STATS,
+      payload: promise,
+      meta: {userId}
+    }
   }
 }
 
@@ -123,6 +140,9 @@ export const selectors = {
   },
   getTick(state) {
     return state.times.tick
+  },
+  getTotals(state) {
+    return state.times.totals
   }
 }
 
@@ -143,7 +163,13 @@ byUser: {
     params: {}
   }
 },
-loading: true
+loading: true,
+tick: 0,
+totals: {
+  day: 0,
+  week: 0,
+  month: 0
+}
 */
 
 // REDUCER
@@ -263,13 +289,25 @@ const tickReducer = (state = Date.now(), action = {}) => {
   }
   return state
 }
+const initialTotals = {
+  dayTotalTime: 0,
+  weekTotalTime: 0,
+  monthTotalTime: 0
+}
+const totalsReducer = (state = initialTotals, action = {}) => {
+  if(action.type === ok(types.FETCH_STATS)) {
+    return action.payload
+  }
+  return state
+}
 
 const reducer = combineReducers({
   loading: loadingReducer,
   entities: entitiesReducer,
   byUser: byUserReducer,
   byTask: byTaskReducer,
-  tick: tickReducer
+  tick: tickReducer,
+  totals: totalsReducer
 })
 
 export default reducer
