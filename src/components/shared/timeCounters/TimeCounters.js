@@ -38,7 +38,7 @@ function formatTime(time, activeTime, tick) {
 }
 function getActiveTime(time, tick) {
   if(!time) {
-    return '00:00:00';
+    return '0:00:00';
   }
   const start = moment(time.startTime)
   const end = moment(tick)

@@ -19,6 +19,12 @@ class Sidenav extends Component {
   logout = () => {
     this.props.actions.logout()
   }
+  componentWillUnmount() {
+    this.props.dispatch({
+      type: 'PROFILE_UPDATE_SUCCESS',
+      full_name: ''
+    })
+  }
   render () {
     const {times, timeStats, tick, sidenav, profile, actions} = this.props;
     const {profileMenuActive} = this.state;
@@ -31,7 +37,7 @@ class Sidenav extends Component {
         onOverlayClick={actions.toggleSidenavOpen}>
         <Flex align="center">
           <Avatar />
-          <h3>{profile.full_name}</h3>
+          <h3>{profile.full_name || 'Cargando ...'}</h3>
           <IconButton
             inverse
             icon={`arrow_drop_${profileMenuActive ? 'up':'down'}`} 

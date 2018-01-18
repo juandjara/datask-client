@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Avatar from 'react-avatar'
 
 const UserAvatar = ({profile, dispatch, ...props}) => {
-  const name = `${profile.name} ${profile.surname}`
+  const name = `${profile.name || ''} ${profile.surname || ''}`
   return (
     <Avatar name={name} round={true} size={50} {...props} style={{margin: '.5em'}} />      
   )

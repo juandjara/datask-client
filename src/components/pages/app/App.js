@@ -36,7 +36,17 @@ export class App extends Component {
   }
 
   render() {
-    const { times, timeStats, profile, sidenav, tick, actions, timeActions, children } = this.props;
+    const { 
+      dispatch, 
+      times, 
+      timeStats, 
+      profile, 
+      sidenav, 
+      tick, 
+      actions, 
+      timeActions, 
+      children 
+    } = this.props;
     const containerStyle = {
       minHeight: '100vh'
     };
@@ -46,6 +56,7 @@ export class App extends Component {
     return (
       <Layout>
         <Sidenav
+          dispatch={dispatch}
           tick={tick}
           actions={{...actions, ...timeActions}}
           profile={profile}
@@ -75,6 +86,7 @@ const mapStateToProps = (state) => ({
   timeStats: timeSelectors.getTotals(state)
 })
 const mapDispatchToProps = dispatch => ({
+  dispatch,
   timeActions: bindActionCreators(timeActions, dispatch),
   actions: bindActionCreators({
     logout, 
