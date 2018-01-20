@@ -9,6 +9,7 @@ import {connect} from 'react-redux'
 import axios from 'services/axiosWrapper';
 import moment from 'moment';
 import { groupBy } from 'lodash';
+import BarChart from '../../shared/BarChart';
 
 const Header = styled.div`
   display: flex;
@@ -32,20 +33,23 @@ const DateSelector = styled.section`
     line-height: 60px;
     padding: 12px;
     padding-bottom: 0;
+    + div {
+      width: 150px;
+    }
   }
 `;
 
 class Dashboard extends Component {
-  chartData = [];
   state = {
     loading: true,
     times: [],
+    chartData: [],
     selectedUser: {},
     startDate: moment().startOf('week').toDate(),
     endDate: moment().endOf('week').toDate()
   }
   componentWillReceiveProps(nextProps) {
-    if(nextProps.selectedUser.value !== this.state.selectedUser.value) {
+    if(!this.state.selectedUser.value && !!nextProps.selectedUser.value) {
       this.setState({selectedUser: nextProps.selectedUser}, () => {
         this.fetchTimes();
       })
@@ -62,10 +66,11 @@ class Dashboard extends Component {
     axios.get(url, {params})
     .then(res => res.data)
     .then(times => {
-      this.setState({loading: false, times}, () => {
-        this.chartData = this.getChartData();
-        console.log("CHART DATA", this.chartData)        
-      })
+      this.setState({
+        loading: false, 
+        times,
+        chartData: this.getChartData(times)
+      });
     })
   }
   handleFilterChange(key) {
@@ -75,11 +80,11 @@ class Dashboard extends Component {
       })
     }
   }
-  getChartData() {
-    if(!this.state.times.length) {
+  getChartData(times) {
+    if(!times.length) {
       return [];
     }
-    const {times, startDate, endDate} = this.state;
+    const {startDate, endDate} = this.state;
     return times.map(group => {
       const projectName = group.times[0].project.name
       const timesByDay = groupBy(group.times, time => (
@@ -127,10 +132,43 @@ class Dashboard extends Component {
       value: this.state.selectedUser,
       onChange: this.handleFilterChange('selectedUser')
     }
+    const {
+      startDate,
+      endDate,
+      chartData,
+      loading
+    } = this.state;
     return  (
       <div className="list-container">
-        <Header>
-          <h2 className="list-title">Reportes</h2>
+        <h2 className="list-title">Reportes</h2>
+        <DateSelector>
+          {loading && (
+            <p className="color-primary">
+              <strong>Cargando ...</strong> 
+            </p>
+          )}
+          <div style={{flex: 1}}></div>
+          <Datepicker 
+            name="startDate"
+            input={{
+              value: startDate,
+              onChange: this.handleFilterChange('startDate')
+            }}
+            label="Desde"
+            icon="date_range"
+            locale="es"
+            autoOk
+          />
+          <Datepicker 
+            name="endDate"
+            input={{
+              value: endDate,
+              onChange: this.handleFilterChange('endDate')
+            }}
+            label="Hasta"
+            locale="es"
+            autoOk
+          />
           {this.props.isAdmin && (
             <AsyncSelect
               name="user"
@@ -143,35 +181,17 @@ class Dashboard extends Component {
               meta={{}}
             />
           )}
-        </Header>
-        <DateSelector>
-          {this.state.loading && (
-            <p className="color-primary">Cargando ... </p>
-          )}
-          <div style={{flex: 1}}></div>
-          <Datepicker 
-            name="startDate"
-            input={{
-              value: this.state.startDate,
-              onChange: this.handleFilterChange('startDate')
-            }}
-            label="Desde"
-            icon="date_range"
-            locale="es"
-            autoOk
-          />
-          <Datepicker 
-            name="endDate"
-            input={{
-              value: this.state.endDate,
-              onChange: this.handleFilterChange('endDate')
-            }}
-            label="Hasta"
-            icon="date_range"
-            locale="es"
-            autoOk
-          />
         </DateSelector>
+        {!loading && chartData.length === 0  && (
+          <p style={{
+            textAlign: 'center',
+            marginTop: '1em',
+            fontSize: '20px'
+          }}>
+            Este usuario no tiene ningun tiempo registrado en este rango de fechas
+          </p>
+        )}
+        <BarChart data={chartData} />
       </div>
     )
   }
